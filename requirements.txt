@@ -4,3 +4,4 @@ pytest
 google-genai
 openai
 python-dotenv
+matplotlib

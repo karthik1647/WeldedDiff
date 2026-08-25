@@ -2,6 +2,7 @@ import os
 import json
 import pandas as pd
 import streamlit as st
+import matplotlib.pyplot as plt
 from decimal import Decimal
 
 # Setup directories
@@ -13,35 +14,51 @@ SUMMARY_REPORT_PATH = os.path.join(TRACES_DIR, "summary_report.json")
 
 st.set_page_config(page_title="WeldedDiff Reconciliation Review", layout="wide")
 
-# Inject light custom styling to avoid default stock template look
+# Inject custom styling for visual hierarchy and Slate Teal corporate aesthetic
 st.markdown("""
 <style>
-    /* Metric Card Styling */
-    [data-testid="stMetricValue"] {
-        font-size: 2rem !important;
-        font-weight: 700;
-        color: #1e293b;
-    }
+    /* Metric Card Container */
     div[data-testid="stMetric"] {
-        background-color: #f8fafc;
-        border: 1px solid #e2e8f0;
-        padding: 1.25rem;
-        border-radius: 8px;
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+        background-color: #ffffff !important;
+        border: 1px solid #e2e8f0 !important;
+        border-left: 4px solid #0f766e !important;
+        padding: 1.25rem !important;
+        border-radius: 6px !important;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05) !important;
     }
-    /* Tab Styling */
+    /* Muted, uppercase metric labels to enforce hierarchy */
+    div[data-testid="stMetricLabel"] {
+        font-size: 0.75rem !important;
+        font-weight: 600 !important;
+        color: #475569 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+    }
+    /* Large bold numeric values */
+    [data-testid="stMetricValue"] {
+        font-size: 2.25rem !important;
+        font-weight: 800 !important;
+        color: #0f172a !important;
+        margin-top: 4px !important;
+    }
+    /* Tab Navigation with Slate Teal Accent */
     button[data-baseweb="tab"] {
-        font-weight: 600;
-        color: #64748b;
+        font-weight: 600 !important;
+        color: #64748b !important;
     }
     button[data-baseweb="tab"][aria-selected="true"] {
-        color: #0f172a;
-        border-bottom-color: #0f172a;
+        color: #0f766e !important;
+        border-bottom-color: #0f766e !important;
     }
-    /* Button Customizations */
+    /* Interactive Buttons */
     .stButton>button {
-        border-radius: 6px;
-        font-weight: 600;
+        border-radius: 6px !important;
+        font-weight: 600 !important;
+        border-color: #cbd5e1 !important;
+    }
+    .stButton>button:hover {
+        color: #0f766e !important;
+        border-color: #0f766e !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -76,12 +93,19 @@ else:
     abstained_traces = [t for t in traces if t.get("decision") == "ABSTAINED"]
     auto_committed_traces = [t for t in traces if t.get("decision") in ("AUTO_COMMIT", "USER_APPROVED")]
     
-    total_payouts = summary.get("baseline", {}).get("baseline_matched_orders", 0) # total payouts proxy from baseline matches
-    total_bank_credits = summary.get("baseline", {}).get("baseline_matched_bank_credits", 0)
+    # Load payouts to get exact total count (denominator)
+    df_payouts = pd.read_csv(os.path.join(DATA_DIR, "razorpay_payouts.csv"))
+    total_payout_count = len(df_payouts) # Denominator: 102 payouts
     
-    # Recalculate match rate dynamically based on current commits
-    committed_count = len([t for t in traces if t.get("decision") in ("AUTO_COMMIT", "USER_APPROVED") and t.get("step") in ("payout_to_bank_utr", "payout_to_bank_settlement_batch")])
-    total_bank_credits_count = summary.get("baseline", {}).get("baseline_matched_bank_credits", 0) + summary.get("llm_abstained_payouts", 0)
+    # Baseline matched payouts (exact matching)
+    # The baseline matched 2 bank credits, which represents 2 payouts matched out of 102 payouts.
+    baseline_matched_payouts = summary.get("baseline", {}).get("baseline_matched_bank_credits", 0)
+    baseline_payout_rate = (baseline_matched_payouts / total_payout_count) * 100 if total_payout_count > 0 else 0.0
+    
+    # Advanced matched payouts (deterministic matches + user approved matches)
+    user_approved_payouts = len([t for t in traces if t.get("decision") == "USER_APPROVED" and t.get("step") == "llm_payout_audit"])
+    advanced_matched_payouts = summary.get("deterministic_reconciled_payouts", 0) + user_approved_payouts
+    advanced_payout_rate = (advanced_matched_payouts / total_payout_count) * 100 if total_payout_count > 0 else 0.0
     
     # 1. KPI Panel
     col1, col2, col3, col4 = st.columns(4)
@@ -89,22 +113,17 @@ else:
     with col1:
         st.metric(
             label="Baseline Match Rate (Exact Matches)",
-            value=f"{summary.get('baseline', {}).get('baseline_bank_match_rate_pct', 0.0)}%",
+            value=f"{round(baseline_payout_rate, 2)}%",
+            help=f"Exact matches: {baseline_matched_payouts} / {total_payout_count} payouts",
             delta=None
         )
         
     with col2:
-        # Calculate dynamic advanced match rate
-        # baseline rate is bank credits matched exactly. Advanced match includes deterministic advanced + user approved payouts.
-        denom = summary.get("baseline", {}).get("baseline_matched_bank_credits", 0) + len(proposed_traces) + len([t for t in traces if t.get("step") == "llm_payout_audit" and t.get("decision") == "ABSTAINED"])
-        numer = summary.get("deterministic_reconciled_payouts", 0) + len([t for t in traces if t.get("decision") == "USER_APPROVED" and t.get("step") == "llm_payout_audit"])
-        advanced_rate = (numer / denom) * 100 if denom > 0 else 0.0
-        
-        baseline_rate = summary.get("baseline", {}).get("baseline_bank_match_rate_pct", 0.0)
-        delta_val = f"+{round(advanced_rate - float(baseline_rate), 2)}%"
+        delta_val = f"+{round(advanced_payout_rate - baseline_payout_rate, 2)}%"
         st.metric(
             label="Pipeline Match Rate (With LLM Review)",
-            value=f"{round(advanced_rate, 2)}%",
+            value=f"{round(advanced_payout_rate, 2)}%",
+            help=f"Reconciled payouts (Deterministic + LLM): {advanced_matched_payouts} / {total_payout_count} payouts",
             delta=delta_val
         )
         
@@ -123,14 +142,38 @@ else:
 
     # 2. Performance Comparison Chart
     st.write("---")
-    chart_data = pd.DataFrame({
-        "Metric": ["Exact Baseline Match", "Pipeline Match (With LLM Review)"],
-        "Payout Match Rate (%)": [
-            float(summary.get("baseline", {}).get("baseline_bank_match_rate_pct", 0.0)),
-            float(round(advanced_rate, 2))
-        ]
-    })
-    st.bar_chart(chart_data, x="Metric", y="Payout Match Rate (%)")
+    st.write("### Match Rate Comparison")
+    
+    fig, ax = plt.subplots(figsize=(8, 2.2))
+    categories = ["Exact Baseline Match", "Pipeline Match\n(With LLM Review)"]
+    rates = [float(baseline_payout_rate), float(advanced_payout_rate)]
+    colors = ["#cbd5e1", "#0f766e"] # Slate gray for baseline, Slate Teal for advanced
+    
+    bars = ax.barh(categories, rates, color=colors, height=0.45)
+    ax.set_xlim(0, 110)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_color("#cbd5e1")
+    ax.spines["bottom"].set_color("#cbd5e1")
+    ax.tick_params(axis="both", colors="#475569", labelsize=9)
+    ax.xaxis.grid(True, linestyle="--", alpha=0.3, color="#cbd5e1")
+    ax.set_axisbelow(True)
+    
+    # Label tip numbers
+    for bar in bars:
+        width = bar.get_width()
+        ax.text(
+            width + 1.5,
+            bar.get_y() + bar.get_height() / 2,
+            f"{width:.2f}%",
+            ha="left",
+            va="center",
+            fontsize=9,
+            fontweight="bold",
+            color="#1e293b"
+        )
+        
+    st.pyplot(fig)
 
     # 3. Interactive Review Desk (Human-In-The-Loop Approval)
     st.write("---")
