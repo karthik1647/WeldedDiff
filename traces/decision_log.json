@@ -1,0 +1,2942 @@
+[
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_001",
+    "amount": "21452.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_001",
+        "amount": "21452.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_002",
+    "amount": "24799.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_002",
+        "amount": "24799.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_003",
+    "amount": "7814.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_003",
+        "amount": "7814.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_004",
+    "amount": "22674.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_004",
+        "amount": "22674.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_005",
+    "amount": "19849.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_005",
+        "amount": "19849.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_006",
+    "amount": "1476.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_006",
+        "amount": "1476.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_007",
+    "amount": "8123.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_007",
+        "amount": "8123.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_008",
+    "amount": "18890.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_008",
+        "amount": "18890.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_009",
+    "amount": "7723.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_009",
+        "amount": "7723.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_010",
+    "amount": "712.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_010",
+        "amount": "712.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_011",
+    "amount": "23376.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_011",
+        "amount": "23376.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_012",
+    "amount": "9605.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_012",
+        "amount": "9605.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_013",
+    "amount": "11529.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_013",
+        "amount": "11529.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_014",
+    "amount": "12949.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_014",
+        "amount": "12949.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_015",
+    "amount": "11770.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_015",
+        "amount": "11770.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_016",
+    "amount": "1923.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_016",
+        "amount": "1923.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_017",
+    "amount": "18071.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_017",
+        "amount": "18071.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_018",
+    "amount": "3082.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_018",
+        "amount": "3082.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_019",
+    "amount": "21099.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_019",
+        "amount": "21099.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_020",
+    "amount": "19418.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_020",
+        "amount": "19418.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_021",
+    "amount": "2001.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_021",
+        "amount": "2001.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_022",
+    "amount": "9982.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_022",
+        "amount": "9982.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_023",
+    "amount": "3809.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_023",
+        "amount": "3809.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_024",
+    "amount": "15357.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_024",
+        "amount": "15357.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_025",
+    "amount": "5829.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_025",
+        "amount": "5829.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_026",
+    "amount": "7365.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_026",
+        "amount": "7365.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_027",
+    "amount": "23497.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_027",
+        "amount": "23497.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_028",
+    "amount": "20460.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_028",
+        "amount": "20460.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_029",
+    "amount": "18002.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_029",
+        "amount": "18002.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_030",
+    "amount": "5854.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_030",
+        "amount": "5854.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_031",
+    "amount": "9345.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_031",
+        "amount": "9345.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_032",
+    "amount": "22933.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_032",
+        "amount": "22933.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_033",
+    "amount": "8005.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_033",
+        "amount": "8005.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_034",
+    "amount": "10836.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_034",
+        "amount": "10836.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_035",
+    "amount": "2668.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_035",
+        "amount": "2668.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_036",
+    "amount": "7467.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_036",
+        "amount": "7467.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_037",
+    "amount": "13464.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_037",
+        "amount": "13464.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_038",
+    "amount": "5181.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_038",
+        "amount": "5181.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_039",
+    "amount": "8581.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_039",
+        "amount": "8581.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_040",
+    "amount": "24978.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_040",
+        "amount": "24978.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_041",
+    "amount": "19621.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_041_S1",
+        "amount": "9810.50"
+      },
+      {
+        "payment_id": "pay_041_S2",
+        "amount": "9810.50"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Split payment match: Sum of 2 payouts equals order amount"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_042",
+    "amount": "7686.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_042",
+        "amount": "7686.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_043",
+    "amount": "3478.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_043",
+        "amount": "3478.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_044",
+    "amount": "4092.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_044",
+        "amount": "4092.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_045",
+    "amount": "22798.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_045",
+        "amount": "22798.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_046",
+    "amount": "13108.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_046",
+        "amount": "13108.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_047",
+    "amount": "17838.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_047",
+        "amount": "17838.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_048",
+    "amount": "22791.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_048",
+        "amount": "22791.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_049",
+    "amount": "22838.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_049",
+        "amount": "22838.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_050",
+    "amount": "21503.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_050",
+        "amount": "21503.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_051",
+    "amount": "10117.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_051",
+        "amount": "10117.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_052",
+    "amount": "15367.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_052",
+        "amount": "15367.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_053",
+    "amount": "16903.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_053",
+        "amount": "16903.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_054",
+    "amount": "17135.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_054",
+        "amount": "17135.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_055",
+    "amount": "20989.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_055",
+        "amount": "20989.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_056",
+    "amount": "5508.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_056",
+        "amount": "5508.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_057",
+    "amount": "18174.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_057",
+        "amount": "18174.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_058",
+    "amount": "20126.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_058",
+        "amount": "20126.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_059",
+    "amount": "1138.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_059",
+        "amount": "1138.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_060",
+    "amount": "10576.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_060",
+        "amount": "10576.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_061",
+    "amount": "8392.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_061",
+        "amount": "8392.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_062",
+    "amount": "3306.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_062",
+        "amount": "3306.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_063",
+    "amount": "2767.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_063",
+        "amount": "2767.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_064",
+    "amount": "4707.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_064",
+        "amount": "4707.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_065",
+    "amount": "18515.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_065",
+        "amount": "18515.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_066",
+    "amount": "17790.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_066",
+        "amount": "17790.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_067",
+    "amount": "7440.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_067",
+        "amount": "7440.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_068",
+    "amount": "23861.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_068",
+        "amount": "23861.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_069",
+    "amount": "22509.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_069",
+        "amount": "22509.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_070",
+    "amount": "14855.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_070",
+        "amount": "14855.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_071",
+    "amount": "4465.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_071",
+        "amount": "4465.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_072",
+    "amount": "2598.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_072",
+        "amount": "2598.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_073",
+    "amount": "19777.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_073",
+        "amount": "19777.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_074",
+    "amount": "19782.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_074",
+        "amount": "19782.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_075",
+    "amount": "2826.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_075",
+        "amount": "2826.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_076",
+    "amount": "8001.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_076",
+        "amount": "8001.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_077",
+    "amount": "11327.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_077",
+        "amount": "11327.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_078",
+    "amount": "9625.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_078",
+        "amount": "9625.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_079",
+    "amount": "7520.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_079",
+        "amount": "7520.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_080",
+    "amount": "24202.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_080",
+        "amount": "24202.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_081",
+    "amount": "8462.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_081",
+        "amount": "8462.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_082",
+    "amount": "13838.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_082",
+        "amount": "13838.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_083",
+    "amount": "3676.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_083",
+        "amount": "3676.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_084",
+    "amount": "12109.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_084",
+        "amount": "12109.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_085",
+    "amount": "15803.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_085",
+        "amount": "15803.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_086",
+    "amount": "22564.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_086",
+        "amount": "22564.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_087",
+    "amount": "2486.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_087",
+        "amount": "2486.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_088",
+    "amount": "4080.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_088",
+        "amount": "4080.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_089",
+    "amount": "6732.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_089",
+        "amount": "6732.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_090",
+    "amount": "5093.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_090",
+        "amount": "5093.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_091",
+    "amount": "9627.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_091",
+        "amount": "9627.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_092",
+    "amount": "2970.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_092",
+        "amount": "2970.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_093",
+    "amount": "2157.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_093",
+        "amount": "2157.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_094",
+    "amount": "3556.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_094",
+        "amount": "3556.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_095",
+    "amount": "5949.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_095",
+        "amount": "5949.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_096",
+    "amount": "16273.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_096",
+        "amount": "16273.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_097",
+    "amount": "2421.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_097",
+        "amount": "2421.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_098",
+    "amount": "570.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_098",
+        "amount": "570.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_099",
+    "amount": "15409.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_099",
+        "amount": "15409.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_100",
+    "amount": "23325.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_100",
+        "amount": "23325.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_dup_1",
+    "amount": "1500.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_dup_1",
+        "amount": "1500.00"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_dup_2",
+    "amount": "1500.00",
+    "status": "failed",
+    "compared_candidates": [],
+    "decision": "AUTO_COMMIT",
+    "reason": "Failed order correctly lacks payout"
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_001",
+    "utr": "UTR_N00001",
+    "net_calculated": "20945.73",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_002",
+    "utr": "UTR_N00002",
+    "net_calculated": "24213.74",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_003",
+    "utr": "UTR_N00003",
+    "net_calculated": "7629.59",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_004",
+    "utr": "UTR_N00004",
+    "net_calculated": "22138.89",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_005",
+    "utr": "UTR_N00005",
+    "net_calculated": "19380.56",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_006",
+    "utr": "UTR_N00006",
+    "net_calculated": "1423.75",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_007",
+    "utr": "UTR_N00007",
+    "net_calculated": "7931.30",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_008",
+    "utr": "UTR_N00008",
+    "net_calculated": "18444.20",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_009",
+    "utr": "UTR_N00009",
+    "net_calculated": "7540.74",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_010",
+    "utr": "UTR_N00010",
+    "net_calculated": "695.20",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_011",
+    "utr": "UTR_N00011",
+    "net_calculated": "22824.33",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_012",
+    "utr": "UTR_N00012",
+    "net_calculated": "9378.32",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_013",
+    "utr": "UTR_N00013",
+    "net_calculated": "11256.92",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_014",
+    "utr": "UTR_N00014",
+    "net_calculated": "12643.40",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_015",
+    "utr": "UTR_N00015",
+    "net_calculated": "11492.23",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_016",
+    "utr": "UTR_N00016",
+    "net_calculated": "1877.63",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_017",
+    "utr": "UTR_N00017",
+    "net_calculated": "17644.52",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_018",
+    "utr": "UTR_N00018",
+    "net_calculated": "3009.26",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_019",
+    "utr": "UTR_N00019",
+    "net_calculated": "20601.06",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_020",
+    "utr": "UTR_N00020",
+    "net_calculated": "18959.74",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_021",
+    "utr": "UTR_N00021",
+    "net_calculated": "1953.78",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_022",
+    "utr": "UTR_N00022",
+    "net_calculated": "9746.42",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_023",
+    "utr": "UTR_N00023",
+    "net_calculated": "3719.11",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_024",
+    "utr": "UTR_N00024",
+    "net_calculated": "14994.57",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_025",
+    "utr": "UTR_N00025",
+    "net_calculated": "5691.44",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_026",
+    "utr": "UTR_N00026",
+    "net_calculated": "7191.19",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_027",
+    "utr": "UTR_N00027",
+    "net_calculated": "22942.47",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_028",
+    "utr": "UTR_N00028",
+    "net_calculated": "19977.14",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_029",
+    "utr": "UTR_N00029",
+    "net_calculated": "17577.15",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_030",
+    "utr": "UTR_N00030",
+    "net_calculated": "5715.85",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_031",
+    "utr": "UTR_N00031",
+    "net_calculated": "9124.46",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_032",
+    "utr": "UTR_N00032",
+    "net_calculated": "22391.78",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_033",
+    "utr": "UTR_N00033",
+    "net_calculated": "7816.08",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_034",
+    "utr": "UTR_N00034",
+    "net_calculated": "10580.27",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_035",
+    "utr": "UTR_N00035",
+    "net_calculated": "2605.04",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_036",
+    "utr": "UTR_N00036",
+    "net_calculated": "7290.78",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_037",
+    "utr": "UTR_N00037",
+    "net_calculated": "13146.25",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_038",
+    "utr": "UTR_N00038",
+    "net_calculated": "5058.73",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_039",
+    "utr": "UTR_N00039",
+    "net_calculated": "8378.49",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_040",
+    "utr": "UTR_N00040",
+    "net_calculated": "24388.52",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_041_S1",
+    "utr": "UTR_N00041_S1",
+    "net_calculated": "9578.97",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_041_S2",
+    "utr": "UTR_N00041_S2",
+    "net_calculated": "9578.97",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_042",
+    "utr": "UTR_N00042",
+    "net_calculated": "7504.61",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_043",
+    "utr": "UTR_N00043",
+    "net_calculated": "3395.92",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_044",
+    "utr": "UTR_N00044",
+    "net_calculated": "3995.43",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_045",
+    "utr": "UTR_N00045",
+    "net_calculated": "22259.97",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_046",
+    "utr": "UTR_N00046",
+    "net_calculated": "12798.65",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_047",
+    "utr": "UTR_N00047",
+    "net_calculated": "17417.02",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_048",
+    "utr": "UTR_N00048",
+    "net_calculated": "22253.13",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_049",
+    "utr": "UTR_N00049",
+    "net_calculated": "22299.02",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_050",
+    "utr": "UTR_N00050",
+    "net_calculated": "20995.53",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_051",
+    "utr": "UTR_N00051",
+    "net_calculated": "9878.24",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_052",
+    "utr": "UTR_N00052",
+    "net_calculated": "15004.34",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_053",
+    "utr": "UTR_N00053",
+    "net_calculated": "16504.09",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_054",
+    "utr": "UTR_N00054",
+    "net_calculated": "16730.61",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_055",
+    "utr": "UTR_N00055",
+    "net_calculated": "20493.66",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_056",
+    "utr": "UTR_N00056",
+    "net_calculated": "5378.01",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_057",
+    "utr": "UTR_N00057",
+    "net_calculated": "17745.09",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_058",
+    "utr": "UTR_N00058",
+    "net_calculated": "19651.03",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_059",
+    "utr": "UTR_N00059",
+    "net_calculated": "1111.14",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_060",
+    "utr": "UTR_N00060",
+    "net_calculated": "10326.41",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_061",
+    "utr": "UTR_N00061",
+    "net_calculated": "8193.95",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_062",
+    "utr": "UTR_N00062",
+    "net_calculated": "3227.98",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_063",
+    "utr": "UTR_N00063",
+    "net_calculated": "2701.70",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_064",
+    "utr": "UTR_N00064",
+    "net_calculated": "4595.91",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_065",
+    "utr": "UTR_N00065",
+    "net_calculated": "18078.05",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_066",
+    "utr": "UTR_N00066",
+    "net_calculated": "17370.16",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_067",
+    "utr": "UTR_N00067",
+    "net_calculated": "7264.42",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_068",
+    "utr": "UTR_N00068",
+    "net_calculated": "23297.88",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_069",
+    "utr": "UTR_N00069",
+    "net_calculated": "21977.79",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_070",
+    "utr": "UTR_N00070",
+    "net_calculated": "14504.42",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_071",
+    "utr": "UTR_N00071",
+    "net_calculated": "4359.63",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_072",
+    "utr": "UTR_N00072",
+    "net_calculated": "2536.69",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_073",
+    "utr": "UTR_N00073",
+    "net_calculated": "19310.26",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_074",
+    "utr": "UTR_N00074",
+    "net_calculated": "19315.14",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_075",
+    "utr": "UTR_N00075",
+    "net_calculated": "2759.31",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_076",
+    "utr": "UTR_N00076",
+    "net_calculated": "7812.18",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_077",
+    "utr": "UTR_N00077",
+    "net_calculated": "11059.68",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_078",
+    "utr": "UTR_N00078",
+    "net_calculated": "9397.85",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_079",
+    "utr": "UTR_N00079",
+    "net_calculated": "7342.53",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_080",
+    "utr": "UTR_N00080",
+    "net_calculated": "23630.83",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_081",
+    "utr": "UTR_N00081",
+    "net_calculated": "8262.30",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_082",
+    "utr": "UTR_N00082",
+    "net_calculated": "13511.42",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_083",
+    "utr": "UTR_N00083",
+    "net_calculated": "3589.25",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_084",
+    "utr": "UTR_N00084",
+    "net_calculated": "11823.23",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_085",
+    "utr": "UTR_N00085",
+    "net_calculated": "15430.05",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_086",
+    "utr": "UTR_N00086",
+    "net_calculated": "22031.49",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_087",
+    "utr": "UTR_N00087",
+    "net_calculated": "2427.33",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_088",
+    "utr": "UTR_N00088",
+    "net_calculated": "3983.71",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_089",
+    "utr": "UTR_N00089",
+    "net_calculated": "6573.12",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_090",
+    "utr": "UTR_N00090",
+    "net_calculated": "4972.81",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_091",
+    "utr": "UTR_N00091",
+    "net_calculated": "9399.80",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_092",
+    "utr": "UTR_N00092",
+    "net_calculated": "2899.91",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_093",
+    "utr": "UTR_N00093",
+    "net_calculated": "2106.09",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_094",
+    "utr": "UTR_N00094",
+    "net_calculated": "3472.08",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_095",
+    "utr": "UTR_N00095",
+    "net_calculated": "5808.60",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_096",
+    "utr": "UTR_N00096",
+    "net_calculated": "15888.96",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_097",
+    "utr": "UTR_N00097",
+    "net_calculated": "2363.86",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_098",
+    "utr": "UTR_N00098",
+    "net_calculated": "556.55",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_099",
+    "utr": "UTR_N00099",
+    "net_calculated": "15045.35",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_100",
+    "utr": "UTR_N00100",
+    "net_calculated": "22774.53",
+    "compared_candidates": [
+      {
+        "date": "2026-08-31",
+        "amount_credited": "22774.53",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_110/UTR_N00100"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact UTR, net amount, and timing SLA match"
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_dup_1",
+    "utr": "UTR_DUP_SUCCESS",
+    "net_calculated": "1464.60",
+    "compared_candidates": [
+      {
+        "date": "2026-08-31",
+        "amount_credited": "1464.60",
+        "description": "CMS/RZRPY PAYOUT WELDEDDIF/set_dup/UTR_DUP_SUCCESS"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact UTR, net amount, and timing SLA match"
+  },
+  {
+    "step": "payout_to_bank_settlement_batch",
+    "settlement_id": "set_100",
+    "batch_size": 9,
+    "sum_net_calculated": "129648.50",
+    "compared_candidates": [
+      {
+        "date": "2026-08-24",
+        "amount_credited": "129665.92",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_100/BATCH"
+      }
+    ],
+    "decision": "UNRESOLVED",
+    "reason": "Batch settlement contains payouts violating MDR contract rates"
+  },
+  {
+    "step": "payout_to_bank_settlement_batch",
+    "settlement_id": "set_101",
+    "batch_size": 10,
+    "sum_net_calculated": "111422.87",
+    "compared_candidates": [
+      {
+        "date": "2026-08-24",
+        "amount_credited": "111422.86",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_101/BATCH"
+      }
+    ],
+    "decision": "UNRESOLVED",
+    "reason": "Batch settlement contains payouts violating MDR contract rates"
+  },
+  {
+    "step": "payout_to_bank_settlement_batch",
+    "settlement_id": "set_102",
+    "batch_size": 10,
+    "sum_net_calculated": "122753.01",
+    "compared_candidates": [
+      {
+        "date": "2026-09-01",
+        "amount_credited": "122753.01",
+        "description": "CMS/RZRPY SETTLEMENT/set_102/BATCH"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Batch settlement match: Sum of 10 payouts matches bank statement batch deposit exactly"
+  },
+  {
+    "step": "payout_to_bank_settlement_batch",
+    "settlement_id": "set_103",
+    "batch_size": 10,
+    "sum_net_calculated": "92107.73",
+    "compared_candidates": [
+      {
+        "date": "2026-08-25",
+        "amount_credited": "92107.73",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_103/BATCH"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Batch settlement match: Sum of 10 payouts matches bank statement batch deposit exactly"
+  },
+  {
+    "step": "payout_to_bank_settlement_batch",
+    "settlement_id": "set_104",
+    "batch_size": 11,
+    "sum_net_calculated": "155470.21",
+    "compared_candidates": [
+      {
+        "date": "2026-08-26",
+        "amount_credited": "155470.21",
+        "description": "CMS/RZRPY PAYOUT WELDEDDIF/set_104/BATCH"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Batch settlement match: Sum of 11 payouts matches bank statement batch deposit exactly"
+  },
+  {
+    "step": "payout_to_bank_settlement_batch",
+    "settlement_id": "set_105",
+    "batch_size": 10,
+    "sum_net_calculated": "143491.74",
+    "compared_candidates": [
+      {
+        "date": "2026-08-27",
+        "amount_credited": "143491.74",
+        "description": "CMS/RZRPY PAYOUT WELDEDDIF/set_105/BATCH"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Batch settlement match: Sum of 10 payouts matches bank statement batch deposit exactly"
+  },
+  {
+    "step": "payout_to_bank_settlement_batch",
+    "settlement_id": "set_106",
+    "batch_size": 10,
+    "sum_net_calculated": "117034.25",
+    "compared_candidates": [
+      {
+        "date": "2026-08-28",
+        "amount_credited": "117034.25",
+        "description": "CMS/RZRPY SETTLEMENT/set_106/BATCH"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Batch settlement match: Sum of 10 payouts matches bank statement batch deposit exactly"
+  },
+  {
+    "step": "payout_to_bank_settlement_batch",
+    "settlement_id": "set_107",
+    "batch_size": 10,
+    "sum_net_calculated": "98397.69",
+    "compared_candidates": [
+      {
+        "date": "2026-08-31",
+        "amount_credited": "98397.69",
+        "description": "CMS/RZRPY PAYOUT WELDEDDIF/set_107/BATCH"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Batch settlement match: Sum of 10 payouts matches bank statement batch deposit exactly"
+  },
+  {
+    "step": "payout_to_bank_settlement_batch",
+    "settlement_id": "set_108",
+    "batch_size": 10,
+    "sum_net_calculated": "111262.73",
+    "compared_candidates": [
+      {
+        "date": "2026-08-31",
+        "amount_credited": "111262.73",
+        "description": "CMS/RZRPY PAYOUT WELDEDDIF/set_108/BATCH"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Batch settlement match: Sum of 10 payouts matches bank statement batch deposit exactly"
+  },
+  {
+    "step": "payout_to_bank_settlement_batch",
+    "settlement_id": "set_109",
+    "batch_size": 10,
+    "sum_net_calculated": "62514.01",
+    "compared_candidates": [
+      {
+        "date": "2026-08-31",
+        "amount_credited": "62514.01",
+        "description": "CMS/RAZORPAY SOFTWARE PRIVATE/set_109/BATCH"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Batch settlement match: Sum of 10 payouts matches bank statement batch deposit exactly"
+  },
+  {
+    "step": "bank_debit_to_refund",
+    "bank_date": "2026-08-30",
+    "amount_debited": "1500.00",
+    "utr": "UTR_DUP_SUCCESS",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_dup_1",
+        "amount": "1500.00",
+        "order_id": "ord_dup_1"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact UTR and original transaction amount match"
+  },
+  {
+    "step": "llm_payout_audit",
+    "payment_id": "pay_001",
+    "utr": "UTR_N00001",
+    "net_calculated": "20945.73",
+    "compared_candidates": [
+      {
+        "date": "2026-08-24",
+        "amount_credited": "129665.92",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_100/BATCH"
+      },
+      {
+        "date": "2026-08-24",
+        "amount_credited": "111422.86",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_101/BATCH"
+      }
+    ],
+    "decision": "ABSTAINED",
+    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
+    "llm_confidence": 0,
+    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+  },
+  {
+    "step": "llm_payout_audit",
+    "payment_id": "pay_002",
+    "utr": "UTR_N00002",
+    "net_calculated": "24213.74",
+    "compared_candidates": [
+      {
+        "date": "2026-08-24",
+        "amount_credited": "129665.92",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_100/BATCH"
+      },
+      {
+        "date": "2026-08-24",
+        "amount_credited": "111422.86",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_101/BATCH"
+      }
+    ],
+    "decision": "ABSTAINED",
+    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
+    "llm_confidence": 0,
+    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+  },
+  {
+    "step": "llm_payout_audit",
+    "payment_id": "pay_003",
+    "utr": "UTR_N00003",
+    "net_calculated": "7629.59",
+    "compared_candidates": [
+      {
+        "date": "2026-08-24",
+        "amount_credited": "129665.92",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_100/BATCH"
+      },
+      {
+        "date": "2026-08-24",
+        "amount_credited": "111422.86",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_101/BATCH"
+      }
+    ],
+    "decision": "ABSTAINED",
+    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
+    "llm_confidence": 0,
+    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+  },
+  {
+    "step": "llm_payout_audit",
+    "payment_id": "pay_004",
+    "utr": "UTR_N00004",
+    "net_calculated": "22138.89",
+    "compared_candidates": [
+      {
+        "date": "2026-08-24",
+        "amount_credited": "129665.92",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_100/BATCH"
+      },
+      {
+        "date": "2026-08-24",
+        "amount_credited": "111422.86",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_101/BATCH"
+      }
+    ],
+    "decision": "ABSTAINED",
+    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
+    "llm_confidence": 0,
+    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+  },
+  {
+    "step": "llm_payout_audit",
+    "payment_id": "pay_005",
+    "utr": "UTR_N00005",
+    "net_calculated": "19380.56",
+    "compared_candidates": [
+      {
+        "date": "2026-08-24",
+        "amount_credited": "129665.92",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_100/BATCH"
+      },
+      {
+        "date": "2026-08-24",
+        "amount_credited": "111422.86",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_101/BATCH"
+      }
+    ],
+    "decision": "ABSTAINED",
+    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
+    "llm_confidence": 0,
+    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+  },
+  {
+    "step": "llm_payout_audit",
+    "payment_id": "pay_006",
+    "utr": "UTR_N00006",
+    "net_calculated": "1423.75",
+    "compared_candidates": [
+      {
+        "date": "2026-08-24",
+        "amount_credited": "129665.92",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_100/BATCH"
+      },
+      {
+        "date": "2026-08-24",
+        "amount_credited": "111422.86",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_101/BATCH"
+      }
+    ],
+    "decision": "ABSTAINED",
+    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
+    "llm_confidence": 0,
+    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+  },
+  {
+    "step": "llm_payout_audit",
+    "payment_id": "pay_007",
+    "utr": "UTR_N00007",
+    "net_calculated": "7931.30",
+    "compared_candidates": [
+      {
+        "date": "2026-08-24",
+        "amount_credited": "129665.92",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_100/BATCH"
+      },
+      {
+        "date": "2026-08-24",
+        "amount_credited": "111422.86",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_101/BATCH"
+      }
+    ],
+    "decision": "ABSTAINED",
+    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
+    "llm_confidence": 0,
+    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+  },
+  {
+    "step": "llm_payout_audit",
+    "payment_id": "pay_008",
+    "utr": "UTR_N00008",
+    "net_calculated": "18444.20",
+    "compared_candidates": [
+      {
+        "date": "2026-08-24",
+        "amount_credited": "129665.92",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_100/BATCH"
+      },
+      {
+        "date": "2026-08-24",
+        "amount_credited": "111422.86",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_101/BATCH"
+      }
+    ],
+    "decision": "ABSTAINED",
+    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
+    "llm_confidence": 0,
+    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+  },
+  {
+    "step": "llm_payout_audit",
+    "payment_id": "pay_009",
+    "utr": "UTR_N00009",
+    "net_calculated": "7540.74",
+    "compared_candidates": [
+      {
+        "date": "2026-08-24",
+        "amount_credited": "129665.92",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_100/BATCH"
+      },
+      {
+        "date": "2026-08-24",
+        "amount_credited": "111422.86",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_101/BATCH"
+      }
+    ],
+    "decision": "ABSTAINED",
+    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
+    "llm_confidence": 0,
+    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+  },
+  {
+    "step": "llm_payout_audit",
+    "payment_id": "pay_010",
+    "utr": "UTR_N00010",
+    "net_calculated": "695.20",
+    "compared_candidates": [
+      {
+        "date": "2026-08-24",
+        "amount_credited": "129665.92",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_100/BATCH"
+      },
+      {
+        "date": "2026-08-24",
+        "amount_credited": "111422.86",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_101/BATCH"
+      }
+    ],
+    "decision": "ABSTAINED",
+    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
+    "llm_confidence": 0,
+    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+  },
+  {
+    "step": "llm_payout_audit",
+    "payment_id": "pay_011",
+    "utr": "UTR_N00011",
+    "net_calculated": "22824.33",
+    "compared_candidates": [
+      {
+        "date": "2026-08-24",
+        "amount_credited": "129665.92",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_100/BATCH"
+      },
+      {
+        "date": "2026-08-24",
+        "amount_credited": "111422.86",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_101/BATCH"
+      }
+    ],
+    "decision": "ABSTAINED",
+    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
+    "llm_confidence": 0,
+    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+  },
+  {
+    "step": "llm_payout_audit",
+    "payment_id": "pay_012",
+    "utr": "UTR_N00012",
+    "net_calculated": "9378.32",
+    "compared_candidates": [
+      {
+        "date": "2026-08-24",
+        "amount_credited": "129665.92",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_100/BATCH"
+      },
+      {
+        "date": "2026-08-24",
+        "amount_credited": "111422.86",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_101/BATCH"
+      }
+    ],
+    "decision": "ABSTAINED",
+    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
+    "llm_confidence": 0,
+    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+  },
+  {
+    "step": "llm_payout_audit",
+    "payment_id": "pay_013",
+    "utr": "UTR_N00013",
+    "net_calculated": "11256.92",
+    "compared_candidates": [
+      {
+        "date": "2026-08-24",
+        "amount_credited": "129665.92",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_100/BATCH"
+      },
+      {
+        "date": "2026-08-24",
+        "amount_credited": "111422.86",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_101/BATCH"
+      }
+    ],
+    "decision": "ABSTAINED",
+    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
+    "llm_confidence": 0,
+    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+  },
+  {
+    "step": "llm_payout_audit",
+    "payment_id": "pay_014",
+    "utr": "UTR_N00014",
+    "net_calculated": "12643.40",
+    "compared_candidates": [
+      {
+        "date": "2026-08-24",
+        "amount_credited": "129665.92",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_100/BATCH"
+      },
+      {
+        "date": "2026-08-24",
+        "amount_credited": "111422.86",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_101/BATCH"
+      }
+    ],
+    "decision": "ABSTAINED",
+    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
+    "llm_confidence": 0,
+    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+  },
+  {
+    "step": "llm_payout_audit",
+    "payment_id": "pay_015",
+    "utr": "UTR_N00015",
+    "net_calculated": "11492.23",
+    "compared_candidates": [
+      {
+        "date": "2026-08-24",
+        "amount_credited": "129665.92",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_100/BATCH"
+      },
+      {
+        "date": "2026-08-24",
+        "amount_credited": "111422.86",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_101/BATCH"
+      }
+    ],
+    "decision": "ABSTAINED",
+    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
+    "llm_confidence": 0,
+    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+  },
+  {
+    "step": "llm_payout_audit",
+    "payment_id": "pay_016",
+    "utr": "UTR_N00016",
+    "net_calculated": "1877.63",
+    "compared_candidates": [
+      {
+        "date": "2026-08-24",
+        "amount_credited": "129665.92",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_100/BATCH"
+      },
+      {
+        "date": "2026-08-24",
+        "amount_credited": "111422.86",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_101/BATCH"
+      }
+    ],
+    "decision": "ABSTAINED",
+    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
+    "llm_confidence": 0,
+    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+  },
+  {
+    "step": "llm_payout_audit",
+    "payment_id": "pay_017",
+    "utr": "UTR_N00017",
+    "net_calculated": "17644.52",
+    "compared_candidates": [
+      {
+        "date": "2026-08-24",
+        "amount_credited": "129665.92",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_100/BATCH"
+      },
+      {
+        "date": "2026-08-24",
+        "amount_credited": "111422.86",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_101/BATCH"
+      }
+    ],
+    "decision": "ABSTAINED",
+    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
+    "llm_confidence": 0,
+    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+  },
+  {
+    "step": "llm_payout_audit",
+    "payment_id": "pay_018",
+    "utr": "UTR_N00018",
+    "net_calculated": "3009.26",
+    "compared_candidates": [
+      {
+        "date": "2026-08-24",
+        "amount_credited": "129665.92",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_100/BATCH"
+      },
+      {
+        "date": "2026-08-24",
+        "amount_credited": "111422.86",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_101/BATCH"
+      }
+    ],
+    "decision": "ABSTAINED",
+    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
+    "llm_confidence": 0,
+    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+  },
+  {
+    "step": "llm_payout_audit",
+    "payment_id": "pay_019",
+    "utr": "UTR_N00019",
+    "net_calculated": "20601.06",
+    "compared_candidates": [
+      {
+        "date": "2026-08-24",
+        "amount_credited": "129665.92",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_100/BATCH"
+      },
+      {
+        "date": "2026-08-24",
+        "amount_credited": "111422.86",
+        "description": "CMS/RAZORPAY APY WELDEDDIFFA/set_101/BATCH"
+      }
+    ],
+    "decision": "ABSTAINED",
+    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
+    "llm_confidence": 0,
+    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+  }
+]
