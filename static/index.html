@@ -3,792 +3,576 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WeldedDiff Reconciliation Review</title>
+  <title>WeldedDiff — Reconciliation Review</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    /* Reset & CSS Variables */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
     :root {
-      --bg-color: #f8fafc;
-      --card-bg: rgba(255, 255, 255, 0.88);
-      --card-border: rgba(226, 232, 240, 0.85);
-      --text-main: #0f172a;
-      --text-muted: #64748b;
-      --accent: #0f766e;
-      --accent-glow: rgba(15, 118, 110, 0.15);
-      --accent-light: #f0fdf4;
-      --accent-border: #99f6e4;
-      --badge-abstained-bg: #fef2f2;
-      --badge-abstained-text: #991b1b;
-      --badge-committed-bg: #f0fdf4;
-      --badge-committed-text: #166534;
-      --badge-proposed-bg: #fffbeb;
-      --badge-proposed-text: #b45309;
-      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --bg: #0b0f1a;
+      --surface-1: #111827;
+      --surface-2: #1e293b;
+      --surface-3: rgba(30, 41, 59, 0.6);
+      --border: rgba(148, 163, 184, 0.12);
+      --border-hover: rgba(148, 163, 184, 0.25);
+      --text: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-dim: #64748b;
+      --accent: #22d3ee;
+      --accent-2: #a78bfa;
+      --accent-green: #34d399;
+      --accent-red: #f87171;
+      --accent-amber: #fbbf24;
+      --glow-accent: rgba(34, 211, 238, 0.15);
+      --glow-purple: rgba(167, 139, 250, 0.1);
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
     }
 
     body {
-      background-color: var(--bg-color);
-      color: var(--text-main);
-      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
       font-size: 14px;
       font-weight: 400;
-      line-height: 1.5;
-      padding: 2.5rem 2rem;
-      max-width: 1240px;
-      margin: 0 auto;
-      min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Dynamic Mouse Gradient Spotlight Background */
-    body::before {
-      content: "";
+    /* === MOUSE-REACTIVE GRADIENT MESH === */
+    .gradient-bg {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
+      inset: 0;
       z-index: 0;
-      background: radial-gradient(900px circle at var(--mouse-x, 50vw) var(--mouse-y, 30vh), rgba(15, 118, 110, 0.08), rgba(56, 189, 248, 0.04) 40%, transparent 80%);
-      transition: background 0.05s ease;
-    }
-
-    /* Ambient Floating Gradient Orbs */
-    .ambient-orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(90px);
       pointer-events: none;
-      z-index: 0;
-      opacity: 0.35;
-      animation: float 14s ease-in-out infinite alternate;
+      background:
+        radial-gradient(800px ellipse at var(--mx, 50%) var(--my, 30%), rgba(34, 211, 238, 0.07), transparent 50%),
+        radial-gradient(600px circle at 20% 80%, rgba(167, 139, 250, 0.06), transparent 50%),
+        radial-gradient(500px circle at 80% 20%, rgba(52, 211, 153, 0.04), transparent 50%);
     }
 
-    .orb-1 {
-      top: -50px;
-      right: 10%;
-      width: 450px;
-      height: 450px;
-      background: radial-gradient(circle, rgba(15, 118, 110, 0.25), rgba(45, 212, 191, 0.05));
-    }
+    /* === LAYOUT === */
+    .page { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 3rem 2rem 4rem; }
 
-    .orb-2 {
-      bottom: 10%;
-      left: -100px;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(56, 189, 248, 0.2), rgba(99, 102, 241, 0.05));
-      animation-duration: 18s;
-      animation-delay: -5s;
-    }
-
-    @keyframes float {
-      0% { transform: translate(0px, 0px) scale(1); }
-      50% { transform: translate(30px, 40px) scale(1.08); }
-      100% { transform: translate(-20px, 20px) scale(0.95); }
-    }
-
-    /* Content Wrapper */
-    .content-wrapper {
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Typography & Headers */
-    h1, h2, h3, h4, button, label, select {
-      font-weight: 500;
-    }
-
-    header {
-      margin-bottom: 2rem;
-      border-bottom: 1px solid var(--card-border);
-      padding-bottom: 1.5rem;
+    /* === HERO HEADER === */
+    .hero {
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
-      align-items: flex-end;
+      align-items: flex-start;
       flex-wrap: wrap;
       gap: 1rem;
     }
 
-    .header-title {
-      font-size: 1.5rem;
-      color: var(--text-main);
-      margin-bottom: 0.35rem;
-      letter-spacing: -0.02em;
+    .hero h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #f1f5f9, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .header-subtitle {
-      color: var(--text-muted);
-      font-size: 0.9rem;
+    .hero p {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      margin-top: 0.35rem;
     }
 
-    .system-status-pill {
+    .status-chip {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.35rem 0.85rem;
-      background: rgba(15, 118, 110, 0.08);
-      border: 1px solid rgba(15, 118, 110, 0.2);
+      padding: 0.4rem 0.9rem;
+      background: rgba(34, 211, 238, 0.08);
+      border: 1px solid rgba(34, 211, 238, 0.2);
       border-radius: 9999px;
       font-size: 12px;
       color: var(--accent);
       font-weight: 500;
-      backdrop-filter: blur(8px);
+      font-family: var(--mono);
     }
 
-    .pulse-dot {
-      width: 7px;
-      height: 7px;
-      background-color: var(--accent);
-      border-radius: 50%;
-      box-shadow: 0 0 0 0 rgba(15, 118, 110, 0.7);
-      animation: pulse-ring 2s infinite;
+    .pulse { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(34,211,238,0.6); }
+      70% { box-shadow: 0 0 0 8px rgba(34,211,238,0); }
+      100% { box-shadow: 0 0 0 0 rgba(34,211,238,0); }
     }
 
-    @keyframes pulse-ring {
-      0% { box-shadow: 0 0 0 0 rgba(15, 118, 110, 0.7); }
-      70% { box-shadow: 0 0 0 8px rgba(15, 118, 110, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(15, 118, 110, 0); }
-    }
-
-    /* Three-Way Visual Flow Graphic (Apple-style interactive architecture card) */
-    .flow-graphic-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.04);
+    /* === ARCHITECTURE FLOW CARD === */
+    .arch-card {
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem 2rem;
+      margin-bottom: 2.5rem;
       position: relative;
       overflow: hidden;
     }
 
-    .graphic-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
+    .arch-card::before {
+      content: "";
+      position: absolute;
+      top: -1px; left: -1px; right: -1px; bottom: -1px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(34,211,238,0.15), transparent 40%, rgba(167,139,250,0.1));
+      z-index: 0;
+      pointer-events: none;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      -webkit-mask-composite: xor;
+      padding: 1px;
     }
 
-    .graphic-title {
-      font-size: 0.85rem;
+    .arch-label {
+      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
       font-weight: 500;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
     }
 
-    .svg-flow-container {
-      width: 100%;
-      height: 140px;
-    }
+    .arch-svg { width: 100%; height: 120px; position: relative; z-index: 1; }
 
-    /* KPI Summary Cards Grid */
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.25rem;
-      margin-bottom: 2rem;
-    }
+    /* === METRICS GRID === */
+    .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
 
-    .metric-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--card-border);
-      border-left: 3px solid var(--accent);
-      border-radius: 10px;
-      padding: 1.25rem;
-      box-shadow: 0 2px 12px -2px rgba(0, 0, 0, 0.03);
-      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-      cursor: default;
-    }
+    @media (max-width: 768px) { .metrics { grid-template-columns: repeat(2, 1fr); } }
 
-    .metric-card:hover {
-      transform: translateY(-2px);
-      border-color: #cbd5e1;
-      box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.06);
-    }
-
-    .metric-label {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 0.35rem;
-    }
-
-    .metric-value {
-      font-size: 26px;
-      font-weight: 500;
-      color: var(--text-main);
-      letter-spacing: -0.02em;
-    }
-
-    /* Replay Control Bar */
-    .control-panel {
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--card-border);
-      border-radius: 10px;
+    .kpi {
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: 12px;
       padding: 1.25rem 1.5rem;
-      margin-bottom: 2rem;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      border-radius: 3px 0 0 3px;
+    }
+
+    .kpi:nth-child(1)::after { background: var(--accent-red); }
+    .kpi:nth-child(2)::after { background: var(--accent-green); }
+    .kpi:nth-child(3)::after { background: var(--accent); }
+    .kpi:nth-child(4)::after { background: var(--accent-2); }
+
+    .kpi:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .kpi-label { font-size: 12px; color: var(--text-dim); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .kpi-value { font-size: 28px; font-weight: 600; letter-spacing: -0.02em; color: var(--text); }
+
+    /* === CONTROLS === */
+    .controls {
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
-      gap: 1rem;
-      box-shadow: 0 2px 12px -2px rgba(0, 0, 0, 0.03);
-    }
-
-    .control-group {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
       flex-wrap: wrap;
+      gap: 1rem;
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      margin-bottom: 2.5rem;
     }
 
-    label {
+    .controls label { font-size: 13px; color: var(--text-dim); }
+
+    .controls select {
+      background: var(--surface-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 0.85rem;
       font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    select {
-      background-color: #ffffff;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      padding: 0.55rem 0.85rem;
-      font-size: 14px;
-      color: var(--text-main);
+      font-family: var(--mono);
       outline: none;
-      min-width: 280px;
+      min-width: 320px;
       cursor: pointer;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
-    select:focus, select:hover {
+    .controls select:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-glow);
+      box-shadow: 0 0 0 3px var(--glow-accent);
     }
 
-    .btn-primary {
-      background-color: var(--accent);
-      color: #ffffff;
-      border: none;
-      border-radius: 8px;
-      padding: 0.55rem 1.4rem;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
+    .btn {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
-      box-shadow: 0 2px 8px rgba(15, 118, 110, 0.25);
+      padding: 0.55rem 1.3rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: all 0.15s;
     }
 
-    .btn-primary:hover {
-      background-color: #0d655e;
-      box-shadow: 0 4px 12px rgba(15, 118, 110, 0.35);
+    .btn-accent {
+      background: linear-gradient(135deg, #06b6d4, #22d3ee);
+      color: #0b0f1a;
+      box-shadow: 0 2px 12px rgba(34,211,238,0.3);
     }
 
-    .btn-primary:active {
-      transform: scale(0.97);
+    .btn-accent:hover {
+      box-shadow: 0 4px 20px rgba(34,211,238,0.45);
+      transform: translateY(-1px);
     }
 
-    .btn-primary:disabled {
-      background-color: #94a3b8;
+    .btn-accent:active { transform: scale(0.97); }
+
+    .btn-accent:disabled {
+      background: var(--surface-2);
+      color: var(--text-dim);
+      box-shadow: none;
       cursor: not-allowed;
       transform: none;
-      box-shadow: none;
-      opacity: 0.85;
     }
 
-    /* Stage Progression Section */
-    .replay-container {
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 1.75rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.04);
+    /* === REPLAY STAGES === */
+    .replay-section {
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2.5rem;
     }
 
-    .section-title {
-      font-size: 1.05rem;
+    .section-heading {
+      font-size: 1.1rem;
+      font-weight: 600;
       margin-bottom: 1.25rem;
-      color: var(--text-main);
       letter-spacing: -0.01em;
     }
 
-    .stages-wrapper {
+    .stages {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      position: relative;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.85rem;
+      margin-bottom: 1.75rem;
     }
 
-    .stage-card {
-      border: 1px solid var(--card-border);
+    @media (max-width: 900px) { .stages { grid-template-columns: repeat(2, 1fr); } }
+
+    .stage {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
       border-radius: 10px;
-      padding: 1.25rem;
-      background: #ffffff;
-      transition: all 0.25s ease;
-      opacity: 0.55;
-      position: relative;
+      padding: 1.15rem;
+      opacity: 0.45;
+      transition: all 0.3s;
     }
 
-    .stage-card.active {
+    .stage.active {
       opacity: 1;
       border-color: var(--accent);
-      box-shadow: 0 4px 18px rgba(15, 118, 110, 0.12);
+      box-shadow: 0 0 24px var(--glow-accent), inset 0 0 0 1px rgba(34,211,238,0.15);
       transform: translateY(-2px);
     }
 
-    .stage-card.passed {
+    .stage.passed {
       opacity: 1;
-      border-color: #cbd5e1;
-      background: #ffffff;
+      border-color: var(--border-hover);
     }
 
-    .stage-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 0.75rem;
-    }
+    .stage-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem; }
+    .stage-num { font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
 
-    .stage-num {
-      font-size: 12px;
-      color: var(--text-muted);
-      font-family: var(--font-mono);
-    }
-
-    .stage-status {
-      font-size: 12px;
-      padding: 0.15rem 0.55rem;
+    .stage-pill {
+      font-size: 11px;
+      padding: 0.15rem 0.5rem;
       border-radius: 4px;
       font-weight: 500;
-      background-color: var(--card-border);
-      color: var(--text-muted);
-      transition: all 0.2s ease;
+      font-family: var(--mono);
+      background: var(--surface-3);
+      color: var(--text-dim);
+      transition: all 0.2s;
     }
 
-    .status-success {
-      background-color: #f0fdf4 !important;
-      color: #166534 !important;
-      border: 1px solid #bbf7d0 !important;
-    }
+    .pill-success { background: rgba(52,211,153,0.15) !important; color: var(--accent-green) !important; }
+    .pill-danger { background: rgba(248,113,113,0.15) !important; color: var(--accent-red) !important; }
+    .pill-warning { background: rgba(251,191,36,0.15) !important; color: var(--accent-amber) !important; }
 
-    .status-warning {
-      background-color: #fffbeb !important;
-      color: #b45309 !important;
-      border: 1px solid #fde68a !important;
-    }
+    .stage-title { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.3rem; color: var(--text); }
+    .stage-desc { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
 
-    .status-danger {
-      background-color: #fef2f2 !important;
-      color: #991b1b !important;
-      border: 1px solid #fecaca !important;
-    }
-
-    .stage-title {
-      font-size: 0.95rem;
-      color: var(--text-main);
-      margin-bottom: 0.35rem;
-    }
-
-    .stage-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.45;
-    }
-
-    /* Monospace Console Card */
-    .console-card {
-      background-color: #0f172a;
+    /* === CONSOLE === */
+    .console {
+      background: #030712;
+      border: 1px solid rgba(148,163,184,0.08);
       border-radius: 10px;
-      padding: 1.25rem 1.5rem;
-      color: #e2e8f0;
-      font-family: var(--font-mono);
-      font-size: 13px;
-      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+      font-family: var(--mono);
+      font-size: 12.5px;
+      overflow: hidden;
     }
 
-    .console-header {
+    .console-head {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      margin-bottom: 0.75rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid #334155;
-      color: #94a3b8;
-      font-size: 12px;
+      align-items: center;
+      padding: 0.75rem 1.25rem;
+      border-bottom: 1px solid rgba(148,163,184,0.08);
+      color: var(--text-dim);
+      font-size: 11px;
     }
 
-    .console-log {
+    .console-head .dots { display: flex; gap: 5px; }
+    .console-head .dot { width: 8px; height: 8px; border-radius: 50%; }
+    .dot-r { background: #ef4444; }
+    .dot-y { background: #eab308; }
+    .dot-g { background: #22c55e; }
+
+    .console-body {
+      padding: 1rem 1.25rem;
       max-height: 260px;
       overflow-y: auto;
-      white-space: pre-wrap;
-      word-break: break-word;
-      line-height: 1.6;
+      line-height: 1.7;
+      color: #cbd5e1;
     }
 
-    .log-line {
-      margin-bottom: 0.35rem;
-    }
+    .log-line { margin-bottom: 0.2rem; }
+    .log-ts { color: #475569; }
+    .log-ok { color: var(--accent-green); }
+    .log-err { color: var(--accent-red); }
 
-    .log-time {
-      color: #64748b;
-      margin-right: 0.5rem;
-    }
-
-    .log-highlight {
-      color: #2dd4bf;
-    }
-
-    .log-warning {
-      color: #f87171;
-    }
-
-    /* Custom Thin Scrollbars */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-
-    .console-log::-webkit-scrollbar-track {
-      background: #0f172a;
-    }
-
-    .console-log::-webkit-scrollbar-thumb {
-      background: #334155;
-      border-radius: 3px;
-    }
-
-    .console-log::-webkit-scrollbar-thumb:hover {
-      background: #475569;
-    }
-
-    .payload-box::-webkit-scrollbar-track,
-    .table-container::-webkit-scrollbar-track {
-      background: var(--bg-color);
-    }
-
-    .payload-box::-webkit-scrollbar-thumb,
-    .table-container::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 3px;
-    }
-
-    .payload-box::-webkit-scrollbar-thumb:hover,
-    .table-container::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
-    }
-
-    /* Payload Drawers */
-    .payload-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
-      margin-top: 1.25rem;
-    }
+    /* === PAYLOADS === */
+    .payloads { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.25rem; }
 
     .payload-box {
-      background-color: #ffffff;
-      border: 1px solid var(--card-border);
+      background: var(--surface-2);
+      border: 1px solid var(--border);
       border-radius: 8px;
       padding: 1rem;
-      font-family: var(--font-mono);
+      font-family: var(--mono);
       font-size: 12px;
-      max-height: 220px;
+      color: #94a3b8;
+      max-height: 200px;
       overflow-y: auto;
       white-space: pre-wrap;
     }
 
-    /* Table Container */
-    .table-container {
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
+    /* === TABLE === */
+    .table-wrap {
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: 16px;
       overflow: hidden;
-      margin-top: 2rem;
-      box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.04);
+      margin-top: 2.5rem;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 13px;
-    }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
 
     th {
-      background-color: rgba(241, 245, 249, 0.7);
-      color: var(--text-muted);
+      text-align: left;
+      background: var(--surface-2);
+      color: var(--text-dim);
       font-weight: 500;
       padding: 0.85rem 1.25rem;
-      border-bottom: 1px solid var(--card-border);
+      border-bottom: 1px solid var(--border);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     td {
-      padding: 0.9rem 1.25rem;
-      border-bottom: 1px solid var(--card-border);
-      color: var(--text-main);
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
     }
 
-    tbody tr {
-      cursor: pointer;
-      transition: background-color 0.15s ease;
-    }
+    tbody tr { transition: background 0.15s; cursor: pointer; }
+    tbody tr:hover { background: rgba(34,211,238,0.03); }
+    tr:last-child td { border-bottom: none; }
 
-    tbody tr:hover {
-      background-color: rgba(241, 245, 249, 0.6);
-    }
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    .badge {
+    .tag {
       display: inline-block;
       padding: 0.2rem 0.6rem;
       border-radius: 4px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 500;
+      font-family: var(--mono);
     }
 
-    .badge-abstained {
-      background-color: #fef2f2 !important;
-      color: #991b1b !important;
-      border: 1px solid #fecaca !important;
-    }
+    .tag-committed { background: rgba(52,211,153,0.12); color: var(--accent-green); }
+    .tag-abstained { background: rgba(248,113,113,0.12); color: var(--accent-red); }
+    .tag-proposed { background: rgba(251,191,36,0.12); color: var(--accent-amber); }
+    .tag-unresolved { background: rgba(148,163,184,0.1); color: var(--text-dim); }
 
-    .badge-committed {
-      background-color: #f0fdf4 !important;
-      color: #166534 !important;
-      border: 1px solid #bbf7d0 !important;
-    }
+    /* === SCROLLBARS === */
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
 
-    .badge-proposed {
-      background-color: #fffbeb !important;
-      color: #b45309 !important;
-      border: 1px solid #fde68a !important;
-    }
-
-    .badge-unresolved {
-      background-color: #f1f5f9 !important;
-      color: #475569 !important;
-      border: 1px solid #cbd5e1 !important;
-    }
+    /* === SPINNER === */
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spin { animation: spin 0.8s linear infinite; }
   </style>
 </head>
 <body>
 
-  <!-- Ambient Blurred Glowing Gradient Spheres -->
-  <div class="ambient-orb orb-1"></div>
-  <div class="ambient-orb orb-2"></div>
+  <div class="gradient-bg"></div>
 
-  <div class="content-wrapper">
+  <div class="page">
 
-    <!-- Header -->
-    <header>
+    <!-- HERO -->
+    <div class="hero">
       <div>
-        <h1 class="header-title">WeldedDiff Reconciliation Review</h1>
-        <p class="header-subtitle">Razorpay sandbox test-mode matching & forensic LLM audit engine</p>
+        <h1>WeldedDiff</h1>
+        <p>Three-way ledger reconciliation & forensic LLM audit engine</p>
       </div>
-      <div class="system-status-pill">
-        <span class="pulse-dot"></span>
-        <span>Reconciliation Engine Online</span>
-      </div>
-    </header>
+      <div class="status-chip"><span class="pulse"></span> engine online</div>
+    </div>
 
-    <!-- Three-Way Visual Flow Graphic (Apple-style interactive architecture card) -->
-    <div class="flow-graphic-card">
-      <div class="graphic-header">
-        <span class="graphic-title">Interactive Three-Way Reconciliation Architecture</span>
-        <span style="font-size: 12px; color: var(--text-muted);">Real-time Ledger Match Pipeline</span>
-      </div>
-      <svg class="svg-flow-container" viewBox="0 0 1000 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Connecting Curved Lines -->
-        <path d="M 180 35 C 320 35, 360 60, 480 60" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 4"/>
-        <path d="M 180 85 C 320 85, 360 60, 480 60" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 4"/>
-        <path d="M 520 60 C 660 60, 700 60, 820 60" stroke="#0f766e" stroke-width="2.5"/>
-
-        <!-- Animated Pulse Along Flow -->
-        <circle r="4" fill="#0f766e">
-          <animateMotion path="M 180 35 C 320 35, 360 60, 480 60" dur="3s" repeatCount="indefinite" />
-        </circle>
-        <circle r="4" fill="#38bdf8">
-          <animateMotion path="M 180 85 C 320 85, 360 60, 480 60" dur="3.5s" repeatCount="indefinite" />
-        </circle>
-        <circle r="4.5" fill="#2dd4bf">
-          <animateMotion path="M 520 60 C 660 60, 700 60, 820 60" dur="2.2s" repeatCount="indefinite" />
-        </circle>
-
-        <!-- Node 1: Internal Orders -->
-        <rect x="20" y="15" width="160" height="40" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
-        <text x="35" y="38" font-family="-apple-system, sans-serif" font-size="12" font-weight="500" fill="#0f172a">1. Internal Orders Ledger</text>
-
-        <!-- Node 2: Razorpay Sandbox API -->
-        <rect x="20" y="65" width="160" height="40" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
-        <text x="35" y="88" font-family="-apple-system, sans-serif" font-size="12" font-weight="500" fill="#0f172a">2. Razorpay Payouts API</text>
-
-        <!-- Center Node: WeldedDiff Match Engine -->
-        <rect x="420" y="35" width="180" height="50" rx="10" fill="#0f172a" stroke="#0f766e" stroke-width="2"/>
-        <text x="442" y="58" font-family="-apple-system, sans-serif" font-size="12" font-weight="500" fill="#ffffff">WeldedDiff Engine</text>
-        <text x="442" y="73" font-family="-apple-system, sans-serif" font-size="10" fill="#94a3b8">Deterministic + DeepSeek</text>
-
-        <!-- Node 3: Bank Feed -->
-        <rect x="820" y="38" width="160" height="44" rx="8" fill="#ffffff" stroke="#0f766e" stroke-width="1.5"/>
-        <text x="835" y="63" font-family="-apple-system, sans-serif" font-size="12" font-weight="500" fill="#0f766e">3. Bank Statement Feed</text>
+    <!-- ARCHITECTURE -->
+    <div class="arch-card">
+      <div class="arch-label">Reconciliation pipeline architecture</div>
+      <svg class="arch-svg" viewBox="0 0 1000 120" fill="none">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#22d3ee" stop-opacity="0.6"/><stop offset="100%" stop-color="#22d3ee" stop-opacity="0"/></linearGradient>
+          <linearGradient id="g2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#a78bfa" stop-opacity="0.5"/><stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/></linearGradient>
+          <linearGradient id="g3" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#34d399" stop-opacity="0.8"/><stop offset="100%" stop-color="#34d399" stop-opacity="0.1"/></linearGradient>
+        </defs>
+        <!-- Connectors -->
+        <path d="M 190 35 C 330 35 370 60 470 60" stroke="url(#g1)" stroke-width="2"/>
+        <path d="M 190 85 C 330 85 370 60 470 60" stroke="url(#g2)" stroke-width="2"/>
+        <path d="M 570 60 C 680 60 720 60 820 60" stroke="url(#g3)" stroke-width="2.5"/>
+        <!-- Pulses -->
+        <circle r="4" fill="#22d3ee" opacity="0.9"><animateMotion path="M 190 35 C 330 35 370 60 470 60" dur="2.5s" repeatCount="indefinite"/></circle>
+        <circle r="4" fill="#a78bfa" opacity="0.9"><animateMotion path="M 190 85 C 330 85 370 60 470 60" dur="3s" repeatCount="indefinite"/></circle>
+        <circle r="5" fill="#34d399" opacity="0.9"><animateMotion path="M 570 60 C 680 60 720 60 820 60" dur="2s" repeatCount="indefinite"/></circle>
+        <!-- Nodes -->
+        <rect x="20" y="18" width="170" height="36" rx="8" fill="#1e293b" stroke="#334155"/>
+        <text x="40" y="40" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#94a3b8">Internal Orders</text>
+        <rect x="20" y="68" width="170" height="36" rx="8" fill="#1e293b" stroke="#334155"/>
+        <text x="40" y="90" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#94a3b8">Razorpay Payouts</text>
+        <!-- Center Engine -->
+        <rect x="430" y="35" width="180" height="50" rx="10" fill="#111827" stroke="#22d3ee" stroke-width="1.5"/>
+        <text x="455" y="57" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="#f1f5f9">WeldedDiff Engine</text>
+        <text x="455" y="73" font-family="Inter, sans-serif" font-size="10" fill="#64748b">Deterministic + DeepSeek</text>
+        <!-- Output -->
+        <rect x="820" y="40" width="160" height="40" rx="8" fill="#1e293b" stroke="#334155"/>
+        <text x="840" y="64" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#94a3b8">Bank Statement</text>
       </svg>
     </div>
 
-    <!-- Metrics Bar -->
-    <div class="metrics-grid">
-      <div class="metric-card">
-        <div class="metric-label">Baseline match rate</div>
-        <div class="metric-value" id="kpi-baseline">16.67%</div>
+    <!-- KPIs -->
+    <div class="metrics">
+      <div class="kpi">
+        <div class="kpi-label">Baseline match</div>
+        <div class="kpi-value" id="kpi-baseline">16.67%</div>
       </div>
-      <div class="metric-card">
-        <div class="metric-label">Pipeline match rate</div>
-        <div class="metric-value" id="kpi-pipeline">81.37%</div>
+      <div class="kpi">
+        <div class="kpi-label">Pipeline match</div>
+        <div class="kpi-value" id="kpi-pipeline">81.37%</div>
       </div>
-      <div class="metric-card">
-        <div class="metric-label">Transactions reviewed</div>
-        <div class="metric-value" id="kpi-reviewed">119</div>
+      <div class="kpi">
+        <div class="kpi-label">Reviewed</div>
+        <div class="kpi-value" id="kpi-reviewed">119</div>
       </div>
-      <div class="metric-card">
-        <div class="metric-label">LLM execution cost</div>
-        <div class="metric-value" id="kpi-cost">$0.0107</div>
+      <div class="kpi">
+        <div class="kpi-label">LLM cost</div>
+        <div class="kpi-value" id="kpi-cost">$0.0107</div>
       </div>
     </div>
 
-    <!-- Control Bar -->
-    <div class="control-panel">
-      <div class="control-group">
-        <label for="tx-select">Select transaction to inspect:</label>
+    <!-- CONTROLS -->
+    <div class="controls">
+      <div style="display:flex;align-items:center;gap:0.85rem;flex-wrap:wrap;">
+        <label>Inspect transaction:</label>
         <select id="tx-select">
-          <option value="pay_012" selected>pay_012 (Hard case - LLM 95% conf, safety gate override)</option>
+          <option value="pay_012">pay_012 — LLM 95% conf, safety gate override</option>
         </select>
       </div>
-      <div class="control-group">
-        <button class="btn-primary" id="btn-replay">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="5 3 19 12 5 21 5 3"></polygon>
-          </svg>
-          <span>Replay transaction</span>
-        </button>
-      </div>
+      <button class="btn btn-accent" id="btn-replay">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <span>Replay</span>
+      </button>
     </div>
 
-    <!-- Replay Stage Flow -->
-    <div class="replay-container">
-      <h2 class="section-title">Live pipeline stage progression</h2>
-      
-      <div class="stages-wrapper">
-        <!-- Stage 1 -->
-        <div class="stage-card" id="stage-1">
-          <div class="stage-header">
-            <span class="stage-num">stage 01</span>
-            <span class="stage-status" id="status-1">pending</span>
-          </div>
+    <!-- STAGES -->
+    <div class="replay-section">
+      <h2 class="section-heading">Pipeline stage progression</h2>
+
+      <div class="stages">
+        <div class="stage" id="stage-1">
+          <div class="stage-head"><span class="stage-num">01</span><span class="stage-pill" id="status-1">pending</span></div>
           <div class="stage-title">Deterministic engine</div>
-          <div class="stage-desc">Verifies exact order ID, 2% MDR + 18% GST fee rules, and T+2 day SLA date windows.</div>
+          <div class="stage-desc">Order ID mapping, 2% MDR + 18% GST fee compliance, T+2 SLA windows.</div>
         </div>
-
-        <!-- Stage 2 -->
-        <div class="stage-card" id="stage-2">
-          <div class="stage-header">
-            <span class="stage-num">stage 02</span>
-            <span class="stage-status" id="status-2">pending</span>
-          </div>
+        <div class="stage" id="stage-2">
+          <div class="stage-head"><span class="stage-num">02</span><span class="stage-pill" id="status-2">pending</span></div>
           <div class="stage-title">LLM forensic audit</div>
-          <div class="stage-desc">Queries DeepSeek for fuzzy merchant narration mapping and batch deposit analysis.</div>
+          <div class="stage-desc">DeepSeek fuzzy narration mapping and batch deposit candidate analysis.</div>
         </div>
-
-        <!-- Stage 3 -->
-        <div class="stage-card" id="stage-3">
-          <div class="stage-header">
-            <span class="stage-num">stage 03</span>
-            <span class="stage-status" id="status-3">pending</span>
-          </div>
-          <div class="stage-title">Confidence safety gate</div>
-          <div class="stage-desc">Asserts confidence threshold ≥ 85% and checks gross amount vs bank credit discrepancy.</div>
+        <div class="stage" id="stage-3">
+          <div class="stage-head"><span class="stage-num">03</span><span class="stage-pill" id="status-3">pending</span></div>
+          <div class="stage-title">Confidence gate</div>
+          <div class="stage-desc">Threshold ≥ 85% assertion and gross vs credit amount safety check.</div>
         </div>
-
-        <!-- Stage 4 -->
-        <div class="stage-card" id="stage-4">
-          <div class="stage-header">
-            <span class="stage-num">stage 04</span>
-            <span class="stage-status" id="status-4">pending</span>
-          </div>
+        <div class="stage" id="stage-4">
+          <div class="stage-head"><span class="stage-num">04</span><span class="stage-pill" id="status-4">pending</span></div>
           <div class="stage-title">Final outcome</div>
-          <div class="stage-desc">Records final ledger state: auto-committed, proposed, or abstained exception.</div>
+          <div class="stage-desc">Committed, proposed, or abstained to exception queue.</div>
         </div>
       </div>
 
-      <!-- Monospace Console Log -->
-      <div class="console-card">
-        <div class="console-header">
-          <span>decision trace log</span>
+      <!-- Console -->
+      <div class="console">
+        <div class="console-head">
+          <div class="dots"><span class="dot dot-r"></span><span class="dot dot-y"></span><span class="dot dot-g"></span></div>
           <span id="log-ref-id">pay_012</span>
         </div>
-        <div class="console-log" id="console-output">
-          <div class="log-line"><span class="log-time">[system]</span> Ready to replay transaction trace. Click "Replay transaction" to begin execution.</div>
+        <div class="console-body" id="console-output">
+          <div class="log-line"><span class="log-ts">[sys]</span> Select a transaction and click Replay to step through the pipeline.</div>
         </div>
       </div>
 
-      <!-- Raw Payloads Drawer -->
-      <div class="payload-grid" id="payload-container" style="display: none;">
+      <div class="payloads" id="payload-container" style="display:none;">
         <div>
-          <label>Razorpay payment payload (sandbox schema):</label>
+          <label style="font-size:12px;color:var(--text-dim);display:block;margin-bottom:0.4rem;">Payment payload</label>
           <div class="payload-box" id="payout-payload"></div>
         </div>
         <div>
-          <label>Compared bank statement candidates:</label>
+          <label style="font-size:12px;color:var(--text-dim);display:block;margin-bottom:0.4rem;">Bank candidates</label>
           <div class="payload-box" id="candidates-payload"></div>
         </div>
       </div>
     </div>
 
-    <!-- Exceptions Table -->
-    <h2 class="section-title">Audit log overview</h2>
-    <div class="table-container">
+    <!-- TABLE -->
+    <h2 class="section-heading">Audit log</h2>
+    <div class="table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th>Step</th>
-            <th>Reference ID</th>
-            <th>Expected value</th>
-            <th>Matching source</th>
-            <th>Status</th>
-            <th>Reason & justification</th>
-          </tr>
-        </thead>
+        <thead><tr>
+          <th>Step</th><th>Ref ID</th><th>Expected</th><th>Source</th><th>Status</th><th>Reason</th>
+        </tr></thead>
         <tbody id="traces-table-body">
-          <tr>
-            <td colspan="6" style="text-align: center; color: var(--text-muted);">Loading traces...</td>
-          </tr>
+          <tr><td colspan="6" style="text-align:center;color:var(--text-dim);">Loading…</td></tr>
         </tbody>
       </table>
     </div>
@@ -796,279 +580,169 @@
   </div>
 
   <script>
-    let allTraces = [];
-    let activeTrace = null;
+    let allTraces = [], activeTrace = null;
 
-    // Dynamic Mouse Gradient Tracking (Apple-style interactive mouse spotlight)
-    window.addEventListener('mousemove', (e) => {
-      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
-      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+    // Mouse gradient
+    addEventListener('mousemove', e => {
+      document.documentElement.style.setProperty('--mx', ((e.clientX / innerWidth) * 100) + '%');
+      document.documentElement.style.setProperty('--my', ((e.clientY / innerHeight) * 100) + '%');
     });
 
-    // Load initial data
     async function init() {
       try {
-        const [summaryRes, tracesRes] = await Promise.all([
-          fetch('/api/summary'),
-          fetch('/api/traces')
-        ]);
-
-        if (summaryRes.ok) {
-          const summary = await summaryRes.json();
-          document.getElementById('kpi-baseline').textContent = `${summary.baseline?.baseline_bank_match_rate_pct || '16.67'}%`;
-          document.getElementById('kpi-pipeline').textContent = `${summary.advanced_payout_match_rate_pct || '81.37'}%`;
-          document.getElementById('kpi-reviewed').textContent = (summary.baseline?.baseline_matched_orders || 100) + (summary.llm_calls_made || 19);
-          document.getElementById('kpi-cost').textContent = `$${(summary.llm_processing_cost_usd || 0.0107).toFixed(4)}`;
+        const [sRes, tRes] = await Promise.all([fetch('/api/summary'), fetch('/api/traces')]);
+        if (sRes.ok) {
+          const s = await sRes.json();
+          document.getElementById('kpi-baseline').textContent = `${s.baseline?.baseline_bank_match_rate_pct ?? '16.67'}%`;
+          document.getElementById('kpi-pipeline').textContent = `${s.advanced_payout_match_rate_pct ?? '81.37'}%`;
+          document.getElementById('kpi-reviewed').textContent = (s.baseline?.baseline_matched_orders ?? 100) + (s.llm_calls_made ?? 19);
+          document.getElementById('kpi-cost').textContent = `$${(s.llm_processing_cost_usd ?? 0.0107).toFixed(4)}`;
         }
-
-        if (tracesRes.ok) {
-          allTraces = await tracesRes.json();
-          populateDropdown();
-          renderTable();
-          // Load default pay_012
-          selectTransaction('pay_012');
-        }
-      } catch (err) {
-        console.error('Failed to load initial data:', err);
-      }
+        if (tRes.ok) { allTraces = await tRes.json(); populateDropdown(); renderTable(); selectTransaction('pay_012'); }
+      } catch (e) { console.error(e); }
     }
 
     function populateDropdown() {
-      const select = document.getElementById('tx-select');
-      select.innerHTML = '';
-
-      // Get final trace for each payment ID
-      const finalTracesMap = new Map();
-      allTraces.forEach(t => {
+      const sel = document.getElementById('tx-select');
+      sel.innerHTML = '';
+      const m = new Map();
+      allTraces.forEach(t => { const id = t.payment_id || t.utr; if (id) m.set(id, t); });
+      Array.from(m.values()).filter(t => t.payment_id).forEach(t => {
         const id = t.payment_id || t.utr;
-        if (id) finalTracesMap.set(id, t);
+        const o = document.createElement('option');
+        o.value = id;
+        o.textContent = id === 'pay_012' ? 'pay_012 — LLM 95% conf, safety gate override' : `${id} — ${t.decision}`;
+        sel.appendChild(o);
       });
-
-      const payoutTraces = Array.from(finalTracesMap.values()).filter(t => t.step === 'llm_payout_audit' || t.step === 'payout_to_bank_settlement_batch' || t.payment_id);
-
-      payoutTraces.forEach(t => {
-        const id = t.payment_id || t.utr;
-        const opt = document.createElement('option');
-        opt.value = id;
-        
-        let label = `${id} (${t.decision})`;
-        if (id === 'pay_012') {
-          label = `pay_012 (Hard case - LLM 95% conf, safety gate override)`;
-        }
-        opt.textContent = label;
-        select.appendChild(opt);
-      });
-
-      // Default select pay_012 if exists
-      select.value = 'pay_012';
+      sel.value = 'pay_012';
     }
 
-    function selectTransaction(refId) {
-      const matchingTraces = allTraces.filter(t => t.payment_id === refId || t.utr === refId);
-      activeTrace = matchingTraces.length > 0 ? matchingTraces[matchingTraces.length - 1] : null;
-
-      document.getElementById('log-ref-id').textContent = refId;
+    function selectTransaction(id) {
+      const m = allTraces.filter(t => t.payment_id === id || t.utr === id);
+      activeTrace = m.length ? m[m.length - 1] : null;
+      document.getElementById('log-ref-id').textContent = id;
       resetStages();
     }
 
     function resetStages() {
       for (let i = 1; i <= 4; i++) {
-        const card = document.getElementById(`stage-${i}`);
-        const status = document.getElementById(`status-${i}`);
-        card.className = 'stage-card';
-        status.className = 'stage-status';
-        status.textContent = 'pending';
+        document.getElementById(`stage-${i}`).className = 'stage';
+        const p = document.getElementById(`status-${i}`); p.className = 'stage-pill'; p.textContent = 'pending';
       }
-
-      const consoleOut = document.getElementById('console-output');
-      consoleOut.innerHTML = `<div class="log-line"><span class="log-time">[system]</span> Selected transaction ${activeTrace ? activeTrace.payment_id || activeTrace.utr : 'pay_012'}. Click "Replay transaction" to step through execution.</div>`;
-      
+      document.getElementById('console-output').innerHTML = `<div class="log-line"><span class="log-ts">[sys]</span> Selected ${activeTrace?.payment_id || 'pay_012'}. Click Replay.</div>`;
       document.getElementById('payload-container').style.display = 'none';
     }
 
     async function runReplay() {
-      const refId = document.getElementById('tx-select').value;
-      const matchingTraces = allTraces.filter(t => t.payment_id === refId || t.utr === refId);
-      const trace = matchingTraces.length > 0 ? matchingTraces[matchingTraces.length - 1] : null;
-      if (!trace) return;
+      const id = document.getElementById('tx-select').value;
+      const m = allTraces.filter(t => t.payment_id === id || t.utr === id);
+      const tr = m.length ? m[m.length - 1] : null;
+      if (!tr) return;
 
-      const btnReplay = document.getElementById('btn-replay');
-      btnReplay.disabled = true;
-      btnReplay.innerHTML = `
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="animation: spin 1s linear infinite;">
-          <line x1="12" y1="2" x2="12" y2="6"></line>
-          <line x1="12" y1="18" x2="12" y2="22"></line>
-          <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
-          <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
-        </svg>
-        <span>Running replay...</span>
-      `;
+      const btn = document.getElementById('btn-replay');
+      btn.disabled = true;
+      btn.innerHTML = `<svg class="spin" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg><span>Running…</span>`;
 
       resetStages();
-      const consoleOut = document.getElementById('console-output');
-      consoleOut.innerHTML = '';
+      const out = document.getElementById('console-output');
+      out.innerHTML = '';
 
-      function appendLog(msg, type = '') {
-        const line = document.createElement('div');
-        line.className = 'log-line';
-        const time = new Date().toLocaleTimeString();
-        let spanClass = '';
-        if (type === 'highlight') spanClass = 'log-highlight';
-        if (type === 'warning') spanClass = 'log-warning';
-        
-        line.innerHTML = `<span class="log-time">[${time}]</span> <span class="${spanClass}">${msg}</span>`;
-        consoleOut.appendChild(line);
-        consoleOut.scrollTop = consoleOut.scrollHeight;
+      function log(msg, cls = '') {
+        const d = document.createElement('div'); d.className = 'log-line';
+        const ts = new Date().toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+        d.innerHTML = `<span class="log-ts">[${ts}]</span> <span class="${cls}">${msg}</span>`;
+        out.appendChild(d); out.scrollTop = out.scrollHeight;
       }
 
-      // Stage 1: Deterministic Engine
-      const st1Card = document.getElementById('stage-1');
-      const st1Status = document.getElementById('status-1');
-      st1Card.className = 'stage-card active';
-      st1Status.className = 'stage-status';
-      st1Status.textContent = 'running';
-      appendLog(`[deterministic engine] Inspecting payment ${refId}...`);
-      await new Promise(r => setTimeout(r, 600));
+      const wait = ms => new Promise(r => setTimeout(r, ms));
+      const conf = tr.llm_confidence !== undefined ? tr.llm_confidence : (tr.decision === 'AUTO_COMMIT' ? 100 : 0);
 
-      appendLog(`[deterministic engine] Checking exact order mapping & contract fee rules (2% MDR + 18% GST)...`);
-      appendLog(`[deterministic engine] Payout net calculated: ${trace.net_calculated || trace.amount || 'N/A'} INR.`);
-      st1Card.className = 'stage-card passed';
-      st1Status.className = 'stage-status status-success';
-      st1Status.textContent = 'checked';
+      // Stage 1
+      document.getElementById('stage-1').className = 'stage active';
+      document.getElementById('status-1').textContent = 'running';
+      log(`[engine] Inspecting ${id}…`);
+      await wait(600);
+      log(`[engine] Fee rules verified. Net: ${tr.net_calculated || tr.amount || '—'} INR`);
+      document.getElementById('stage-1').className = 'stage passed';
+      const p1 = document.getElementById('status-1'); p1.className = 'stage-pill pill-success'; p1.textContent = 'checked';
 
-      // Stage 2: LLM Forensic Audit
-      await new Promise(r => setTimeout(r, 400));
-      const st2Card = document.getElementById('stage-2');
-      const st2Status = document.getElementById('status-2');
-      st2Card.className = 'stage-card active';
-      st2Status.className = 'stage-status';
-      st2Status.textContent = 'running';
-      appendLog(`[llm auditor] Querying DeepSeek for fuzzy narration and candidate analysis...`);
-      await new Promise(r => setTimeout(r, 700));
+      // Stage 2
+      await wait(400);
+      document.getElementById('stage-2').className = 'stage active';
+      document.getElementById('status-2').textContent = 'running';
+      log(`[llm] Querying DeepSeek…`);
+      await wait(700);
+      log(`[llm] ${tr.compared_candidates?.length ?? 0} candidate(s). Score: ${conf}%`);
+      if (tr.llm_justification) log(`[llm] "${tr.llm_justification}"`, 'log-ok');
+      document.getElementById('stage-2').className = 'stage passed';
+      const p2 = document.getElementById('status-2');
+      p2.className = conf >= 85 ? 'stage-pill pill-success' : 'stage-pill pill-danger';
+      p2.textContent = `${conf}%`;
 
-      const conf = trace.llm_confidence !== undefined ? trace.llm_confidence : (trace.decision === 'AUTO_COMMIT' ? 100 : 0);
-      appendLog(`[llm auditor] Evaluated ${trace.compared_candidates ? trace.compared_candidates.length : 0} candidate(s). Assigned confidence score: ${conf}%`);
-      if (trace.llm_justification) {
-        appendLog(`[llm reasoning] "${trace.llm_justification}"`, 'highlight');
-      }
-      st2Card.className = 'stage-card passed';
-      if (conf >= 85) {
-        st2Status.className = 'stage-status status-success';
+      // Stage 3
+      await wait(500);
+      document.getElementById('stage-3').className = 'stage active';
+      document.getElementById('status-3').textContent = 'evaluating';
+      log(`[gate] Checking threshold…`);
+      await wait(600);
+      const p3 = document.getElementById('status-3');
+      if (conf >= 85 && tr.decision === 'ABSTAINED') {
+        log(`[gate] OVERRIDE: ${conf}% conf blocked by amount guard`, 'log-err');
+        p3.className = 'stage-pill pill-danger'; p3.textContent = 'override';
+      } else if (conf >= 85) {
+        log(`[gate] PASSED: ${conf}% above threshold`, 'log-ok');
+        p3.className = 'stage-pill pill-success'; p3.textContent = 'passed';
       } else {
-        st2Status.className = 'stage-status status-danger';
+        log(`[gate] ABSTAIN: ${conf}% below 85%`, 'log-err');
+        p3.className = 'stage-pill pill-danger'; p3.textContent = 'abstained';
       }
-      st2Status.textContent = `score ${conf}%`;
+      document.getElementById('stage-3').className = 'stage passed';
 
-      // Stage 3: Confidence Safety Gate
-      await new Promise(r => setTimeout(r, 500));
-      const st3Card = document.getElementById('stage-3');
-      const st3Status = document.getElementById('status-3');
-      st3Card.className = 'stage-card active';
-      st3Status.className = 'stage-status';
-      st3Status.textContent = 'evaluating';
-      appendLog(`[safety gate] Evaluating confidence threshold (≥ 85%) & amount verification...`);
-      await new Promise(r => setTimeout(r, 600));
+      // Stage 4
+      await wait(400);
+      document.getElementById('stage-4').className = 'stage active';
+      const reason = tr.reason || `confidence ${conf}% ${conf >= 85 ? 'above' : 'below'} threshold`;
+      log(`[outcome] ${tr.decision} — ${reason}`, tr.decision === 'ABSTAINED' ? 'log-err' : 'log-ok');
+      const p4 = document.getElementById('status-4');
+      if (tr.decision === 'ABSTAINED') { p4.className = 'stage-pill pill-danger'; p4.textContent = 'abstained'; }
+      else if (tr.decision === 'PROPOSED') { p4.className = 'stage-pill pill-warning'; p4.textContent = 'proposed'; }
+      else { p4.className = 'stage-pill pill-success'; p4.textContent = 'committed'; }
+      document.getElementById('stage-4').className = 'stage passed';
 
-      if (conf >= 85) {
-        if (trace.decision === 'ABSTAINED') {
-          appendLog(`[safety gate] OVERRIDE: LLM proposed match with ${conf}% confidence, but deterministic guard blocked auto-commit due to bulk amount discrepancy.`, 'warning');
-          st3Status.className = 'stage-status status-danger';
-          st3Status.textContent = 'override active';
-        } else {
-          appendLog(`[safety gate] PASSED: Confidence ${conf}% exceeds gate threshold. Candidate verified.`, 'highlight');
-          st3Status.className = 'stage-status status-success';
-          st3Status.textContent = 'passed';
-        }
-      } else {
-        appendLog(`[safety gate] ABSTAIN: Confidence ${conf}% fell below threshold. Pushed to exceptions.`, 'warning');
-        st3Status.className = 'stage-status status-danger';
-        st3Status.textContent = 'abstained';
-      }
-      st3Card.className = 'stage-card passed';
-
-      // Stage 4: Final Outcome
-      await new Promise(r => setTimeout(r, 400));
-      const st4Card = document.getElementById('stage-4');
-      const st4Status = document.getElementById('status-4');
-      st4Card.className = 'stage-card active';
-      
-      const reasonText = trace.reason ? trace.reason : (conf >= 85 ? 'Confidence score above threshold' : `Confidence score ${conf}% below 85% threshold`);
-      appendLog(`[final outcome] Recorded status: ${trace.decision} (${reasonText})`, trace.decision === 'ABSTAINED' ? 'warning' : 'highlight');
-      
-      if (trace.decision === 'ABSTAINED') {
-        st4Status.className = 'stage-status status-danger';
-        st4Status.textContent = 'abstained';
-      } else if (trace.decision === 'PROPOSED') {
-        st4Status.className = 'stage-status status-warning';
-        st4Status.textContent = 'proposed';
-      } else {
-        st4Status.className = 'stage-status status-success';
-        st4Status.textContent = 'auto-committed';
-      }
-      st4Card.className = 'stage-card passed';
-
-      // Show Payloads
       document.getElementById('payload-container').style.display = 'grid';
-      document.getElementById('payout-payload').textContent = JSON.stringify({
-        payment_id: refId,
-        utr: trace.utr || 'N/A',
-        net_calculated: trace.net_calculated || trace.amount || 'N/A',
-        entity: "payment",
-        currency: "INR"
-      }, null, 2);
+      document.getElementById('payout-payload').textContent = JSON.stringify({ payment_id: id, utr: tr.utr || '—', net: tr.net_calculated || tr.amount || '—', entity: 'payment', currency: 'INR' }, null, 2);
+      document.getElementById('candidates-payload').textContent = JSON.stringify(tr.compared_candidates || [], null, 2);
 
-      document.getElementById('candidates-payload').textContent = JSON.stringify(trace.compared_candidates || [], null, 2);
-
-      btnReplay.disabled = false;
-      btnReplay.innerHTML = `
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <polygon points="5 3 19 12 5 21 5 3"></polygon>
-        </svg>
-        <span>Replay transaction</span>
-      `;
+      btn.disabled = false;
+      btn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>Replay</span>`;
     }
 
     function renderTable() {
       const tbody = document.getElementById('traces-table-body');
       tbody.innerHTML = '';
-
-      // Group traces by ID to show final decision of each transaction
-      const finalTracesMap = new Map();
-      allTraces.forEach(t => {
-        const id = t.payment_id || t.order_id || t.utr;
-        if (id) {
-          finalTracesMap.set(id, t);
-        }
-      });
-
-      const displayTraces = Array.from(finalTracesMap.values());
-
-      displayTraces.forEach(t => {
-        const tr = document.createElement('tr');
-        
-        let badgeClass = 'badge-committed';
-        if (t.decision === 'ABSTAINED') badgeClass = 'badge-abstained';
-        if (t.decision === 'PROPOSED') badgeClass = 'badge-proposed';
-        if (t.decision === 'UNRESOLVED') badgeClass = 'badge-unresolved';
-
-        const source = t.decision === 'AUTO_COMMIT' ? 'Deterministic (100%)' : (t.decision === 'USER_APPROVED' ? 'Human-Approved (LLM)' : 'Probabilistic LLM Audit');
-
-        tr.innerHTML = `
-          <td><code>${t.step || 'reconcile'}</code></td>
-          <td><code>${t.payment_id || t.order_id || t.utr || 'N/A'}</code></td>
-          <td>${t.net_calculated || t.amount || t.amount_debited || 'N/A'} INR</td>
-          <td>${source}</td>
-          <td><span class="badge ${badgeClass}">${t.decision}</span></td>
-          <td style="max-width: 420px; white-space: normal; word-wrap: break-word;">${t.reason}</td>
-        `;
-        tbody.appendChild(tr);
+      const m = new Map();
+      allTraces.forEach(t => { const id = t.payment_id || t.order_id || t.utr; if (id) m.set(id, t); });
+      Array.from(m.values()).forEach(t => {
+        const row = document.createElement('tr');
+        let tc = 'tag-committed';
+        if (t.decision === 'ABSTAINED') tc = 'tag-abstained';
+        if (t.decision === 'PROPOSED') tc = 'tag-proposed';
+        if (t.decision === 'UNRESOLVED') tc = 'tag-unresolved';
+        const src = t.decision === 'AUTO_COMMIT' ? 'Deterministic' : t.decision === 'USER_APPROVED' ? 'Human + LLM' : 'LLM Audit';
+        row.innerHTML = `
+          <td><code style="color:var(--text-dim)">${t.step || '—'}</code></td>
+          <td><code>${t.payment_id || t.order_id || t.utr || '—'}</code></td>
+          <td>${t.net_calculated || t.amount || t.amount_debited || '—'}</td>
+          <td style="color:var(--text-dim)">${src}</td>
+          <td><span class="tag ${tc}">${t.decision}</span></td>
+          <td style="max-width:380px;white-space:normal;color:var(--text-dim)">${t.reason || '—'}</td>`;
+        tbody.appendChild(row);
       });
     }
 
-    document.getElementById('tx-select').addEventListener('change', (e) => selectTransaction(e.target.value));
+    document.getElementById('tx-select').addEventListener('change', e => selectTransaction(e.target.value));
     document.getElementById('btn-replay').addEventListener('click', runReplay);
-
-    window.addEventListener('DOMContentLoaded', init);
+    addEventListener('DOMContentLoaded', init);
   </script>
 </body>
 </html>
