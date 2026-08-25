@@ -55,7 +55,7 @@
     .kpi-num.c-teal { color: var(--teal); } .kpi-num.c-blue { color: var(--blue); }
     .kpi-desc { font-size: 12px; color: var(--gray-400); margin-top: 0.45rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
 
-    /* ── Framing note ── */
+    /* ── Framing banner ── */
     .framing-banner { margin-top: 1.75rem; background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 1rem; box-shadow: 0 1px 4px rgba(0,0,0,0.02); }
     .framing-tag { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; background: var(--teal-light); color: var(--teal); padding: 0.25rem 0.65rem; border-radius: 6px; font-family: var(--mono); flex-shrink: 0; }
     .framing-text { font-size: 13.5px; color: var(--gray-600); line-height: 1.5; }
@@ -89,7 +89,7 @@
     .upload-section h2 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.03em; text-align: center; margin-bottom: 0.5rem; }
     .upload-section .subtitle { font-size: 1.05rem; color: var(--gray-500); text-align: center; margin-bottom: 2rem; }
     .upload-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 18px; padding: 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.03); }
-    .upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem; }
+    .upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
     @media (max-width: 640px) { .upload-grid { grid-template-columns: 1fr; } }
     .dropzone {
       border: 1.5px dashed var(--gray-300); border-radius: 12px; padding: 1.35rem 1.25rem;
@@ -100,9 +100,14 @@
     .dropzone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
     .dropzone-icon-box { width: 38px; height: 38px; border-radius: 10px; background: var(--white); border: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: center; color: var(--gray-600); margin-bottom: 0.6rem; }
     .dropzone-title { font-size: 13.5px; font-weight: 600; color: var(--gray-800); margin-bottom: 0.2rem; }
-    .dropzone-sub { font-size: 12px; color: var(--gray-400); }
-    .dropzone-file { font-size: 12.5px; color: var(--blue); font-weight: 500; font-family: var(--mono); margin-top: 0.4rem; word-break: break-all; }
-    .upload-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-top: 0.5rem; border-top: 1px solid var(--gray-100); }
+    .dropzone-sub { font-size: 12px; color: var(--gray-400); margin-bottom: 0.3rem; }
+    .dropzone-file { font-size: 12.5px; color: var(--blue); font-weight: 500; font-family: var(--mono); margin-top: 0.2rem; word-break: break-all; }
+    .template-link { font-size: 11.5px; color: var(--teal); text-decoration: underline; font-family: var(--mono); position: relative; z-index: 2; cursor: pointer; }
+    .template-link:hover { color: var(--blue); }
+
+    .validation-alert { margin-bottom: 1.25rem; padding: 0.75rem 1.25rem; border-radius: 10px; background: var(--red-light); border: 1px solid #fecaca; color: var(--red); font-size: 13px; font-family: var(--mono); display: none; align-items: center; gap: 0.6rem; }
+
+    .upload-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--gray-100); }
     .upload-status { font-size: 13px; color: var(--gray-500); font-family: var(--mono); }
     .upload-status.ok { color: var(--green); } .upload-status.err { color: var(--red); }
 
@@ -143,9 +148,9 @@
     .term-dots { display: flex; gap: 5px; }
     .term-dot { width: 7px; height: 7px; border-radius: 50%; background: #4b5563; }
     .term-title { font-family: var(--mono); font-size: 11.5px; color: var(--gray-400); }
-    .term-body { padding: 1.15rem 1.35rem; font-family: var(--mono); font-size: 12.5px; color: #d1d5db; max-height: 230px; overflow-y: auto; line-height: 1.7; }
+    .term-body { padding: 1.15rem 1.35rem; font-family: var(--mono); font-size: 12.5px; color: #d1d5db; max-height: 250px; overflow-y: auto; line-height: 1.7; }
     .log-line { margin-bottom: 0.15rem; }
-    .t-dim { color: #6b7280; } .t-ok { color: #34d399; } .t-err { color: #f87171; }
+    .t-dim { color: #6b7280; } .t-ok { color: #34d399; } .t-err { color: #f87171; } .t-warn { color: #fbbf24; }
 
     .payload-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.25rem; }
     .payload-box { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 10px; padding: 0.85rem; font-family: var(--mono); font-size: 11.5px; color: var(--gray-600); max-height: 180px; overflow-y: auto; white-space: pre-wrap; }
@@ -163,8 +168,17 @@
     .anomaly-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
     .dot-err { background: var(--red); } .dot-warn { background: var(--amber); } .dot-blue { background: var(--blue); }
 
-    .table-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; flex-wrap: wrap; gap: 0.5rem; }
-    .table-count { font-size: 13px; color: var(--gray-500); font-family: var(--mono); }
+    /* ── Table Toolbar Controls ── */
+    .table-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; flex-wrap: wrap; gap: 0.75rem; }
+    .toolbar-left { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+    .table-search { background: var(--white); border: 1px solid var(--gray-300); border-radius: 8px; padding: 0.45rem 0.8rem; font-size: 13px; font-family: var(--font); color: var(--gray-800); min-width: 220px; outline: none; }
+    .table-search:focus { border-color: var(--blue); box-shadow: 0 0 0 2px rgba(37,99,235,.1); }
+    .table-filter-select { background: var(--white); border: 1px solid var(--gray-300); border-radius: 8px; padding: 0.45rem 0.8rem; font-size: 13px; font-family: var(--font); color: var(--gray-800); outline: none; cursor: pointer; }
+    .table-count { font-size: 12.5px; color: var(--gray-500); font-family: var(--mono); }
+    
+    .toolbar-right { display: flex; align-items: center; gap: 0.5rem; }
+    .export-select { background: var(--white); border: 1px solid var(--gray-200); border-radius: 8px; padding: 0.45rem 0.75rem; font-size: 12.5px; font-family: var(--mono); color: var(--gray-700); cursor: pointer; outline: none; }
+
     .table-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,.03); }
     table { width: 100%; border-collapse: collapse; font-size: 13px; }
     th { text-align: left; padding: 0.85rem 1.15rem; background: var(--gray-50); color: var(--gray-500); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--gray-200); }
@@ -329,6 +343,10 @@
       <h2 class="reveal">Run live reconciliation</h2>
       <p class="subtitle reveal reveal-d1">Upload custom CSV exports to reconcile any dataset against the engine</p>
       <div class="upload-card reveal reveal-d2">
+        <div class="validation-alert" id="validation-alert">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <span id="validation-alert-msg">CSV error</span>
+        </div>
         <div class="upload-grid">
           <div>
             <label class="payload-label">Razorpay payouts CSV</label>
@@ -339,6 +357,7 @@
               </div>
               <div class="dropzone-title">Drop Razorpay Payouts CSV</div>
               <div class="dropzone-sub">or click to browse</div>
+              <a href="/api/download_template/payouts" class="template-link" onclick="event.stopPropagation()">Download sample template ↓</a>
               <div class="dropzone-file" id="file-payouts-name"></div>
             </div>
           </div>
@@ -351,12 +370,13 @@
               </div>
               <div class="dropzone-title">Drop Bank Statement CSV</div>
               <div class="dropzone-sub">or click to browse</div>
+              <a href="/api/download_template/bank" class="template-link" onclick="event.stopPropagation()">Download sample template ↓</a>
               <div class="dropzone-file" id="file-bank-name"></div>
             </div>
           </div>
         </div>
         <div class="upload-footer">
-          <span class="upload-status" id="upload-status">Leave both empty to re-run on existing data</span>
+          <span class="upload-status" id="upload-status">Leave both empty to re-run on current engine dataset</span>
           <div style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;">
             <button class="btn btn-ghost" id="btn-reset-files">Clear files</button>
             <button class="btn btn-fill" id="btn-run-pipeline">
@@ -390,17 +410,17 @@
         <div class="stage-card" id="stage-3"><div class="stage-top"><span class="stage-no">03</span><span class="pill" id="status-3">pending</span></div><div class="stage-name">Confidence gate</div><div class="stage-info">≥ 85% threshold and gross vs bank credit safety check.</div></div>
         <div class="stage-card" id="stage-4"><div class="stage-top"><span class="stage-no">04</span><span class="pill" id="status-4">pending</span></div><div class="stage-name">Final outcome</div><div class="stage-info">Committed, proposed, or abstained to exception queue.</div></div>
       </div>
-      <div class="terminal reveal">
+      <div class="terminal reveal" id="live-terminal">
         <div class="term-chrome">
           <div class="term-dots">
             <span class="term-dot"></span>
             <span class="term-dot"></span>
             <span class="term-dot"></span>
           </div>
-          <span class="term-title" id="log-ref-id">pay_012</span>
+          <span class="term-title" id="log-ref-id">execution_stream</span>
         </div>
         <div class="term-body" id="console-output">
-          <div class="log-line"><span class="t-dim">[sys]</span> Select a transaction and click Replay.</div>
+          <div class="log-line"><span class="t-dim">[sys]</span> Select a transaction or execute pipeline to view logs.</div>
         </div>
       </div>
       <div class="payload-row" id="payload-container" style="display:none;">
@@ -424,12 +444,30 @@
         <div class="anomaly-chip"><span class="anomaly-dot dot-err"></span><span><strong>ord_dup_1/2</strong> · Duplicate collision prevented</span></div>
       </div>
 
+      <!-- Toolbar with Search, Status Filters and ERP Exporter -->
       <div class="table-toolbar reveal">
-        <span class="table-count" id="table-record-count">Loading records…</span>
-        <button class="btn btn-ghost" id="btn-export">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Export reconciled CSV
-        </button>
+        <div class="toolbar-left">
+          <input type="text" id="table-search-input" class="table-search" placeholder="Search Ref ID, UTR, Reason...">
+          <select id="table-status-filter" class="table-filter-select">
+            <option value="ALL">All decisions</option>
+            <option value="AUTO_COMMIT">AUTO_COMMIT (Matched)</option>
+            <option value="ABSTAINED">ABSTAINED (Exceptions)</option>
+            <option value="USER_APPROVED">USER_APPROVED (Overrides)</option>
+            <option value="PROPOSED">PROPOSED (Pending)</option>
+          </select>
+          <span class="table-count" id="table-record-count">Loading records…</span>
+        </div>
+        <div class="toolbar-right">
+          <select id="export-format-select" class="export-select">
+            <option value="standard">Standard CSV Report</option>
+            <option value="tally">Tally ERP Format</option>
+            <option value="zoho">Zoho Books Bank Feed</option>
+          </select>
+          <button class="btn btn-ghost" id="btn-export">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export
+          </button>
+        </div>
       </div>
 
       <div class="table-card reveal reveal-d1">
@@ -590,15 +628,36 @@
     btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>Replay</span>`;
   }
 
-  /* ── Table render ── */
+  /* ── Filtered Table render ── */
   function renderTable() {
     const tbody = document.getElementById('traces-table-body'); tbody.innerHTML = '';
     const m = new Map();
     allTraces.forEach(t => { const id = t.payment_id || t.order_id || t.utr; if (id) m.set(id, t); });
-    const records = Array.from(m.values());
-    document.getElementById('table-record-count').textContent = `${records.length} total reconciled records`;
+    const allRecords = Array.from(m.values());
+
+    const searchQuery = (document.getElementById('table-search-input')?.value || '').trim().toLowerCase();
+    const statusFilter = document.getElementById('table-status-filter')?.value || 'ALL';
+
+    const filtered = allRecords.filter(t => {
+      const id = (t.payment_id || t.order_id || t.utr || '').toLowerCase();
+      const utr = (t.utr || '').toLowerCase();
+      const reason = (t.reason || '').toLowerCase();
+      const step = (t.step || '').toLowerCase();
+
+      const matchesSearch = !searchQuery || id.includes(searchQuery) || utr.includes(searchQuery) || reason.includes(searchQuery) || step.includes(searchQuery);
+      const matchesStatus = statusFilter === 'ALL' || t.decision === statusFilter;
+
+      return matchesSearch && matchesStatus;
+    });
+
+    document.getElementById('table-record-count').textContent = `Showing ${filtered.length} of ${allRecords.length} records`;
     
-    records.forEach(t => {
+    if (filtered.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--gray-400);padding:2rem;">No matching records found.</td></tr>`;
+      return;
+    }
+
+    filtered.forEach(t => {
       const row = document.createElement('tr');
       const id = t.payment_id || t.order_id || t.utr;
       let tc = 'tag-ok';
@@ -626,6 +685,10 @@
       tbody.appendChild(row);
     });
   }
+
+  /* ── Search & Filter listeners ── */
+  document.getElementById('table-search-input').addEventListener('input', renderTable);
+  document.getElementById('table-status-filter').addEventListener('change', renderTable);
 
   /* ── HITL approve/reject ── */
   async function hitlAction(id, action, btn) {
@@ -660,9 +723,10 @@
     }
   }
 
-  /* ── CSV Export ── */
+  /* ── Multi-Format CSV / ERP Export ── */
   document.getElementById('btn-export').addEventListener('click', () => {
-    window.location.href = '/api/export';
+    const fmt = document.getElementById('export-format-select').value || 'standard';
+    window.location.href = `/api/export?format=${encodeURIComponent(fmt)}`;
   });
 
   /* ── Dropzone UX ── */
@@ -672,16 +736,30 @@
     const name = document.getElementById(nameId);
     input.addEventListener('change', () => {
       name.textContent = input.files[0]?.name || '';
+      hideAlert();
     });
     dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('dragover'); });
     dz.addEventListener('dragleave', () => dz.classList.remove('dragover'));
     dz.addEventListener('drop', e => {
       e.preventDefault(); dz.classList.remove('dragover');
-      if (e.dataTransfer.files[0]) { input.files = e.dataTransfer.files; name.textContent = e.dataTransfer.files[0].name; }
+      if (e.dataTransfer.files[0]) { 
+        input.files = e.dataTransfer.files; 
+        name.textContent = e.dataTransfer.files[0].name; 
+        hideAlert();
+      }
     });
   }
   setupDropzone('dz-payouts', 'file-payouts', 'file-payouts-name');
   setupDropzone('dz-bank', 'file-bank', 'file-bank-name');
+
+  function showAlert(msg) {
+    const a = document.getElementById('validation-alert');
+    document.getElementById('validation-alert-msg').textContent = msg;
+    a.style.display = 'flex';
+  }
+  function hideAlert() {
+    document.getElementById('validation-alert').style.display = 'none';
+  }
 
   document.getElementById('btn-reset-files').addEventListener('click', () => {
     document.getElementById('file-payouts').value = '';
@@ -690,15 +768,21 @@
     document.getElementById('file-bank-name').textContent = '';
     document.getElementById('upload-status').textContent = 'Files cleared';
     document.getElementById('upload-status').className = 'upload-status';
+    hideAlert();
   });
 
-  /* ── Run pipeline ── */
+  /* ── Run pipeline with Live Log Output ── */
   document.getElementById('btn-run-pipeline').addEventListener('click', async () => {
     const btn = document.getElementById('btn-run-pipeline');
     const status = document.getElementById('upload-status');
     btn.disabled = true;
     btn.innerHTML = `<span class="spin"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg></span><span>Running pipeline…</span>`;
-    status.textContent = 'Running reconciliation engine…'; status.className = 'upload-status';
+    status.textContent = 'Executing reconciliation engine…'; status.className = 'upload-status';
+    hideAlert();
+
+    const term = document.getElementById('console-output');
+    document.getElementById('log-ref-id').textContent = 'live_reconciliation';
+    term.innerHTML = `<div class="log-line"><span class="t-dim">[sys]</span> Starting reconciliation pipeline execution...</div>`;
 
     const fd = new FormData();
     const f1 = document.getElementById('file-payouts').files[0];
@@ -710,7 +794,23 @@
       const res = await fetch('/api/run_pipeline', { method: 'POST', body: fd });
       const data = await res.json();
       if (res.ok) {
-        status.textContent = `✓ Pipeline complete — ${data.trace_count} traces generated`; status.className = 'upload-status ok';
+        status.textContent = `✓ Pipeline complete — ${data.trace_count} records processed`; status.className = 'upload-status ok';
+        
+        // Print execution logs to terminal
+        if (data.logs && data.logs.length > 0) {
+          term.innerHTML = '';
+          data.logs.forEach(line => {
+            const d = document.createElement('div'); d.className = 'log-line';
+            let cls = 't-dim';
+            if (line.includes('MATCH') || line.includes('PASS') || line.includes('SUCCESS')) cls = 't-ok';
+            if (line.includes('WARN') || line.includes('OVERRIDE')) cls = 't-warn';
+            if (line.includes('FAIL') || line.includes('ERR')) cls = 't-err';
+            d.innerHTML = `<span class="${cls}">${line}</span>`;
+            term.appendChild(d);
+          });
+          term.scrollTop = term.scrollHeight;
+        }
+
         // Reload traces and KPIs
         const [sR, tR] = await Promise.all([fetch('/api/summary'), fetch('/api/traces')]);
         if (sR.ok) {
@@ -722,10 +822,14 @@
         }
         if (tR.ok) { allTraces = await tR.json(); populateDropdown(); renderTable(); }
       } else {
-        status.textContent = `Error: ${data.detail || 'Pipeline failed'}`; status.className = 'upload-status err';
+        const errorMsg = data.detail || 'Reconciliation failed';
+        status.textContent = `Error: ${errorMsg}`; status.className = 'upload-status err';
+        showAlert(errorMsg);
+        term.innerHTML += `<div class="log-line"><span class="t-err">[error] ${errorMsg}</span></div>`;
       }
     } catch (e) {
-      status.textContent = 'Network error — is the server running?'; status.className = 'upload-status err';
+      status.textContent = 'Network error during execution'; status.className = 'upload-status err';
+      showAlert('Network error — check server connection');
     }
 
     btn.disabled = false;
