@@ -357,25 +357,61 @@
 
     .badge {
       display: inline-block;
-      padding: 0.15rem 0.5rem;
+      padding: 0.2rem 0.55rem;
       border-radius: 4px;
       font-size: 12px;
       font-weight: 500;
     }
 
     .badge-abstained {
-      background-color: var(--badge-abstained-bg);
-      color: var(--badge-abstained-text);
+      background-color: #fef2f2 !important;
+      color: #991b1b !important;
+      border: 1px solid #fecaca !important;
     }
 
     .badge-committed {
-      background-color: var(--badge-committed-bg);
-      color: var(--badge-committed-text);
+      background-color: #f0fdf4 !important;
+      color: #166534 !important;
+      border: 1px solid #bbf7d0 !important;
     }
 
     .badge-proposed {
-      background-color: var(--badge-proposed-bg);
-      color: var(--badge-proposed-text);
+      background-color: #fffbeb !important;
+      color: #b45309 !important;
+      border: 1px solid #fde68a !important;
+    }
+
+    .badge-unresolved {
+      background-color: #f1f5f9 !important;
+      color: #475569 !important;
+      border: 1px solid #cbd5e1 !important;
+    }
+
+    .stage-status {
+      font-size: 12px;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 500;
+      background-color: var(--border-color);
+      color: var(--text-muted);
+    }
+
+    .status-success {
+      background-color: #f0fdf4 !important;
+      color: #166534 !important;
+      border: 1px solid #bbf7d0 !important;
+    }
+
+    .status-warning {
+      background-color: #fffbeb !important;
+      color: #b45309 !important;
+      border: 1px solid #fde68a !important;
+    }
+
+    .status-danger {
+      background-color: #fef2f2 !important;
+      color: #991b1b !important;
+      border: 1px solid #fecaca !important;
     }
   </style>
 </head>
@@ -548,9 +584,15 @@
       const select = document.getElementById('tx-select');
       select.innerHTML = '';
 
-      // Filter for unique payment IDs or UTRs from traces
-      const payoutTraces = allTraces.filter(t => t.step === 'llm_payout_audit' || t.step === 'payout_to_bank_settlement_batch');
-      
+      // Get final trace for each payment ID
+      const finalTracesMap = new Map();
+      allTraces.forEach(t => {
+        const id = t.payment_id || t.utr;
+        if (id) finalTracesMap.set(id, t);
+      });
+
+      const payoutTraces = Array.from(finalTracesMap.values()).filter(t => t.step === 'llm_payout_audit' || t.step === 'payout_to_bank_settlement_batch' || t.payment_id);
+
       payoutTraces.forEach(t => {
         const id = t.payment_id || t.utr;
         const opt = document.createElement('option');
@@ -569,7 +611,10 @@
     }
 
     function selectTransaction(refId) {
-      activeTrace = allTraces.find(t => t.payment_id === refId || t.utr === refId);
+      // Find the LAST (final) trace matching this refId to ensure we get the final LLM decision & reason
+      const matchingTraces = allTraces.filter(t => t.payment_id === refId || t.utr === refId);
+      activeTrace = matchingTraces.length > 0 ? matchingTraces[matchingTraces.length - 1] : null;
+
       document.getElementById('log-ref-id').textContent = refId;
       resetStages();
     }
@@ -579,6 +624,7 @@
         const card = document.getElementById(`stage-${i}`);
         const status = document.getElementById(`status-${i}`);
         card.className = 'stage-card';
+        status.className = 'stage-status';
         status.textContent = 'pending';
       }
 
@@ -590,7 +636,8 @@
 
     async function runReplay() {
       const refId = document.getElementById('tx-select').value;
-      const trace = allTraces.find(t => t.payment_id === refId || t.utr === refId);
+      const matchingTraces = allTraces.filter(t => t.payment_id === refId || t.utr === refId);
+      const trace = matchingTraces.length > 0 ? matchingTraces[matchingTraces.length - 1] : null;
       if (!trace) return;
 
       resetStages();
@@ -611,20 +658,27 @@
       }
 
       // Stage 1: Deterministic Engine
-      document.getElementById('stage-1').className = 'stage-card active';
-      document.getElementById('status-1').textContent = 'running';
+      const st1Card = document.getElementById('stage-1');
+      const st1Status = document.getElementById('status-1');
+      st1Card.className = 'stage-card active';
+      st1Status.className = 'stage-status';
+      st1Status.textContent = 'running';
       appendLog(`[deterministic engine] Inspecting payment ${refId}...`);
       await new Promise(r => setTimeout(r, 600));
 
       appendLog(`[deterministic engine] Checking exact order mapping & contract fee rules (2% MDR + 18% GST)...`);
       appendLog(`[deterministic engine] Payout net calculated: ${trace.net_calculated || trace.amount || 'N/A'} INR.`);
-      document.getElementById('stage-1').className = 'stage-card passed';
-      document.getElementById('status-1').textContent = 'checked';
+      st1Card.className = 'stage-card passed';
+      st1Status.className = 'stage-status status-success';
+      st1Status.textContent = 'checked';
 
       // Stage 2: LLM Forensic Audit
       await new Promise(r => setTimeout(r, 400));
-      document.getElementById('stage-2').className = 'stage-card active';
-      document.getElementById('status-2').textContent = 'running';
+      const st2Card = document.getElementById('stage-2');
+      const st2Status = document.getElementById('status-2');
+      st2Card.className = 'stage-card active';
+      st2Status.className = 'stage-status';
+      st2Status.textContent = 'running';
       appendLog(`[llm auditor] Querying DeepSeek for fuzzy narration and candidate analysis...`);
       await new Promise(r => setTimeout(r, 700));
 
@@ -633,36 +687,61 @@
       if (trace.llm_justification) {
         appendLog(`[llm reasoning] "${trace.llm_justification}"`, 'highlight');
       }
-      document.getElementById('stage-2').className = 'stage-card passed';
-      document.getElementById('status-2').textContent = `score ${conf}%`;
+      st2Card.className = 'stage-card passed';
+      if (conf >= 85) {
+        st2Status.className = 'stage-status status-success';
+      } else {
+        st2Status.className = 'stage-status status-danger';
+      }
+      st2Status.textContent = `score ${conf}%`;
 
       // Stage 3: Confidence Safety Gate
       await new Promise(r => setTimeout(r, 500));
-      document.getElementById('stage-3').className = 'stage-card active';
-      document.getElementById('status-3').textContent = 'evaluating';
+      const st3Card = document.getElementById('stage-3');
+      const st3Status = document.getElementById('status-3');
+      st3Card.className = 'stage-card active';
+      st3Status.className = 'stage-status';
+      st3Status.textContent = 'evaluating';
       appendLog(`[safety gate] Evaluating confidence threshold (≥ 85%) & amount verification...`);
       await new Promise(r => setTimeout(r, 600));
 
       if (conf >= 85) {
         if (trace.decision === 'ABSTAINED') {
           appendLog(`[safety gate] OVERRIDE: LLM proposed match with ${conf}% confidence, but deterministic guard blocked auto-commit due to bulk amount discrepancy.`, 'warning');
-          document.getElementById('status-3').textContent = 'override active';
+          st3Status.className = 'stage-status status-danger';
+          st3Status.textContent = 'override active';
         } else {
           appendLog(`[safety gate] PASSED: Confidence ${conf}% exceeds gate threshold. Candidate verified.`, 'highlight');
-          document.getElementById('status-3').textContent = 'passed';
+          st3Status.className = 'stage-status status-success';
+          st3Status.textContent = 'passed';
         }
       } else {
         appendLog(`[safety gate] ABSTAIN: Confidence ${conf}% fell below threshold. Pushed to exceptions.`, 'warning');
-        document.getElementById('status-3').textContent = 'abstained';
+        st3Status.className = 'stage-status status-danger';
+        st3Status.textContent = 'abstained';
       }
-      document.getElementById('stage-3').className = 'stage-card passed';
+      st3Card.className = 'stage-card passed';
 
       // Stage 4: Final Outcome
       await new Promise(r => setTimeout(r, 400));
-      document.getElementById('stage-4').className = 'stage-card active';
-      appendLog(`[final outcome] Recorded status: ${trace.decision} (${trace.reason})`, trace.decision === 'ABSTAINED' ? 'warning' : 'highlight');
-      document.getElementById('status-4').textContent = trace.decision.toLowerCase();
-      document.getElementById('stage-4').className = 'stage-card passed';
+      const st4Card = document.getElementById('stage-4');
+      const st4Status = document.getElementById('status-4');
+      st4Card.className = 'stage-card active';
+      
+      const reasonText = trace.reason ? trace.reason : (conf >= 85 ? 'Confidence score above threshold' : `Confidence score ${conf}% below 85% threshold`);
+      appendLog(`[final outcome] Recorded status: ${trace.decision} (${reasonText})`, trace.decision === 'ABSTAINED' ? 'warning' : 'highlight');
+      
+      if (trace.decision === 'ABSTAINED') {
+        st4Status.className = 'stage-status status-danger';
+        st4Status.textContent = 'abstained';
+      } else if (trace.decision === 'PROPOSED') {
+        st4Status.className = 'stage-status status-warning';
+        st4Status.textContent = 'proposed';
+      } else {
+        st4Status.className = 'stage-status status-success';
+        st4Status.textContent = 'auto-committed';
+      }
+      st4Card.className = 'stage-card passed';
 
       // Show Payloads
       document.getElementById('payload-container').style.display = 'grid';
@@ -681,8 +760,16 @@
       const tbody = document.getElementById('traces-table-body');
       tbody.innerHTML = '';
 
-      // Render top 25 traces for overview
-      const displayTraces = allTraces.slice(0, 30);
+      // Group traces by ID to show final decision of each transaction
+      const finalTracesMap = new Map();
+      allTraces.forEach(t => {
+        const id = t.payment_id || t.order_id || t.utr;
+        if (id) {
+          finalTracesMap.set(id, t);
+        }
+      });
+
+      const displayTraces = Array.from(finalTracesMap.values());
 
       displayTraces.forEach(t => {
         const tr = document.createElement('tr');
@@ -690,6 +777,7 @@
         let badgeClass = 'badge-committed';
         if (t.decision === 'ABSTAINED') badgeClass = 'badge-abstained';
         if (t.decision === 'PROPOSED') badgeClass = 'badge-proposed';
+        if (t.decision === 'UNRESOLVED') badgeClass = 'badge-unresolved';
 
         const source = t.decision === 'AUTO_COMMIT' ? 'Deterministic (100%)' : (t.decision === 'USER_APPROVED' ? 'Human-Approved (LLM)' : 'Probabilistic LLM Audit');
 
@@ -699,7 +787,7 @@
           <td>${t.net_calculated || t.amount || t.amount_debited || 'N/A'} INR</td>
           <td>${source}</td>
           <td><span class="badge ${badgeClass}">${t.decision}</span></td>
-          <td style="max-width: 380px;">${t.reason}</td>
+          <td style="max-width: 420px; white-space: normal; word-wrap: break-word;">${t.reason}</td>
         `;
         tbody.appendChild(tr);
       });
