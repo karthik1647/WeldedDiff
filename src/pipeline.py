@@ -119,7 +119,12 @@ class ReconciliationPipeline:
                     abstained_exceptions["payouts"].append(p)
             else:
                 trace["decision"] = "ABSTAINED"
-                trace["reason"] = f"LLM Match rejected or fell below confidence gate (score: {proposal.confidence_score})"
+                if "LLM Client not authenticated" in proposal.justification:
+                    trace["reason"] = "Technical Failure: LLM Client not authenticated"
+                elif "Audit execution error" in proposal.justification:
+                    trace["reason"] = f"Technical Failure: {proposal.justification}"
+                else:
+                    trace["reason"] = f"LLM Match rejected or fell below confidence gate (score: {proposal.confidence_score})"
                 abstained_exceptions["payouts"].append(p)
                 
             traces.append(trace)
@@ -191,7 +196,12 @@ class ReconciliationPipeline:
                     abstained_exceptions["bank_debits"].append(b_debit)
             else:
                 trace["decision"] = "ABSTAINED"
-                trace["reason"] = f"LLM Refund Match rejected or fell below confidence gate (score: {proposal.confidence_score})"
+                if "LLM Client not authenticated" in proposal.justification:
+                    trace["reason"] = "Technical Failure: LLM Client not authenticated"
+                elif "Audit execution error" in proposal.justification:
+                    trace["reason"] = f"Technical Failure: {proposal.justification}"
+                else:
+                    trace["reason"] = f"LLM Refund Match rejected or fell below confidence gate (score: {proposal.confidence_score})"
                 abstained_exceptions["bank_debits"].append(b_debit)
                 
             traces.append(trace)
