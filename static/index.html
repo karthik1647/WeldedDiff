@@ -21,162 +21,179 @@
       --font: 'Inter', -apple-system, sans-serif;
       --mono: 'JetBrains Mono', ui-monospace, monospace;
     }
-    body { background: var(--bg); color: var(--gray-900); font-family: var(--font); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    body { background: var(--bg); color: var(--gray-900); font-family: var(--font); font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 
     /* Mouse glow */
     .mouse-glow { position: fixed; inset: 0; z-index: 0; pointer-events: none;
-      background: radial-gradient(1200px circle at var(--mx,50%) var(--my,40%), rgba(37,99,235,0.04), rgba(13,148,136,0.02) 40%, transparent 70%); }
+      background: radial-gradient(1200px circle at var(--mx,50%) var(--my,40%), rgba(37,99,235,0.035), rgba(13,148,136,0.015) 40%, transparent 70%); }
 
     /* Scroll reveal */
-    .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1); }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-d1 { transition-delay: 0.1s; } .reveal-d2 { transition-delay: 0.2s; } .reveal-d3 { transition-delay: 0.3s; }
+    .reveal-d1 { transition-delay: 0.08s; } .reveal-d2 { transition-delay: 0.16s; } .reveal-d3 { transition-delay: 0.24s; }
 
     /* Layout */
     .page { position: relative; z-index: 1; }
     .container { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
 
     /* ── Hero ── */
-    .hero { text-align: center; padding: 7rem 2rem 5rem; }
-    .hero-badge { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 13px; font-weight: 500; color: var(--teal); margin-bottom: 1.5rem; font-family: var(--mono); }
+    .hero { text-align: center; padding: 4.5rem 2rem 2.5rem; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 13px; font-weight: 500; color: var(--teal); margin-bottom: 1.25rem; font-family: var(--mono); }
     .pulse-dot { width: 6px; height: 6px; background: var(--teal); border-radius: 50%; animation: pulse 2s infinite; }
     @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(13,148,136,.5); } 70% { box-shadow: 0 0 0 8px rgba(13,148,136,0); } 100% { box-shadow: 0 0 0 0 rgba(13,148,136,0); } }
-    .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; letter-spacing: -0.04em; line-height: 1.08; margin-bottom: 1.25rem; }
+    .hero h1 { font-size: clamp(2.4rem, 5.5vw, 4.2rem); font-weight: 700; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 1.2rem; }
     .hero h1 span { background: linear-gradient(135deg, var(--blue), var(--teal)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero p { font-size: 1.2rem; color: var(--gray-500); max-width: 580px; margin: 0 auto; }
+    .hero p { font-size: 1.15rem; color: var(--gray-500); max-width: 620px; margin: 0 auto 1.25rem; }
+    .sandbox-chip { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.35rem 0.85rem; background: var(--gray-100); border: 1px solid var(--gray-200); border-radius: 999px; font-size: 12px; color: var(--gray-600); font-family: var(--mono); }
 
     /* ── KPI strip ── */
-    .kpi-section { padding: 3rem 0 4rem; }
-    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--gray-200); border-radius: 16px; overflow: hidden; }
+    .kpi-section { padding: 2.5rem 0 3rem; border-bottom: 1px solid var(--gray-200); }
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--gray-200); border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.03); }
     @media (max-width: 768px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
-    .kpi-cell { background: var(--white); padding: 2rem 2.25rem; text-align: center; }
-    .kpi-num { font-size: 2.75rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
+    .kpi-cell { background: var(--white); padding: 1.75rem 2rem; text-align: center; }
+    .kpi-num { font-size: 2.6rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
     .kpi-num.c-teal { color: var(--teal); } .kpi-num.c-blue { color: var(--blue); }
-    .kpi-desc { font-size: 12px; color: var(--gray-400); margin-top: 0.5rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
+    .kpi-desc { font-size: 12px; color: var(--gray-400); margin-top: 0.45rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
+
+    /* ── Framing note ── */
+    .framing-banner { margin-top: 1.75rem; background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 1rem; box-shadow: 0 1px 4px rgba(0,0,0,0.02); }
+    .framing-tag { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; background: var(--teal-light); color: var(--teal); padding: 0.25rem 0.65rem; border-radius: 6px; font-family: var(--mono); flex-shrink: 0; }
+    .framing-text { font-size: 13.5px; color: var(--gray-600); line-height: 1.5; }
 
     /* ── ROI section ── */
-    .roi-section { padding: 0 0 5rem; }
-    .roi-section h2 { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; text-align: center; margin-bottom: 0.75rem; }
-    .roi-section .subtitle { font-size: 1.1rem; color: var(--gray-500); text-align: center; margin-bottom: 3rem; }
+    .roi-section { padding: 3rem 0; }
+    .roi-section h2 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.03em; text-align: center; margin-bottom: 0.5rem; }
+    .roi-section .subtitle { font-size: 1.05rem; color: var(--gray-500); text-align: center; margin-bottom: 2rem; }
     .roi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
     @media (max-width: 768px) { .roi-grid { grid-template-columns: 1fr; } }
-    .roi-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 16px; padding: 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.04); position: relative; overflow: hidden; }
-    .roi-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-    .roi-card:nth-child(1)::before { background: linear-gradient(90deg, var(--blue), var(--teal)); }
-    .roi-card:nth-child(2)::before { background: linear-gradient(90deg, var(--green), var(--teal)); }
-    .roi-card:nth-child(3)::before { background: linear-gradient(90deg, var(--amber), var(--red)); }
-    .roi-icon { font-size: 1.75rem; margin-bottom: 0.75rem; }
-    .roi-num { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; color: var(--gray-900); line-height: 1; margin-bottom: 0.35rem; }
-    .roi-label { font-size: 15px; font-weight: 600; color: var(--gray-700); margin-bottom: 0.35rem; }
-    .roi-sub { font-size: 13px; color: var(--gray-400); }
+    .roi-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 16px; padding: 1.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.03); display: flex; flex-direction: column; justify-content: space-between; }
+    .roi-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.85rem; }
+    .roi-icon-wrap { width: 38px; height: 38px; border-radius: 10px; background: var(--gray-50); border: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: center; color: var(--gray-700); }
+    .roi-num { font-size: 2.3rem; font-weight: 700; letter-spacing: -0.03em; color: var(--gray-900); line-height: 1.1; margin-bottom: 0.3rem; }
+    .roi-label { font-size: 14.5px; font-weight: 600; color: var(--gray-800); margin-bottom: 0.3rem; }
+    .roi-sub { font-size: 13px; color: var(--gray-500); line-height: 1.45; }
     .roi-bar-wrap { margin-top: 1.25rem; }
-    .roi-bar-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--gray-400); margin-bottom: 0.4rem; }
+    .roi-bar-label { display: flex; justify-content: space-between; font-size: 11.5px; color: var(--gray-400); margin-bottom: 0.4rem; font-family: var(--mono); }
     .roi-bar-track { background: var(--gray-100); border-radius: 4px; height: 6px; overflow: hidden; }
-    .roi-bar-fill { height: 100%; border-radius: 4px; transition: width 1.5s cubic-bezier(0.16,1,0.3,1); }
+    .roi-bar-fill { height: 100%; border-radius: 4px; transition: width 1.2s cubic-bezier(0.16,1,0.3,1); }
 
     /* ── Architecture ── */
-    .arch-section { padding: 5rem 0; text-align: center; }
-    .arch-section h2 { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.75rem; }
-    .arch-section .subtitle { font-size: 1.1rem; color: var(--gray-500); margin-bottom: 3rem; }
-    .arch-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 20px; padding: 3rem; box-shadow: 0 4px 24px rgba(0,0,0,0.04); }
+    .arch-section { padding: 3rem 0; text-align: center; }
+    .arch-section h2 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+    .arch-section .subtitle { font-size: 1.05rem; color: var(--gray-500); margin-bottom: 2rem; }
+    .arch-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 20px; padding: 2.5rem 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.03); }
     .arch-svg { width: 100%; height: 130px; }
 
     /* ── Upload section ── */
-    .upload-section { padding: 5rem 0; }
-    .upload-section h2 { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; text-align: center; margin-bottom: 0.75rem; }
-    .upload-section .subtitle { font-size: 1.1rem; color: var(--gray-500); text-align: center; margin-bottom: 3rem; }
-    .upload-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 20px; padding: 2.5rem; box-shadow: 0 4px 24px rgba(0,0,0,0.04); }
-    .upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+    .upload-section { padding: 3rem 0; }
+    .upload-section h2 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.03em; text-align: center; margin-bottom: 0.5rem; }
+    .upload-section .subtitle { font-size: 1.05rem; color: var(--gray-500); text-align: center; margin-bottom: 2rem; }
+    .upload-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 18px; padding: 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.03); }
+    .upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.5rem; }
     @media (max-width: 640px) { .upload-grid { grid-template-columns: 1fr; } }
     .dropzone {
-      border: 2px dashed var(--gray-200); border-radius: 14px; padding: 2rem;
+      border: 1.5px dashed var(--gray-300); border-radius: 12px; padding: 1.35rem 1.25rem;
       text-align: center; cursor: pointer; transition: all 0.2s; background: var(--gray-50);
-      position: relative;
+      position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;
     }
     .dropzone:hover, .dropzone.dragover { border-color: var(--blue); background: var(--blue-light); }
     .dropzone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-    .dropzone-icon { font-size: 2rem; margin-bottom: 0.6rem; }
-    .dropzone-title { font-size: 14px; font-weight: 600; color: var(--gray-700); margin-bottom: 0.3rem; }
+    .dropzone-icon-box { width: 38px; height: 38px; border-radius: 10px; background: var(--white); border: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: center; color: var(--gray-600); margin-bottom: 0.6rem; }
+    .dropzone-title { font-size: 13.5px; font-weight: 600; color: var(--gray-800); margin-bottom: 0.2rem; }
     .dropzone-sub { font-size: 12px; color: var(--gray-400); }
-    .dropzone-file { font-size: 13px; color: var(--blue); font-weight: 500; font-family: var(--mono); margin-top: 0.5rem; }
-    .upload-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .dropzone-file { font-size: 12.5px; color: var(--blue); font-weight: 500; font-family: var(--mono); margin-top: 0.4rem; word-break: break-all; }
+    .upload-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-top: 0.5rem; border-top: 1px solid var(--gray-100); }
     .upload-status { font-size: 13px; color: var(--gray-500); font-family: var(--mono); }
     .upload-status.ok { color: var(--green); } .upload-status.err { color: var(--red); }
 
     /* ── Buttons ── */
-    .btn { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.6rem 1.4rem; border: none; border-radius: 980px; font-size: 14px; font-weight: 500; font-family: var(--font); cursor: pointer; transition: all 0.2s; }
-    .btn-fill { background: var(--blue); color: #fff; box-shadow: 0 2px 8px rgba(37,99,235,.25); }
-    .btn-fill:hover { box-shadow: 0 4px 16px rgba(37,99,235,.35); transform: translateY(-1px); }
-    .btn-fill:active { transform: scale(0.97); }
+    .btn { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.55rem 1.3rem; border: none; border-radius: 980px; font-size: 13.5px; font-weight: 500; font-family: var(--font); cursor: pointer; transition: all 0.2s; }
+    .btn-fill { background: var(--blue); color: #fff; box-shadow: 0 2px 8px rgba(37,99,235,.2); }
+    .btn-fill:hover { box-shadow: 0 4px 14px rgba(37,99,235,.3); transform: translateY(-1px); }
+    .btn-fill:active { transform: scale(0.98); }
     .btn-fill:disabled { background: var(--gray-200); color: var(--gray-400); box-shadow: none; cursor: not-allowed; transform: none; }
-    .btn-ghost { background: transparent; border: 1px solid var(--gray-200); color: var(--gray-600); }
+    .btn-ghost { background: transparent; border: 1px solid var(--gray-200); color: var(--gray-700); }
     .btn-ghost:hover { border-color: var(--gray-400); background: var(--gray-50); }
-    .btn-green { background: var(--green); color: #fff; }
-    .btn-green:hover { background: #047857; }
-    .btn-red { background: var(--red); color: #fff; }
-    .btn-red:hover { background: #b91c1c; }
 
     /* ── Replay section ── */
-    .interactive-section { padding: 5rem 0; }
-    .interactive-section h2 { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; text-align: center; margin-bottom: 0.75rem; }
-    .interactive-section .subtitle { font-size: 1.1rem; color: var(--gray-500); text-align: center; margin-bottom: 3rem; }
-    .ctrl-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
-    .ctrl-bar label { font-size: 14px; color: var(--gray-500); }
-    .ctrl-bar select { background: var(--white); border: 1px solid var(--gray-300); border-radius: 10px; padding: 0.6rem 1rem; font-size: 14px; font-family: var(--mono); color: var(--gray-800); min-width: 340px; outline: none; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; }
+    .interactive-section { padding: 3rem 0; }
+    .interactive-section h2 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.03em; text-align: center; margin-bottom: 0.5rem; }
+    .interactive-section .subtitle { font-size: 1.05rem; color: var(--gray-500); text-align: center; margin-bottom: 2rem; }
+    .ctrl-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.75rem; }
+    .ctrl-bar label { font-size: 13.5px; color: var(--gray-600); font-weight: 500; }
+    .ctrl-bar select { background: var(--white); border: 1px solid var(--gray-300); border-radius: 10px; padding: 0.55rem 0.9rem; font-size: 13.5px; font-family: var(--mono); color: var(--gray-800); min-width: 360px; outline: none; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; }
     .ctrl-bar select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,.1); }
 
-    .stages-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+    .stages-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.75rem; }
     @media (max-width: 900px) { .stages-grid { grid-template-columns: repeat(2, 1fr); } }
-    .stage-card { background: var(--white); border: 1.5px solid var(--gray-200); border-radius: 14px; padding: 1.5rem; opacity: 0.4; transition: all 0.35s cubic-bezier(0.16,1,0.3,1); }
-    .stage-card.active { opacity: 1; border-color: var(--blue); box-shadow: 0 0 0 4px rgba(37,99,235,.08), 0 8px 24px rgba(37,99,235,.06); transform: translateY(-3px); }
+    .stage-card { background: var(--white); border: 1.5px solid var(--gray-200); border-radius: 14px; padding: 1.35rem; opacity: 0.45; transition: all 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .stage-card.active { opacity: 1; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,.08), 0 6px 20px rgba(37,99,235,.06); transform: translateY(-2px); }
     .stage-card.passed { opacity: 1; border-color: var(--gray-200); }
-    .stage-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
-    .stage-no { font-family: var(--mono); font-size: 12px; color: var(--gray-400); }
-    .pill { font-size: 11px; padding: 2px 8px; border-radius: 6px; font-weight: 500; font-family: var(--mono); background: var(--gray-100); color: var(--gray-400); transition: all 0.2s; }
+    .stage-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem; }
+    .stage-no { font-family: var(--mono); font-size: 11.5px; color: var(--gray-400); }
+    .pill { font-size: 11px; padding: 2px 8px; border-radius: 6px; font-weight: 500; font-family: var(--mono); background: var(--gray-100); color: var(--gray-500); transition: all 0.2s; }
     .pill-ok { background: var(--green-light); color: var(--green); }
     .pill-bad { background: var(--red-light); color: var(--red); }
     .pill-warn { background: var(--amber-light); color: var(--amber); }
-    .stage-name { font-size: 15px; font-weight: 600; margin-bottom: 0.3rem; }
-    .stage-info { font-size: 13px; color: var(--gray-500); line-height: 1.5; }
+    .stage-name { font-size: 14.5px; font-weight: 600; margin-bottom: 0.25rem; }
+    .stage-info { font-size: 12.5px; color: var(--gray-500); line-height: 1.45; }
 
-    .terminal { background: var(--gray-900); border-radius: 14px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,.12); }
-    .term-chrome { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1.25rem; background: var(--gray-800); }
-    .term-dots { display: flex; gap: 6px; }
-    .term-dot { width: 10px; height: 10px; border-radius: 50%; }
-    .td-r { background: #ef4444; } .td-y { background: #eab308; } .td-g { background: #22c55e; }
-    .term-title { font-family: var(--mono); font-size: 12px; color: var(--gray-400); }
-    .term-body { padding: 1.25rem 1.5rem; font-family: var(--mono); font-size: 13px; color: #d1d5db; max-height: 250px; overflow-y: auto; line-height: 1.7; }
+    .terminal { background: var(--gray-900); border-radius: 12px; overflow: hidden; box-shadow: 0 6px 24px rgba(0,0,0,.1); }
+    .term-chrome { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem; background: var(--gray-800); }
+    .term-dots { display: flex; gap: 5px; }
+    .term-dot { width: 7px; height: 7px; border-radius: 50%; background: #4b5563; }
+    .term-title { font-family: var(--mono); font-size: 11.5px; color: var(--gray-400); }
+    .term-body { padding: 1.15rem 1.35rem; font-family: var(--mono); font-size: 12.5px; color: #d1d5db; max-height: 230px; overflow-y: auto; line-height: 1.7; }
     .log-line { margin-bottom: 0.15rem; }
     .t-dim { color: #6b7280; } .t-ok { color: #34d399; } .t-err { color: #f87171; }
 
-    .payload-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
-    .payload-box { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 10px; padding: 1rem; font-family: var(--mono); font-size: 12px; color: var(--gray-600); max-height: 200px; overflow-y: auto; white-space: pre-wrap; }
-    .payload-label { font-size: 12px; color: var(--gray-400); margin-bottom: 0.4rem; display: block; }
+    .payload-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.25rem; }
+    .payload-box { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 10px; padding: 0.85rem; font-family: var(--mono); font-size: 11.5px; color: var(--gray-600); max-height: 180px; overflow-y: auto; white-space: pre-wrap; }
+    .payload-label { font-size: 11.5px; color: var(--gray-400); margin-bottom: 0.35rem; display: block; font-family: var(--mono); }
 
     /* ── Audit log table ── */
-    .table-section { padding: 5rem 0 6rem; }
-    .table-section h2 { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; text-align: center; margin-bottom: 0.75rem; }
-    .table-section .subtitle { font-size: 1.1rem; color: var(--gray-500); text-align: center; margin-bottom: 3rem; }
-    .table-toolbar { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
-    .table-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,.04); }
-    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-    th { text-align: left; padding: 1rem 1.25rem; background: var(--gray-50); color: var(--gray-400); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--gray-200); }
-    td { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--gray-100); color: var(--gray-700); vertical-align: middle; }
+    .table-section { padding: 3rem 0 4rem; }
+    .table-section h2 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.03em; text-align: center; margin-bottom: 0.5rem; }
+    .table-section .subtitle { font-size: 1.05rem; color: var(--gray-500); text-align: center; margin-bottom: 1.75rem; }
+    
+    /* ── Anomaly Strip ── */
+    .anomalies-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 1.25rem; }
+    @media (max-width: 860px) { .anomalies-strip { grid-template-columns: repeat(2, 1fr); } }
+    .anomaly-chip { background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; padding: 0.7rem 0.9rem; font-size: 12px; color: var(--gray-600); display: flex; align-items: center; gap: 0.5rem; line-height: 1.4; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+    .anomaly-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .dot-err { background: var(--red); } .dot-warn { background: var(--amber); } .dot-blue { background: var(--blue); }
+
+    .table-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; flex-wrap: wrap; gap: 0.5rem; }
+    .table-count { font-size: 13px; color: var(--gray-500); font-family: var(--mono); }
+    .table-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,.03); }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { text-align: left; padding: 0.85rem 1.15rem; background: var(--gray-50); color: var(--gray-500); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--gray-200); }
+    td { padding: 0.75rem 1.15rem; border-bottom: 1px solid var(--gray-100); color: var(--gray-700); vertical-align: middle; }
     tbody tr { transition: background 0.15s; }
     tbody tr:hover { background: var(--gray-50); }
     tr:last-child td { border-bottom: none; }
-    .tag { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; font-family: var(--mono); }
+    .tag { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; font-family: var(--mono); }
     .tag-ok { background: var(--green-light); color: var(--green); }
     .tag-err { background: var(--red-light); color: var(--red); }
     .tag-warn { background: var(--amber-light); color: var(--amber); }
     .tag-blue { background: var(--blue-light); color: var(--blue); }
     .tag-muted { background: var(--gray-100); color: var(--gray-400); }
-    .action-btns { display: flex; gap: 0.4rem; }
-    .btn-xs { padding: 0.25rem 0.65rem; font-size: 11px; border-radius: 6px; font-family: var(--mono); }
+    .action-btns { display: flex; gap: 0.35rem; }
+    .btn-xs { padding: 0.22rem 0.6rem; font-size: 11px; border-radius: 6px; font-family: var(--mono); font-weight: 500; }
     .btn-approve { background: var(--green-light); color: var(--green); border: 1px solid #a7f3d0; cursor: pointer; transition: all 0.15s; }
     .btn-approve:hover { background: var(--green); color: #fff; }
     .btn-reject { background: var(--red-light); color: var(--red); border: 1px solid #fecaca; cursor: pointer; transition: all 0.15s; }
     .btn-reject:hover { background: var(--red); color: #fff; }
+
+    /* ── Resolution Flow ── */
+    .resolution-flow { margin-top: 2rem; background: var(--white); border: 1px solid var(--gray-200); border-radius: 14px; padding: 1.5rem 1.75rem; box-shadow: 0 1px 4px rgba(0,0,0,0.02); }
+    .flow-title { font-size: 13px; font-weight: 600; color: var(--gray-700); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .flow-steps { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 1rem; }
+    @media (max-width: 768px) { .flow-steps { grid-template-columns: 1fr; text-align: center; } .flow-arrow { transform: rotate(90deg); margin: 0.25rem 0; } }
+    .flow-step { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 13px; color: var(--gray-600); }
+    .step-num { width: 24px; height: 24px; border-radius: 50%; background: var(--gray-100); border: 1px solid var(--gray-200); font-size: 11px; font-weight: 600; font-family: var(--mono); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--gray-700); }
+    .step-desc { font-size: 12px; color: var(--gray-400); }
+    .flow-arrow { color: var(--gray-300); font-weight: bold; }
 
     ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 3px; }
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -191,7 +208,11 @@
   <section class="hero reveal">
     <div class="hero-badge"><span class="pulse-dot"></span> Reconciliation engine online</div>
     <h1>Three-way ledger matching.<br><span>Down to ₹0.01.</span></h1>
-    <p>WeldedDiff reconciles internal orders, Razorpay payouts, and bank deposits — using a deterministic engine backed by a forensic LLM audit layer.</p>
+    <p>WeldedDiff reconciles internal orders, Razorpay payouts, and bank deposits using a deterministic engine backed by a forensic LLM audit layer.</p>
+    <div class="sandbox-chip">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      <span>Sandbox mode · Schema-accurate dataset · Live Razorpay API pending key verification</span>
+    </div>
   </section>
 
   <!-- ══ KPIs ══ -->
@@ -203,6 +224,10 @@
         <div class="kpi-cell"><div class="kpi-num" id="kpi-reviewed">119</div><div class="kpi-desc">Transactions reviewed</div></div>
         <div class="kpi-cell"><div class="kpi-num c-blue" id="kpi-cost">$0.0107</div><div class="kpi-desc">LLM cost (19 calls)</div></div>
       </div>
+      <div class="framing-banner reveal reveal-d1">
+        <span class="framing-tag">Risk prevention</span>
+        <span class="framing-text">19 high-ambiguity edge cases routed to DeepSeek LLM. All 19 were correctly abstained or blocked by safety gates — <strong>0 false positives committed to ledger</strong>.</span>
+      </div>
     </div>
   </section>
 
@@ -210,14 +235,20 @@
   <section class="roi-section">
     <div class="container">
       <h2 class="reveal">Enterprise efficiency metrics</h2>
-      <p class="subtitle reveal reveal-d1">What the engine delivers compared to manual reconciliation.</p>
+      <p class="subtitle reveal reveal-d1">What the engine delivers compared to manual reconciliation</p>
       <div class="roi-grid">
 
         <div class="roi-card reveal reveal-d1">
-          <div class="roi-icon">⏱</div>
-          <div class="roi-num">~14 hrs</div>
-          <div class="roi-label">Manual time saved</div>
-          <div class="roi-sub">At ~5 min per invoice audit vs 0.12s automated</div>
+          <div>
+            <div class="roi-header">
+              <div class="roi-icon-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+            </div>
+            <div class="roi-num">~14 hrs</div>
+            <div class="roi-label">Manual time saved</div>
+            <div class="roi-sub">At ~5 min per invoice audit vs 0.12s automated engine throughput</div>
+          </div>
           <div class="roi-bar-wrap">
             <div class="roi-bar-label"><span>Manual</span><span>Automated</span></div>
             <div class="roi-bar-track"><div class="roi-bar-fill" style="width:0%;background:linear-gradient(90deg,var(--blue),var(--teal));" data-target="95"></div></div>
@@ -225,24 +256,36 @@
         </div>
 
         <div class="roi-card reveal reveal-d2">
-          <div class="roi-icon">🛡</div>
-          <div class="roi-num">0.00%</div>
-          <div class="roi-label">False positive rate</div>
-          <div class="roi-sub">Deterministic safety gate prevents incorrect auto-commits</div>
+          <div>
+            <div class="roi-header">
+              <div class="roi-icon-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+            </div>
+            <div class="roi-num">0.00%</div>
+            <div class="roi-label">False positive rate</div>
+            <div class="roi-sub">Deterministic safety gate prevents incorrect auto-commits</div>
+          </div>
           <div class="roi-bar-wrap">
-            <div class="roi-bar-label"><span>Industry avg ~3%</span><span>WeldedDiff 0%</span></div>
+            <div class="roi-bar-label"><span>Industry ~3%</span><span>WeldedDiff 0%</span></div>
             <div class="roi-bar-track"><div class="roi-bar-fill" style="width:0%;background:linear-gradient(90deg,var(--green),var(--teal));" data-target="100"></div></div>
           </div>
         </div>
 
         <div class="roi-card reveal reveal-d3">
-          <div class="roi-icon">💰</div>
-          <div class="roi-num">$0.00009</div>
-          <div class="roi-label">Cost per transaction</div>
-          <div class="roi-sub">99.4% cheaper than GPT-4o equivalent processing</div>
+          <div>
+            <div class="roi-header">
+              <div class="roi-icon-wrap">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+            </div>
+            <div class="roi-num">$0.00009</div>
+            <div class="roi-label">Cost per transaction</div>
+            <div class="roi-sub">99.4% cheaper than GPT-4o equivalent processing cost</div>
+          </div>
           <div class="roi-bar-wrap">
-            <div class="roi-bar-label"><span>GPT-4o cost</span><span>DeepSeek cost</span></div>
-            <div class="roi-bar-track"><div class="roi-bar-fill" style="width:0%;background:linear-gradient(90deg,var(--amber),var(--red));" data-target="99"></div></div>
+            <div class="roi-bar-label"><span>GPT-4o</span><span>DeepSeek</span></div>
+            <div class="roi-bar-track"><div class="roi-bar-fill" style="width:0%;background:linear-gradient(90deg,var(--amber),var(--teal));" data-target="99"></div></div>
           </div>
         </div>
 
@@ -254,29 +297,27 @@
   <section class="arch-section">
     <div class="container">
       <h2 class="reveal">How it works</h2>
-      <p class="subtitle reveal reveal-d1">Three data streams. One matching engine. Real-time safety gating.</p>
+      <p class="subtitle reveal reveal-d1">Three data streams. One matching engine. Real-time safety gating</p>
       <div class="arch-card reveal reveal-d2">
         <svg class="arch-svg" viewBox="0 0 1000 130" fill="none">
-          <defs>
-            <linearGradient id="lg1"><stop offset="0%" stop-color="#2563eb" stop-opacity="0.6"/><stop offset="100%" stop-color="#2563eb" stop-opacity="0.05"/></linearGradient>
-            <linearGradient id="lg2"><stop offset="0%" stop-color="#0d9488" stop-opacity="0.6"/><stop offset="100%" stop-color="#0d9488" stop-opacity="0.05"/></linearGradient>
-            <linearGradient id="lg3"><stop offset="0%" stop-color="#059669" stop-opacity="0.8"/><stop offset="100%" stop-color="#059669" stop-opacity="0.1"/></linearGradient>
-          </defs>
-          <path d="M 195 40 C 330 40 370 65 455 65" stroke="url(#lg1)" stroke-width="2.5"/>
-          <path d="M 195 90 C 330 90 370 65 455 65" stroke="url(#lg2)" stroke-width="2.5"/>
-          <path d="M 575 65 C 690 65 730 65 815 65" stroke="url(#lg3)" stroke-width="3"/>
-          <circle r="5" fill="#2563eb" opacity="0.8"><animateMotion path="M 195 40 C 330 40 370 65 455 65" dur="2.5s" repeatCount="indefinite"/></circle>
-          <circle r="5" fill="#0d9488" opacity="0.8"><animateMotion path="M 195 90 C 330 90 370 65 455 65" dur="3s" repeatCount="indefinite"/></circle>
-          <circle r="6" fill="#059669" opacity="0.9"><animateMotion path="M 575 65 C 690 65 730 65 815 65" dur="2s" repeatCount="indefinite"/></circle>
+          <!-- Connection lines -->
+          <path d="M 195 41 C 310 41 340 65 415 65" stroke="rgba(37, 99, 235, 0.5)" stroke-width="2.5"/>
+          <path d="M 195 91 C 310 91 340 65 415 65" stroke="rgba(13, 148, 136, 0.5)" stroke-width="2.5"/>
+          <path d="M 615 65 C 720 65 750 65 825 65" stroke="rgba(5, 150, 105, 0.5)" stroke-width="2.5"/>
+          <!-- Animated pulse dots -->
+          <circle r="4.5" fill="#2563eb"><animateMotion path="M 195 41 C 310 41 340 65 415 65" dur="2.5s" repeatCount="indefinite"/></circle>
+          <circle r="4.5" fill="#0d9488"><animateMotion path="M 195 91 C 310 91 340 65 415 65" dur="3s" repeatCount="indefinite"/></circle>
+          <circle r="5" fill="#059669"><animateMotion path="M 615 65 C 720 65 750 65 825 65" dur="2s" repeatCount="indefinite"/></circle>
+          <!-- Nodes -->
           <rect x="25" y="22" width="170" height="38" rx="10" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1.5"/>
           <text x="55" y="46" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#374151">Internal Orders</text>
           <rect x="25" y="72" width="170" height="38" rx="10" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1.5"/>
           <text x="42" y="96" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#374151">Razorpay Payouts</text>
-          <rect x="430" y="38" width="170" height="54" rx="12" fill="#1f2937" stroke="#374151" stroke-width="1.5"/>
-          <text x="452" y="62" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#f9fafb">WeldedDiff</text>
-          <text x="452" y="79" font-family="Inter,sans-serif" font-size="11" fill="#9ca3af">Engine + DeepSeek LLM</text>
-          <rect x="815" y="44" width="165" height="42" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5"/>
-          <text x="838" y="70" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#059669">Bank Statement</text>
+          <rect x="415" y="36" width="200" height="58" rx="12" fill="#1f2937" stroke="#374151" stroke-width="1.5"/>
+          <text x="515" y="60" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#f9fafb">WeldedDiff</text>
+          <text x="515" y="78" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#9ca3af">Engine + DeepSeek LLM</text>
+          <rect x="825" y="44" width="155" height="42" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5"/>
+          <text x="902" y="70" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#059669">Bank Statement</text>
         </svg>
       </div>
     </div>
@@ -286,14 +327,16 @@
   <section class="upload-section">
     <div class="container">
       <h2 class="reveal">Run live reconciliation</h2>
-      <p class="subtitle reveal reveal-d1">Upload your own CSV exports to reconcile any dataset against the engine.</p>
+      <p class="subtitle reveal reveal-d1">Upload custom CSV exports to reconcile any dataset against the engine</p>
       <div class="upload-card reveal reveal-d2">
         <div class="upload-grid">
           <div>
-            <label class="payload-label">Razorpay payouts CSV (or internal orders)</label>
+            <label class="payload-label">Razorpay payouts CSV</label>
             <div class="dropzone" id="dz-payouts">
               <input type="file" id="file-payouts" accept=".csv">
-              <div class="dropzone-icon">📄</div>
+              <div class="dropzone-icon-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </div>
               <div class="dropzone-title">Drop Razorpay Payouts CSV</div>
               <div class="dropzone-sub">or click to browse</div>
               <div class="dropzone-file" id="file-payouts-name"></div>
@@ -303,7 +346,9 @@
             <label class="payload-label">Bank statement CSV</label>
             <div class="dropzone" id="dz-bank">
               <input type="file" id="file-bank" accept=".csv">
-              <div class="dropzone-icon">🏦</div>
+              <div class="dropzone-icon-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </div>
               <div class="dropzone-title">Drop Bank Statement CSV</div>
               <div class="dropzone-sub">or click to browse</div>
               <div class="dropzone-file" id="file-bank-name"></div>
@@ -328,7 +373,7 @@
   <section class="interactive-section" id="replay">
     <div class="container">
       <h2 class="reveal">Step through a real transaction</h2>
-      <p class="subtitle reveal reveal-d1">Watch a payment traverse the full pipeline — deterministic checks, LLM audit, safety gate, final verdict.</p>
+      <p class="subtitle reveal reveal-d1">Watch a payment traverse the full pipeline — deterministic checks, LLM audit, safety gate, final verdict</p>
       <div class="ctrl-bar reveal reveal-d2">
         <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
           <label>Transaction:</label>
@@ -347,7 +392,11 @@
       </div>
       <div class="terminal reveal">
         <div class="term-chrome">
-          <div class="term-dots"><span class="term-dot td-r"></span><span class="term-dot td-y"></span><span class="term-dot td-g"></span></div>
+          <div class="term-dots">
+            <span class="term-dot"></span>
+            <span class="term-dot"></span>
+            <span class="term-dot"></span>
+          </div>
           <span class="term-title" id="log-ref-id">pay_012</span>
         </div>
         <div class="term-body" id="console-output">
@@ -365,19 +414,52 @@
   <section class="table-section">
     <div class="container">
       <h2 class="reveal">Full audit log</h2>
-      <p class="subtitle reveal reveal-d1">Every transaction. Every decision. Complete provenance.</p>
+      <p class="subtitle reveal reveal-d1">Every transaction. Every decision. Complete provenance</p>
+      
+      <!-- Injected anomalies summary -->
+      <div class="anomalies-strip reveal">
+        <div class="anomaly-chip"><span class="anomaly-dot dot-warn"></span><span><strong>pay_005</strong> · MDR fee overcharge detected (>2%)</span></div>
+        <div class="anomaly-chip"><span class="anomaly-dot dot-err"></span><span><strong>pay_012</strong> · Safety gate blocked ₹102k mismatch</span></div>
+        <div class="anomaly-chip"><span class="anomaly-dot dot-warn"></span><span><strong>pay_025</strong> · SLA settlement breach (>T+2)</span></div>
+        <div class="anomaly-chip"><span class="anomaly-dot dot-err"></span><span><strong>ord_dup_1/2</strong> · Duplicate collision prevented</span></div>
+      </div>
+
       <div class="table-toolbar reveal">
+        <span class="table-count" id="table-record-count">Loading records…</span>
         <button class="btn btn-ghost" id="btn-export">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Export reconciled CSV
         </button>
       </div>
+
       <div class="table-card reveal reveal-d1">
         <table>
           <thead><tr><th>Step</th><th>Ref ID</th><th>Expected</th><th>Source</th><th>Status</th><th>Reason</th><th>Actions</th></tr></thead>
           <tbody id="traces-table-body"><tr><td colspan="7" style="text-align:center;color:var(--gray-400)">Loading…</td></tr></tbody>
         </table>
       </div>
+
+      <!-- Downstream Exception Lifecycle -->
+      <div class="resolution-flow reveal reveal-d2">
+        <div class="flow-title">Exception Resolution Lifecycle</div>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="step-num">1</div>
+            <div><strong>Variance Flagged</strong><div class="step-desc">Deterministic rule or LLM flags discrepancy</div></div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">
+            <div class="step-num">2</div>
+            <div><strong>Controller Review</strong><div class="step-desc">Interactive HITL approve/dismiss in dashboard</div></div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">
+            <div class="step-num">3</div>
+            <div><strong>Ledger Sync</strong><div class="step-desc">Approved exports to CSV / Rejected to manual recon</div></div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -386,13 +468,13 @@
   /* ── Scroll reveal ── */
   const revealObs = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
-  }, { threshold: 0.1 });
+  }, { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
   /* ── ROI bar animation ── */
   const barObs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { const f = e.target.querySelector('.roi-bar-fill'); if (f) { setTimeout(() => f.style.width = f.dataset.target + '%', 200); } barObs.unobserve(e.target); } });
-  }, { threshold: 0.3 });
+    entries.forEach(e => { if (e.isIntersecting) { const f = e.target.querySelector('.roi-bar-fill'); if (f) { setTimeout(() => f.style.width = f.dataset.target + '%', 150); } barObs.unobserve(e.target); } });
+  }, { threshold: 0.25 });
   document.querySelectorAll('.roi-card').forEach(el => barObs.observe(el));
 
   /* ── Mouse gradient ── */
@@ -513,7 +595,10 @@
     const tbody = document.getElementById('traces-table-body'); tbody.innerHTML = '';
     const m = new Map();
     allTraces.forEach(t => { const id = t.payment_id || t.order_id || t.utr; if (id) m.set(id, t); });
-    Array.from(m.values()).forEach(t => {
+    const records = Array.from(m.values());
+    document.getElementById('table-record-count').textContent = `${records.length} total reconciled records`;
+    
+    records.forEach(t => {
       const row = document.createElement('tr');
       const id = t.payment_id || t.order_id || t.utr;
       let tc = 'tag-ok';
