@@ -1,8 +1,10 @@
 import os
 import csv
+import json
 import random
 from datetime import datetime, timedelta
 from decimal import Decimal, ROUND_HALF_UP
+from src.razorpay_client import RazorpaySandboxClient
 
 # Define project directories
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -14,6 +16,7 @@ def to_decimal(val):
 
 def generate_synthetic_data(num_records=100, seed=42):
     random.seed(seed)
+    rzp_client = RazorpaySandboxClient()
     
     # Base datetime for starting transactions
     start_time = datetime(2026, 8, 20, 10, 0, 0)

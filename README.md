@@ -1,99 +1,106 @@
-# WeldedDiff: Hybrid Transaction Reconciliation & Forensic Audit Engine
+# WeldedDiff: Three-Way Ledger Reconciliation & Forensic Auditor
 
-WeldedDifff is a transaction reconciliation and audit engine designed for multi-gateway merchant settlements. It matches transactions across internal order ledgers, gateway reports, and bank statements using a hybrid deterministic-probabilistic pipeline.
+WeldedDiff is an automated three-way ledger reconciliation system built for the Razorpay AI Buildathon (AI Finance Controller Track). It matches internal e-commerce sales records against payment gateway settlement ledgers and bank statement deposit feeds down to 0.01 INR decimal precision.
 
----
-
-## The Problem: Fee Leakage in Payment Settlements
-
-Payment gateways settle transactions net of Merchant Discount Rates (MDR), taxes, and chargeback adjustments. Due to system discrepancies, billing misclassifications occur frequently (e.g., misclassifying a debit card as a corporate credit card). 
-
-* **Revenue Leakage:** Industry data from EY indicates that businesses lose between 1% and 5% of annual revenue to billing and payment discrepancies.
-* **The Scale Problem:** High-volume merchants processing 50,000+ transactions monthly cannot manually verify fee percentages and tax calculations at the transaction level, resulting in unrecovered overcharges.
+The system uses a two-phase architecture:
+1. **Deterministic Matching Engine:** Resolves exact order-to-payout mappings, contract fee compliance (2% MDR + 18% GST), and T+2 day settlement SLA windows.
+2. **Probabilistic Forensic Auditor (LLM Layer):** Uses DeepSeek to evaluate fuzzy bank statement narrations, UTR cross-references, and batch settlement aggregations for unmatched records.
 
 ---
 
-## System Architecture and Pipeline Flow
+### Data Layer Architecture & Razorpay API Integration
 
-WeldedDifff processes reconciliation via a single, automated matching pipeline:
+#### Schema-Accurate Sandbox Data
+The transaction generator is built against authentic Razorpay API response schemas (`/v1/orders`, `/v1/payments`, `/v1/settlements`). 
 
-```
-[Raw CSV Inputs]
-       │
-       ▼
-[Deterministic Matching Engine] ──(Matched 90%)──► [Settled Ledger (Auto-Commit)]
-       │
-  (Unresolved 10%)
-       │
-       ▼
-[LLM Matching Resolution] (Direct API Call)
-       │
-       ▼
-[Confidence Gate (Score >= 85)]
-       ├── (Passes Gate) ──► [Proposed Matches (Pending Human Review)]
-       └── (Fails Gate)  ──► [Abstained Exceptions (Requires Manual Audit)]
-```
+During development, real test-mode API key generation on Razorpay's Dashboard was blocked by an account KYC verification flow. To maintain execution without blocking, the data pipeline uses a local Razorpay Sandbox Mock Client (`src/razorpay_client.py`). This client generates schema-accurate JSON payloads matching Razorpay's exact REST API response structures (including `entity`, `amount` in paise, `fee`, `tax`, `utr`, `status`, and `created_at` timestamps).
 
-### The Three Matching Phases
-1. **Deterministic Phase:** The core engine matches records using strict mathematical invariants. It groups split payments, accounts for timing delays (up to T+2 days), and matches bulk settlements. Matches resolved with 100% mathematical certainty are auto-committed.
-2. **Probabilistic Phase:** Unresolved exceptions (such as fuzzy merchant descriptors or fee discrepancies) are extracted. The system queries the LLM (Gemini 2.5 Flash) via direct API calls to evaluate similarity and contextual data (e.g., customer communication history).
-3. **Confidence Gate:** The LLM returns a structured JSON containing a confidence score and a traceable justification. A deterministic gate filters proposals. If the score is >= 85, the match is routed to the human-in-the-loop review queue. If below, the engine abstains.
+* **Razorpay API Schema Features:** Order ID schemas (`ord_...`), Payment ID schemas (`pay_...`), contractual fee calculations (2% MDR + 18% GST), and settlement UTR references.
+* **Injected Anomalies (Synthetic Noise):**
+  * **Batch Settlement Aggregations:** 10 individual payments consolidated into 1 bank statement deposit line (~111,422.86 INR).
+  * **MDR Fee Overcharges:** Payment `pay_005` charged 3.0% MDR instead of the contractual 2.0%.
+  * **Timing SLA Delays:** Friday payments (`pay_025`) settling Tuesday in the bank feed.
+  * **Split Checkouts:** Order `ord_040` split into two 50% payments (`pay_040_a` and `pay_040_b`).
 
 ---
 
-## Evaluation: Naive Baseline vs. Advanced Pipeline
+### Deterministic Safety Guardrails (False-Positive Prevention)
 
-The engine evaluates performance against a naive exact-matching baseline:
-* **Naive Baseline Matcher:** Restricts matching to exact matches on transaction IDs, UTRs, and matching amounts.
-* **Equilibrium Advanced Engine:** Applies fuzzy logic, batch grouping, split payouts, and LLM matching.
+A critical requirement of financial reconciliation is preventing false-positive commits. WeldedDiff enforces a **Confidence Safety Gate** (threshold $\ge 85\%$) and a **Deterministic Safety Override**.
 
-### Planted Edge Case: Duplicate Transaction & Refund
-To test pipeline boundaries, the dataset contains a duplicate payment scenario:
-* A customer initiates two attempts for 1,500.00 INR. One succeeds (`ord_dup_1`), and one fails (`ord_dup_2`). The successful transaction is later refunded.
-* The naive baseline fails to reconcile the refund debit and leaves `ord_dup_2` unresolved.
-* WeldedDifff auto-resolves the failed order, matches the initial credit, and links the refund debit to the original payout using temporal analysis and UTR logging.
+#### Case Study: Payment `pay_012`
+* **Scenario:** Payment `pay_012` has an expected net payout of 9,378.32 INR. The bank statement contains a bulk deposit line of 111,422.86 INR with narration `CMS/RAZORPAY APY WELDEDDIFFA/set_101/BATCH`.
+* **LLM Evaluation:** DeepSeek detected matching settlement ID `set_101` in the narration and proposed a match with **95% confidence**.
+* **Safety Gate Override:** The deterministic safety check intercepted the proposal. Because the bank credit amount (111,422.86 INR) differed from the single payout net (9,378.32 INR) by more than 100.00 INR and lacked a explicit payment UTR, the safety filter overrode the LLM's 95% confidence score and forced an **Abstained** status.
+* **Result:** `pay_012` was safely pushed to the Exception queue for manual operational review rather than corrupting the ledger.
 
 ---
 
-## Known Limitation
-If the bank statement narrative is completely stripped of descriptive metadata (e.g., containing only a generic sequence number with no merchant or customer indicators) and does not map to a gateway-provided UTR, the engine cannot resolve the link. In these cases, the pipeline will always choose to abstain to prevent ledger corruption.
+### Performance Metrics (Dataset of 102 Payouts)
+
+* **Total Transactions Reviewed:** 119 (100 orders + 19 LLM audit calls)
+* **Naive Baseline Match Rate:** 1.96% (2 / 102 payouts matched)
+* **Pipeline Match Rate (Deterministic + LLM):** 81.37% (83 / 102 payouts matched)
+* **Auto-Committed Records:** 84 (83 payouts + 1 refund debit)
+* **Abstained Exceptions:** 19 (18 low-confidence batch deposits + 1 safety gate override)
+* **LLM Audit Execution Cost:** $0.0106 USD across 19 API calls (9,213 input tokens, 2,530 output tokens)
 
 ---
 
-## Running the Project
+### Honest Technical Limitations
 
-### 1. Installation
-Install dependencies via pip:
-```bash
-pip install -r requirements.txt
+1. **Batch Settlement Disambiguation:** Bank clearing house transfers (NEFT/RTGS) aggregate multiple payouts into single bulk credits. When bank statements contain only batch IDs (`set_101/BATCH`) without itemized UTRs, the LLM layer correctly abstains from 1-to-1 matching to prevent ledger corruption.
+2. **Sandbox API Execution:** The pipeline runs against local schema-accurate Razorpay Sandbox data rather than authenticated live API endpoints due to merchant KYC verification constraints.
+
+---
+
+### Project Structure & File Inventory
+
+```
+WeldedDiff/
+├── server.py                        # FastAPI web backend server serving REST API & static SPA
+├── static/
+│   └── index.html                   # HTML/CSS/JS frontend with live stage-by-stage transaction replay
+├── src/
+│   ├── razorpay_client.py           # Authentic Razorpay API Sandbox Mock client
+│   ├── generator.py                 # Transaction dataset & anomaly generator
+│   ├── engine.py                    # Deterministic matching & fee calculation engine
+│   ├── auditor.py                   # DeepSeek LLM forensic auditor (structured JSON outputs)
+│   ├── pipeline.py                  # Orchestration pipeline with safety gate enforcement
+│   └── utils.py                     # Decimal rounding and text cleanup utilities
+├── tests/
+│   └── test_engine.py               # Pytest unit test suite (6 passing tests)
+├── scripts/
+│   └── run_determinism_check.py     # Determinism verification script (asserts 100% execution consistency)
+├── traces/
+│   ├── decision_log.json            # Step-by-step decision trace history
+│   └── summary_report.json          # KPI summary metrics
+├── postmortems/
+│   └── case_01_duplicate_collision.md # Incident postmortem for duplicate payment refund collision
+└── requirements.txt                 # Core dependencies
 ```
 
-### 2. Configure Environment
-Create a `.env` file in the root directory and add your Gemini API key:
-```bash
-echo "GEMINI_API_KEY=your_api_key_here" > .env
-```
+---
 
-### 3. Generate Data
-Generate the synthetic transaction datasets:
-```bash
-python -m src.generator
-```
+### Running the Application
 
-### 4. Run Reconciliation Pipeline
-Execute the reconciliation pipeline:
-```bash
-python -m src.pipeline
-```
-This script outputs a summary JSON and generates traces in the `traces/` folder.
+1. **Install Dependencies:**
+   ```powershell
+   pip install -r requirements.txt
+   ```
 
-### 5. Launch the Review Dashboard
-To run the Streamlit review dashboard:
-```bash
-streamlit run app.py
-```
+2. **Run the FastAPI Server:**
+   ```powershell
+   python server.py
+   ```
+   Open **`http://localhost:8000`** in your browser to view the interactive Live Replay Dashboard.
 
-### 6. Verification & Determinism Checks
-Run automated checks:
-* **Unit Tests:** `pytest tests/`
-* **Determinism Verification:** `python -m scripts.run_determinism_check`
+3. **Run Unit Tests:**
+   ```powershell
+   python -m pytest tests/
+   ```
+
+4. **Run Determinism Verification:**
+   ```powershell
+   python -m scripts.run_determinism_check
+   ```

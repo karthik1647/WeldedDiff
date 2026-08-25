@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WeldedDiff Reconciliation Review</title>
+  <style>
+    /* Reset & CSS Variables (Restrained Stripe/Apple Aesthetic) */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent: #0f766e;
+      --accent-light: #f0fdf4;
+      --accent-border: #99f6e4;
+      --badge-abstained-bg: #fef2f2;
+      --badge-abstained-text: #991b1b;
+      --badge-committed-bg: #f0fdf4;
+      --badge-committed-text: #166534;
+      --badge-proposed-bg: #fffbebfb;
+      --badge-proposed-text: #b45309;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.5;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Typography Defaults - Sentence Case & Two Weights Only (400 & 500) */
+    h1, h2, h3, h4, button, label, select {
+      font-weight: 500;
+    }
+
+    /* Header & Navigation */
+    header {
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 1.25rem;
+    }
+
+    .header-title {
+      font-size: 1.25rem;
+      color: var(--text-main);
+      margin-bottom: 0.25rem;
+    }
+
+    .header-subtitle {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    /* KPI Summary Cards Grid */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .metric-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-left: 3px solid var(--accent);
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+    }
+
+    .metric-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+      white-space: normal;
+      word-wrap: break-word;
+    }
+
+    .metric-value {
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    /* Replay Control Bar */
+    .control-panel {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 1.25rem;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    label {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    select {
+      background-color: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.5rem 0.75rem;
+      font-size: 14px;
+      color: var(--text-main);
+      outline: none;
+      min-width: 260px;
+    }
+
+    select:focus {
+      border-color: var(--accent);
+    }
+
+    .btn-primary {
+      background-color: var(--accent);
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.5rem 1.25rem;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #0d655e;
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--text-muted);
+    }
+
+    /* Stage Progression Architecture */
+    .replay-container {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      font-size: 1rem;
+      margin-bottom: 1.25rem;
+      color: var(--text-main);
+    }
+
+    .stages-wrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stage-card {
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 1.25rem;
+      background-color: var(--bg-color);
+      transition: all 0.2s ease;
+      opacity: 0.5;
+    }
+
+    .stage-card.active {
+      opacity: 1;
+      border-color: var(--accent);
+      background-color: var(--card-bg);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+
+    .stage-card.passed {
+      opacity: 1;
+      border-color: var(--border-color);
+      background-color: var(--card-bg);
+    }
+
+    .stage-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+
+    .stage-num {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .stage-status {
+      font-size: 12px;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      background-color: var(--border-color);
+      color: var(--text-muted);
+    }
+
+    .stage-card.active .stage-status {
+      background-color: var(--accent-light);
+      color: var(--accent);
+    }
+
+    .stage-card.passed .stage-status {
+      background-color: #f1f5f9;
+      color: var(--text-main);
+    }
+
+    .stage-title {
+      font-size: 0.95rem;
+      color: var(--text-main);
+      margin-bottom: 0.35rem;
+    }
+
+    .stage-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Monospace Decision Trace Console */
+    .console-card {
+      background-color: #0f172a;
+      border-radius: 6px;
+      padding: 1.25rem;
+      color: #e2e8f0;
+      font-family: var(--font-mono);
+      font-size: 13px;
+    }
+
+    .console-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #334155;
+      color: #94a3b8;
+      font-size: 12px;
+    }
+
+    .console-log {
+      max-height: 260px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.6;
+    }
+
+    .log-line {
+      margin-bottom: 0.35rem;
+    }
+
+    .log-time {
+      color: #64748b;
+      margin-right: 0.5rem;
+    }
+
+    .log-highlight {
+      color: #2dd4bf;
+    }
+
+    .log-warning {
+      color: #f87171;
+    }
+
+    /* Transaction Detail Drawer */
+    .payload-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .payload-box {
+      background-color: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 1rem;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      max-height: 200px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+
+    /* Table Container */
+    .table-container {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    th {
+      background-color: var(--bg-color);
+      color: var(--text-muted);
+      font-weight: 500;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .badge-abstained {
+      background-color: var(--badge-abstained-bg);
+      color: var(--badge-abstained-text);
+    }
+
+    .badge-committed {
+      background-color: var(--badge-committed-bg);
+      color: var(--badge-committed-text);
+    }
+
+    .badge-proposed {
+      background-color: var(--badge-proposed-bg);
+      color: var(--badge-proposed-text);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1 class="header-title">WeldedDiff Reconciliation Review</h1>
+    <p class="header-subtitle">Razorpay test-mode transaction matching & forensic LLM audit engine</p>
+  </header>
+
+  <!-- Metrics Bar -->
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-label">Baseline match rate</div>
+      <div class="metric-value" id="kpi-baseline">1.96%</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Pipeline match rate</div>
+      <div class="metric-value" id="kpi-pipeline">81.37%</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Transactions reviewed</div>
+      <div class="metric-value" id="kpi-reviewed">119</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">LLM execution cost</div>
+      <div class="metric-value" id="kpi-cost">$0.0106</div>
+    </div>
+  </div>
+
+  <!-- Control Bar -->
+  <div class="control-panel">
+    <div class="control-group">
+      <label for="tx-select">Select transaction to inspect:</label>
+      <select id="tx-select">
+        <option value="pay_012" selected>pay_012 (Hard case - LLM 95% conf, safety gate override)</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <button class="btn-primary" id="btn-replay">Replay transaction</button>
+    </div>
+  </div>
+
+  <!-- Replay Stage Flow -->
+  <div class="replay-container">
+    <h2 class="section-title">Live pipeline stage progression</h2>
+    
+    <div class="stages-wrapper">
+      <!-- Stage 1 -->
+      <div class="stage-card" id="stage-1">
+        <div class="stage-header">
+          <span class="stage-num">stage 01</span>
+          <span class="stage-status" id="status-1">pending</span>
+        </div>
+        <div class="stage-title">Deterministic engine</div>
+        <div class="stage-desc">Verifies exact order ID, 2% MDR + 18% GST fee rules, and T+2 day SLA date windows.</div>
+      </div>
+
+      <!-- Stage 2 -->
+      <div class="stage-card" id="stage-2">
+        <div class="stage-header">
+          <span class="stage-num">stage 02</span>
+          <span class="stage-status" id="status-2">pending</span>
+        </div>
+        <div class="stage-title">LLM forensic audit</div>
+        <div class="stage-desc">Queries DeepSeek for fuzzy merchant narration mapping and batch deposit analysis.</div>
+      </div>
+
+      <!-- Stage 3 -->
+      <div class="stage-card" id="stage-3">
+        <div class="stage-header">
+          <span class="stage-num">stage 03</span>
+          <span class="stage-status" id="status-3">pending</span>
+        </div>
+        <div class="stage-title">Confidence safety gate</div>
+        <div class="stage-desc">Asserts confidence threshold ≥ 85% and checks gross amount vs bank credit discrepancy.</div>
+      </div>
+
+      <!-- Stage 4 -->
+      <div class="stage-card" id="stage-4">
+        <div class="stage-header">
+          <span class="stage-num">stage 04</span>
+          <span class="stage-status" id="status-4">pending</span>
+        </div>
+        <div class="stage-title">Final outcome</div>
+        <div class="stage-desc">Records final ledger state: auto-committed, proposed, or abstained exception.</div>
+      </div>
+    </div>
+
+    <!-- Monospace Console Log -->
+    <div class="console-card">
+      <div class="console-header">
+        <span>decision trace log</span>
+        <span id="log-ref-id">pay_012</span>
+      </div>
+      <div class="console-log" id="console-output">
+        <div class="log-line"><span class="log-time">[system]</span> Ready to replay transaction trace. Click "Replay transaction" to begin execution.</div>
+      </div>
+    </div>
+
+    <!-- Raw Payloads Drawer -->
+    <div class="payload-grid" id="payload-container" style="display: none;">
+      <div>
+        <label>Razorpay payment payload (sandbox schema):</label>
+        <div class="payload-box" id="payout-payload"></div>
+      </div>
+      <div>
+        <label>Compared bank statement candidates:</label>
+        <div class="payload-box" id="candidates-payload"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Exceptions Table -->
+  <h2 class="section-title">Audit log overview</h2>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Step</th>
+          <th>Reference ID</th>
+          <th>Expected value</th>
+          <th>Matching source</th>
+          <th>Status</th>
+          <th>Reason & justification</th>
+        </tr>
+      </thead>
+      <tbody id="traces-table-body">
+        <tr>
+          <td colspan="6" style="text-align: center; color: var(--text-muted);">Loading traces...</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    let allTraces = [];
+    let activeTrace = null;
+
+    // Load initial data
+    async function init() {
+      try {
+        const [summaryRes, tracesRes] = await Promise.all([
+          fetch('/api/summary'),
+          fetch('/api/traces')
+        ]);
+
+        if (summaryRes.ok) {
+          const summary = await summaryRes.json();
+          document.getElementById('kpi-baseline').textContent = `${summary.baseline?.baseline_bank_match_rate_pct || '1.96'}%`;
+          document.getElementById('kpi-pipeline').textContent = `${summary.advanced_payout_match_rate_pct || '81.37'}%`;
+          document.getElementById('kpi-reviewed').textContent = (summary.baseline?.baseline_matched_orders || 100) + (summary.llm_calls_made || 19);
+          document.getElementById('kpi-cost').textContent = `$${(summary.llm_processing_cost_usd || 0.0106).toFixed(4)}`;
+        }
+
+        if (tracesRes.ok) {
+          allTraces = await tracesRes.json();
+          populateDropdown();
+          renderTable();
+          // Load default pay_012
+          selectTransaction('pay_012');
+        }
+      } catch (err) {
+        console.error('Failed to load initial data:', err);
+      }
+    }
+
+    function populateDropdown() {
+      const select = document.getElementById('tx-select');
+      select.innerHTML = '';
+
+      // Filter for unique payment IDs or UTRs from traces
+      const payoutTraces = allTraces.filter(t => t.step === 'llm_payout_audit' || t.step === 'payout_to_bank_settlement_batch');
+      
+      payoutTraces.forEach(t => {
+        const id = t.payment_id || t.utr;
+        const opt = document.createElement('option');
+        opt.value = id;
+        
+        let label = `${id} (${t.decision})`;
+        if (id === 'pay_012') {
+          label = `pay_012 (Hard case - LLM 95% conf, safety gate override)`;
+        }
+        opt.textContent = label;
+        select.appendChild(opt);
+      });
+
+      // Default select pay_012 if exists
+      select.value = 'pay_012';
+    }
+
+    function selectTransaction(refId) {
+      activeTrace = allTraces.find(t => t.payment_id === refId || t.utr === refId);
+      document.getElementById('log-ref-id').textContent = refId;
+      resetStages();
+    }
+
+    function resetStages() {
+      for (let i = 1; i <= 4; i++) {
+        const card = document.getElementById(`stage-${i}`);
+        const status = document.getElementById(`status-${i}`);
+        card.className = 'stage-card';
+        status.textContent = 'pending';
+      }
+
+      const consoleOut = document.getElementById('console-output');
+      consoleOut.innerHTML = `<div class="log-line"><span class="log-time">[system]</span> Selected transaction ${activeTrace ? activeTrace.payment_id || activeTrace.utr : 'pay_012'}. Click "Replay transaction" to step through execution.</div>`;
+      
+      document.getElementById('payload-container').style.display = 'none';
+    }
+
+    async function runReplay() {
+      const refId = document.getElementById('tx-select').value;
+      const trace = allTraces.find(t => t.payment_id === refId || t.utr === refId);
+      if (!trace) return;
+
+      resetStages();
+      const consoleOut = document.getElementById('console-output');
+      consoleOut.innerHTML = '';
+
+      function appendLog(msg, type = '') {
+        const line = document.createElement('div');
+        line.className = 'log-line';
+        const time = new Date().toLocaleTimeString();
+        let spanClass = '';
+        if (type === 'highlight') spanClass = 'log-highlight';
+        if (type === 'warning') spanClass = 'log-warning';
+        
+        line.innerHTML = `<span class="log-time">[${time}]</span> <span class="${spanClass}">${msg}</span>`;
+        consoleOut.appendChild(line);
+        consoleOut.scrollTop = consoleOut.scrollHeight;
+      }
+
+      // Stage 1: Deterministic Engine
+      document.getElementById('stage-1').className = 'stage-card active';
+      document.getElementById('status-1').textContent = 'running';
+      appendLog(`[deterministic engine] Inspecting payment ${refId}...`);
+      await new Promise(r => setTimeout(r, 600));
+
+      appendLog(`[deterministic engine] Checking exact order mapping & contract fee rules (2% MDR + 18% GST)...`);
+      appendLog(`[deterministic engine] Payout net calculated: ${trace.net_calculated || trace.amount || 'N/A'} INR.`);
+      document.getElementById('stage-1').className = 'stage-card passed';
+      document.getElementById('status-1').textContent = 'checked';
+
+      // Stage 2: LLM Forensic Audit
+      await new Promise(r => setTimeout(r, 400));
+      document.getElementById('stage-2').className = 'stage-card active';
+      document.getElementById('status-2').textContent = 'running';
+      appendLog(`[llm auditor] Querying DeepSeek for fuzzy narration and candidate analysis...`);
+      await new Promise(r => setTimeout(r, 700));
+
+      const conf = trace.llm_confidence !== undefined ? trace.llm_confidence : (trace.decision === 'AUTO_COMMIT' ? 100 : 0);
+      appendLog(`[llm auditor] Evaluated ${trace.compared_candidates ? trace.compared_candidates.length : 0} candidate(s). Assigned confidence score: ${conf}%`);
+      if (trace.llm_justification) {
+        appendLog(`[llm reasoning] "${trace.llm_justification}"`, 'highlight');
+      }
+      document.getElementById('stage-2').className = 'stage-card passed';
+      document.getElementById('status-2').textContent = `score ${conf}%`;
+
+      // Stage 3: Confidence Safety Gate
+      await new Promise(r => setTimeout(r, 500));
+      document.getElementById('stage-3').className = 'stage-card active';
+      document.getElementById('status-3').textContent = 'evaluating';
+      appendLog(`[safety gate] Evaluating confidence threshold (≥ 85%) & amount verification...`);
+      await new Promise(r => setTimeout(r, 600));
+
+      if (conf >= 85) {
+        if (trace.decision === 'ABSTAINED') {
+          appendLog(`[safety gate] OVERRIDE: LLM proposed match with ${conf}% confidence, but deterministic guard blocked auto-commit due to bulk amount discrepancy.`, 'warning');
+          document.getElementById('status-3').textContent = 'override active';
+        } else {
+          appendLog(`[safety gate] PASSED: Confidence ${conf}% exceeds gate threshold. Candidate verified.`, 'highlight');
+          document.getElementById('status-3').textContent = 'passed';
+        }
+      } else {
+        appendLog(`[safety gate] ABSTAIN: Confidence ${conf}% fell below threshold. Pushed to exceptions.`, 'warning');
+        document.getElementById('status-3').textContent = 'abstained';
+      }
+      document.getElementById('stage-3').className = 'stage-card passed';
+
+      // Stage 4: Final Outcome
+      await new Promise(r => setTimeout(r, 400));
+      document.getElementById('stage-4').className = 'stage-card active';
+      appendLog(`[final outcome] Recorded status: ${trace.decision} (${trace.reason})`, trace.decision === 'ABSTAINED' ? 'warning' : 'highlight');
+      document.getElementById('status-4').textContent = trace.decision.toLowerCase();
+      document.getElementById('stage-4').className = 'stage-card passed';
+
+      // Show Payloads
+      document.getElementById('payload-container').style.display = 'grid';
+      document.getElementById('payout-payload').textContent = JSON.stringify({
+        payment_id: refId,
+        utr: trace.utr || 'N/A',
+        net_calculated: trace.net_calculated || trace.amount || 'N/A',
+        entity: "payment",
+        currency: "INR"
+      }, null, 2);
+
+      document.getElementById('candidates-payload').textContent = JSON.stringify(trace.compared_candidates || [], null, 2);
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('traces-table-body');
+      tbody.innerHTML = '';
+
+      // Render top 25 traces for overview
+      const displayTraces = allTraces.slice(0, 30);
+
+      displayTraces.forEach(t => {
+        const tr = document.createElement('tr');
+        
+        let badgeClass = 'badge-committed';
+        if (t.decision === 'ABSTAINED') badgeClass = 'badge-abstained';
+        if (t.decision === 'PROPOSED') badgeClass = 'badge-proposed';
+
+        const source = t.decision === 'AUTO_COMMIT' ? 'Deterministic (100%)' : (t.decision === 'USER_APPROVED' ? 'Human-Approved (LLM)' : 'Probabilistic LLM Audit');
+
+        tr.innerHTML = `
+          <td><code>${t.step || 'reconcile'}</code></td>
+          <td><code>${t.payment_id || t.order_id || t.utr || 'N/A'}</code></td>
+          <td>${t.net_calculated || t.amount || t.amount_debited || 'N/A'} INR</td>
+          <td>${source}</td>
+          <td><span class="badge ${badgeClass}">${t.decision}</span></td>
+          <td style="max-width: 380px;">${t.reason}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.getElementById('tx-select').addEventListener('change', (e) => selectTransaction(e.target.value));
+    document.getElementById('btn-replay').addEventListener('click', runReplay);
+
+    window.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
