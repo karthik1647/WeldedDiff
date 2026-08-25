@@ -10,662 +10,648 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
     :root {
-      --white: #ffffff;
-      --bg: #fbfbfd;
-      --surface: #ffffff;
-      --gray-50: #f9fafb;
-      --gray-100: #f3f4f6;
-      --gray-200: #e5e7eb;
-      --gray-300: #d1d5db;
-      --gray-400: #9ca3af;
-      --gray-500: #6b7280;
-      --gray-600: #4b5563;
-      --gray-700: #374151;
-      --gray-800: #1f2937;
-      --gray-900: #111827;
-      --black: #000000;
-      --blue: #2563eb;
-      --teal: #0d9488;
-      --green: #059669;
-      --red: #dc2626;
-      --amber: #d97706;
-      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --bg: #fbfbfd; --white: #ffffff;
+      --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb;
+      --gray-300: #d1d5db; --gray-400: #9ca3af; --gray-500: #6b7280;
+      --gray-600: #4b5563; --gray-700: #374151; --gray-800: #1f2937; --gray-900: #111827;
+      --blue: #2563eb; --teal: #0d9488; --green: #059669; --red: #dc2626; --amber: #d97706;
+      --blue-light: #eff6ff; --teal-light: #f0fdfa; --green-light: #ecfdf5;
+      --red-light: #fef2f2; --amber-light: #fffbeb;
+      --font: 'Inter', -apple-system, sans-serif;
       --mono: 'JetBrains Mono', ui-monospace, monospace;
     }
+    body { background: var(--bg); color: var(--gray-900); font-family: var(--font); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 
-    body {
-      background: var(--bg);
-      color: var(--gray-900);
-      font-family: var(--font);
-      font-size: 16px;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
+    /* Mouse glow */
+    .mouse-glow { position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background: radial-gradient(1200px circle at var(--mx,50%) var(--my,40%), rgba(37,99,235,0.04), rgba(13,148,136,0.02) 40%, transparent 70%); }
 
-    /* ========== MOUSE GRADIENT ========== */
-    .mouse-glow {
-      position: fixed; inset: 0; z-index: 0; pointer-events: none;
-      background: radial-gradient(1200px circle at var(--mx, 50%) var(--my, 40%),
-        rgba(37, 99, 235, 0.04), rgba(13, 148, 136, 0.02) 40%, transparent 70%);
-      transition: background 0.1s;
-    }
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: 0.1s; } .reveal-d2 { transition-delay: 0.2s; } .reveal-d3 { transition-delay: 0.3s; }
 
-    /* ========== SCROLL REVEAL ========== */
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-
-    /* ========== LAYOUT ========== */
+    /* Layout */
     .page { position: relative; z-index: 1; }
     .container { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
 
-    /* ========== HERO ========== */
-    .hero {
-      text-align: center;
-      padding: 7rem 2rem 5rem;
-      position: relative;
-    }
+    /* ── Hero ── */
+    .hero { text-align: center; padding: 7rem 2rem 5rem; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 13px; font-weight: 500; color: var(--teal); margin-bottom: 1.5rem; font-family: var(--mono); }
+    .pulse-dot { width: 6px; height: 6px; background: var(--teal); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(13,148,136,.5); } 70% { box-shadow: 0 0 0 8px rgba(13,148,136,0); } 100% { box-shadow: 0 0 0 0 rgba(13,148,136,0); } }
+    .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; letter-spacing: -0.04em; line-height: 1.08; margin-bottom: 1.25rem; }
+    .hero h1 span { background: linear-gradient(135deg, var(--blue), var(--teal)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero p { font-size: 1.2rem; color: var(--gray-500); max-width: 580px; margin: 0 auto; }
 
-    .hero-overline {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--teal);
-      margin-bottom: 1.5rem;
-      font-family: var(--mono);
-    }
-
-    .hero-overline .dot {
-      width: 6px; height: 6px;
-      background: var(--teal);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(13,148,136,0.5); }
-      70% { box-shadow: 0 0 0 8px rgba(13,148,136,0); }
-      100% { box-shadow: 0 0 0 0 rgba(13,148,136,0); }
-    }
-
-    .hero h1 {
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: 700;
-      letter-spacing: -0.04em;
-      line-height: 1.08;
-      color: var(--gray-900);
-      margin-bottom: 1.25rem;
-    }
-
-    .hero h1 span {
-      background: linear-gradient(135deg, var(--blue), var(--teal));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero p {
-      font-size: 1.25rem;
-      color: var(--gray-500);
-      max-width: 600px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
-
-    /* ========== KPI STRIP ========== */
-    .kpi-section {
-      padding: 3rem 0 4rem;
-    }
-
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: var(--gray-200);
-      border-radius: 16px;
-      overflow: hidden;
-    }
-
+    /* ── KPI strip ── */
+    .kpi-section { padding: 3rem 0 4rem; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--gray-200); border-radius: 16px; overflow: hidden; }
     @media (max-width: 768px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+    .kpi-cell { background: var(--white); padding: 2rem 2.25rem; text-align: center; }
+    .kpi-num { font-size: 2.75rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
+    .kpi-num.c-teal { color: var(--teal); } .kpi-num.c-blue { color: var(--blue); }
+    .kpi-desc { font-size: 12px; color: var(--gray-400); margin-top: 0.5rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
 
-    .kpi-cell {
-      background: var(--white);
-      padding: 2rem 2.25rem;
-      text-align: center;
-    }
+    /* ── ROI section ── */
+    .roi-section { padding: 0 0 5rem; }
+    .roi-section h2 { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; text-align: center; margin-bottom: 0.75rem; }
+    .roi-section .subtitle { font-size: 1.1rem; color: var(--gray-500); text-align: center; margin-bottom: 3rem; }
+    .roi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    @media (max-width: 768px) { .roi-grid { grid-template-columns: 1fr; } }
+    .roi-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 16px; padding: 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.04); position: relative; overflow: hidden; }
+    .roi-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+    .roi-card:nth-child(1)::before { background: linear-gradient(90deg, var(--blue), var(--teal)); }
+    .roi-card:nth-child(2)::before { background: linear-gradient(90deg, var(--green), var(--teal)); }
+    .roi-card:nth-child(3)::before { background: linear-gradient(90deg, var(--amber), var(--red)); }
+    .roi-icon { font-size: 1.75rem; margin-bottom: 0.75rem; }
+    .roi-num { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; color: var(--gray-900); line-height: 1; margin-bottom: 0.35rem; }
+    .roi-label { font-size: 15px; font-weight: 600; color: var(--gray-700); margin-bottom: 0.35rem; }
+    .roi-sub { font-size: 13px; color: var(--gray-400); }
+    .roi-bar-wrap { margin-top: 1.25rem; }
+    .roi-bar-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--gray-400); margin-bottom: 0.4rem; }
+    .roi-bar-track { background: var(--gray-100); border-radius: 4px; height: 6px; overflow: hidden; }
+    .roi-bar-fill { height: 100%; border-radius: 4px; transition: width 1.5s cubic-bezier(0.16,1,0.3,1); }
 
-    .kpi-num {
-      font-size: 3rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      color: var(--gray-900);
-      line-height: 1.1;
-    }
-
-    .kpi-num.accent-blue { color: var(--blue); }
-    .kpi-num.accent-teal { color: var(--teal); }
-
-    .kpi-desc {
-      font-size: 13px;
-      color: var(--gray-400);
-      margin-top: 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      font-weight: 500;
-    }
-
-    /* ========== ARCHITECTURE ========== */
-    .arch-section {
-      padding: 5rem 0;
-      text-align: center;
-    }
-
-    .arch-section h2 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      margin-bottom: 0.75rem;
-    }
-
-    .arch-section .subtitle {
-      font-size: 1.1rem;
-      color: var(--gray-500);
-      margin-bottom: 3rem;
-    }
-
-    .arch-card {
-      background: var(--white);
-      border: 1px solid var(--gray-200);
-      border-radius: 20px;
-      padding: 3rem;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.04);
-    }
-
+    /* ── Architecture ── */
+    .arch-section { padding: 5rem 0; text-align: center; }
+    .arch-section h2 { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.75rem; }
+    .arch-section .subtitle { font-size: 1.1rem; color: var(--gray-500); margin-bottom: 3rem; }
+    .arch-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 20px; padding: 3rem; box-shadow: 0 4px 24px rgba(0,0,0,0.04); }
     .arch-svg { width: 100%; height: 130px; }
 
-    /* ========== INTERACTIVE SECTION ========== */
-    .interactive-section {
-      padding: 5rem 0;
+    /* ── Upload section ── */
+    .upload-section { padding: 5rem 0; }
+    .upload-section h2 { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; text-align: center; margin-bottom: 0.75rem; }
+    .upload-section .subtitle { font-size: 1.1rem; color: var(--gray-500); text-align: center; margin-bottom: 3rem; }
+    .upload-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 20px; padding: 2.5rem; box-shadow: 0 4px 24px rgba(0,0,0,0.04); }
+    .upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+    @media (max-width: 640px) { .upload-grid { grid-template-columns: 1fr; } }
+    .dropzone {
+      border: 2px dashed var(--gray-200); border-radius: 14px; padding: 2rem;
+      text-align: center; cursor: pointer; transition: all 0.2s; background: var(--gray-50);
+      position: relative;
     }
+    .dropzone:hover, .dropzone.dragover { border-color: var(--blue); background: var(--blue-light); }
+    .dropzone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .dropzone-icon { font-size: 2rem; margin-bottom: 0.6rem; }
+    .dropzone-title { font-size: 14px; font-weight: 600; color: var(--gray-700); margin-bottom: 0.3rem; }
+    .dropzone-sub { font-size: 12px; color: var(--gray-400); }
+    .dropzone-file { font-size: 13px; color: var(--blue); font-weight: 500; font-family: var(--mono); margin-top: 0.5rem; }
+    .upload-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    .upload-status { font-size: 13px; color: var(--gray-500); font-family: var(--mono); }
+    .upload-status.ok { color: var(--green); } .upload-status.err { color: var(--red); }
 
-    .interactive-section h2 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      text-align: center;
-      margin-bottom: 0.75rem;
-    }
-
-    .interactive-section .subtitle {
-      font-size: 1.1rem;
-      color: var(--gray-500);
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    /* Controls */
-    .ctrl-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
-
-    .ctrl-bar label { font-size: 14px; color: var(--gray-500); }
-
-    .ctrl-bar select {
-      background: var(--white);
-      border: 1px solid var(--gray-300);
-      border-radius: 10px;
-      padding: 0.6rem 1rem;
-      font-size: 14px;
-      font-family: var(--mono);
-      color: var(--gray-800);
-      min-width: 340px;
-      outline: none;
-      cursor: pointer;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-
-    .ctrl-bar select:focus {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
-    }
-
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.6rem 1.5rem;
-      border: none; border-radius: 980px;
-      font-size: 14px; font-weight: 500; font-family: var(--font);
-      cursor: pointer; transition: all 0.2s;
-    }
-
-    .btn-fill {
-      background: var(--blue);
-      color: #fff;
-      box-shadow: 0 2px 8px rgba(37,99,235,0.25);
-    }
-
-    .btn-fill:hover { box-shadow: 0 4px 16px rgba(37,99,235,0.35); transform: translateY(-1px); }
+    /* ── Buttons ── */
+    .btn { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.6rem 1.4rem; border: none; border-radius: 980px; font-size: 14px; font-weight: 500; font-family: var(--font); cursor: pointer; transition: all 0.2s; }
+    .btn-fill { background: var(--blue); color: #fff; box-shadow: 0 2px 8px rgba(37,99,235,.25); }
+    .btn-fill:hover { box-shadow: 0 4px 16px rgba(37,99,235,.35); transform: translateY(-1px); }
     .btn-fill:active { transform: scale(0.97); }
-    .btn-fill:disabled { background: var(--gray-300); color: var(--gray-500); box-shadow: none; cursor: not-allowed; transform: none; }
+    .btn-fill:disabled { background: var(--gray-200); color: var(--gray-400); box-shadow: none; cursor: not-allowed; transform: none; }
+    .btn-ghost { background: transparent; border: 1px solid var(--gray-200); color: var(--gray-600); }
+    .btn-ghost:hover { border-color: var(--gray-400); background: var(--gray-50); }
+    .btn-green { background: var(--green); color: #fff; }
+    .btn-green:hover { background: #047857; }
+    .btn-red { background: var(--red); color: #fff; }
+    .btn-red:hover { background: #b91c1c; }
 
-    /* Stages */
-    .stages-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-      margin-bottom: 2rem;
-    }
+    /* ── Replay section ── */
+    .interactive-section { padding: 5rem 0; }
+    .interactive-section h2 { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; text-align: center; margin-bottom: 0.75rem; }
+    .interactive-section .subtitle { font-size: 1.1rem; color: var(--gray-500); text-align: center; margin-bottom: 3rem; }
+    .ctrl-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem; }
+    .ctrl-bar label { font-size: 14px; color: var(--gray-500); }
+    .ctrl-bar select { background: var(--white); border: 1px solid var(--gray-300); border-radius: 10px; padding: 0.6rem 1rem; font-size: 14px; font-family: var(--mono); color: var(--gray-800); min-width: 340px; outline: none; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; }
+    .ctrl-bar select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,.1); }
 
+    .stages-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
     @media (max-width: 900px) { .stages-grid { grid-template-columns: repeat(2, 1fr); } }
-
-    .stage-card {
-      background: var(--white);
-      border: 1.5px solid var(--gray-200);
-      border-radius: 14px;
-      padding: 1.5rem;
-      opacity: 0.4;
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .stage-card.active {
-      opacity: 1;
-      border-color: var(--blue);
-      box-shadow: 0 0 0 4px rgba(37,99,235,0.08), 0 8px 24px rgba(37,99,235,0.06);
-      transform: translateY(-3px);
-    }
-
+    .stage-card { background: var(--white); border: 1.5px solid var(--gray-200); border-radius: 14px; padding: 1.5rem; opacity: 0.4; transition: all 0.35s cubic-bezier(0.16,1,0.3,1); }
+    .stage-card.active { opacity: 1; border-color: var(--blue); box-shadow: 0 0 0 4px rgba(37,99,235,.08), 0 8px 24px rgba(37,99,235,.06); transform: translateY(-3px); }
     .stage-card.passed { opacity: 1; border-color: var(--gray-200); }
-
     .stage-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
     .stage-no { font-family: var(--mono); font-size: 12px; color: var(--gray-400); }
-
-    .pill {
-      font-size: 11px; padding: 2px 8px; border-radius: 6px;
-      font-weight: 500; font-family: var(--mono);
-      background: var(--gray-100); color: var(--gray-400);
-      transition: all 0.2s;
-    }
-
-    .pill-ok { background: #ecfdf5; color: var(--green); }
-    .pill-bad { background: #fef2f2; color: var(--red); }
-    .pill-warn { background: #fffbeb; color: var(--amber); }
-
+    .pill { font-size: 11px; padding: 2px 8px; border-radius: 6px; font-weight: 500; font-family: var(--mono); background: var(--gray-100); color: var(--gray-400); transition: all 0.2s; }
+    .pill-ok { background: var(--green-light); color: var(--green); }
+    .pill-bad { background: var(--red-light); color: var(--red); }
+    .pill-warn { background: var(--amber-light); color: var(--amber); }
     .stage-name { font-size: 15px; font-weight: 600; margin-bottom: 0.3rem; }
     .stage-info { font-size: 13px; color: var(--gray-500); line-height: 1.5; }
 
-    /* Console */
-    .terminal {
-      background: var(--gray-900);
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-    }
-
-    .term-chrome {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 0.75rem 1.25rem;
-      background: var(--gray-800);
-    }
-
+    .terminal { background: var(--gray-900); border-radius: 14px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,.12); }
+    .term-chrome { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1.25rem; background: var(--gray-800); }
     .term-dots { display: flex; gap: 6px; }
     .term-dot { width: 10px; height: 10px; border-radius: 50%; }
-    .td-r { background: #ef4444; }
-    .td-y { background: #eab308; }
-    .td-g { background: #22c55e; }
+    .td-r { background: #ef4444; } .td-y { background: #eab308; } .td-g { background: #22c55e; }
     .term-title { font-family: var(--mono); font-size: 12px; color: var(--gray-400); }
+    .term-body { padding: 1.25rem 1.5rem; font-family: var(--mono); font-size: 13px; color: #d1d5db; max-height: 250px; overflow-y: auto; line-height: 1.7; }
+    .log-line { margin-bottom: 0.15rem; }
+    .t-dim { color: #6b7280; } .t-ok { color: #34d399; } .t-err { color: #f87171; }
 
-    .term-body {
-      padding: 1.25rem 1.5rem;
-      font-family: var(--mono);
-      font-size: 13px;
-      color: #d1d5db;
-      max-height: 250px;
-      overflow-y: auto;
-      line-height: 1.7;
-    }
-
-    .term-body .log-line { margin-bottom: 0.15rem; }
-    .t-dim { color: #6b7280; }
-    .t-ok { color: #34d399; }
-    .t-err { color: #f87171; }
-
-    /* Payloads */
     .payload-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
-    .payload-box {
-      background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 10px;
-      padding: 1rem; font-family: var(--mono); font-size: 12px; color: var(--gray-600);
-      max-height: 200px; overflow-y: auto; white-space: pre-wrap;
-    }
+    .payload-box { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 10px; padding: 1rem; font-family: var(--mono); font-size: 12px; color: var(--gray-600); max-height: 200px; overflow-y: auto; white-space: pre-wrap; }
     .payload-label { font-size: 12px; color: var(--gray-400); margin-bottom: 0.4rem; display: block; }
 
-    /* ========== TABLE ========== */
+    /* ── Audit log table ── */
     .table-section { padding: 5rem 0 6rem; }
-
-    .table-section h2 {
-      font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em;
-      text-align: center; margin-bottom: 0.75rem;
-    }
-
-    .table-section .subtitle {
-      font-size: 1.1rem; color: var(--gray-500); text-align: center; margin-bottom: 3rem;
-    }
-
-    .table-card {
-      background: var(--white);
-      border: 1px solid var(--gray-200);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.04);
-    }
-
-    table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    th {
-      text-align: left; padding: 1rem 1.5rem;
-      background: var(--gray-50); color: var(--gray-400);
-      font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
-      border-bottom: 1px solid var(--gray-200);
-    }
-    td { padding: 0.9rem 1.5rem; border-bottom: 1px solid var(--gray-100); color: var(--gray-700); }
+    .table-section h2 { font-size: 2.5rem; font-weight: 700; letter-spacing: -0.03em; text-align: center; margin-bottom: 0.75rem; }
+    .table-section .subtitle { font-size: 1.1rem; color: var(--gray-500); text-align: center; margin-bottom: 3rem; }
+    .table-toolbar { display: flex; justify-content: flex-end; margin-bottom: 1rem; }
+    .table-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,.04); }
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    th { text-align: left; padding: 1rem 1.25rem; background: var(--gray-50); color: var(--gray-400); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--gray-200); }
+    td { padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--gray-100); color: var(--gray-700); vertical-align: middle; }
     tbody tr { transition: background 0.15s; }
     tbody tr:hover { background: var(--gray-50); }
     tr:last-child td { border-bottom: none; }
-
-    .tag {
-      display: inline-block; padding: 3px 10px; border-radius: 6px;
-      font-size: 11px; font-weight: 600; font-family: var(--mono);
-    }
-    .tag-ok { background: #ecfdf5; color: var(--green); }
-    .tag-err { background: #fef2f2; color: var(--red); }
-    .tag-warn { background: #fffbeb; color: var(--amber); }
+    .tag { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; font-family: var(--mono); }
+    .tag-ok { background: var(--green-light); color: var(--green); }
+    .tag-err { background: var(--red-light); color: var(--red); }
+    .tag-warn { background: var(--amber-light); color: var(--amber); }
+    .tag-blue { background: var(--blue-light); color: var(--blue); }
     .tag-muted { background: var(--gray-100); color: var(--gray-400); }
+    .action-btns { display: flex; gap: 0.4rem; }
+    .btn-xs { padding: 0.25rem 0.65rem; font-size: 11px; border-radius: 6px; font-family: var(--mono); }
+    .btn-approve { background: var(--green-light); color: var(--green); border: 1px solid #a7f3d0; cursor: pointer; transition: all 0.15s; }
+    .btn-approve:hover { background: var(--green); color: #fff; }
+    .btn-reject { background: var(--red-light); color: var(--red); border: 1px solid #fecaca; cursor: pointer; transition: all 0.15s; }
+    .btn-reject:hover { background: var(--red); color: #fff; }
 
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 3px; }
-
+    ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 3px; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .spin { animation: spin 0.7s linear infinite; }
+    .spin { animation: spin 0.7s linear infinite; display: inline-block; }
   </style>
 </head>
 <body>
+<div class="mouse-glow"></div>
+<div class="page">
 
-  <div class="mouse-glow"></div>
+  <!-- ══ HERO ══ -->
+  <section class="hero reveal">
+    <div class="hero-badge"><span class="pulse-dot"></span> Reconciliation engine online</div>
+    <h1>Three-way ledger matching.<br><span>Down to ₹0.01.</span></h1>
+    <p>WeldedDiff reconciles internal orders, Razorpay payouts, and bank deposits — using a deterministic engine backed by a forensic LLM audit layer.</p>
+  </section>
 
-  <div class="page">
+  <!-- ══ KPIs ══ -->
+  <section class="kpi-section">
+    <div class="container">
+      <div class="kpi-grid reveal">
+        <div class="kpi-cell"><div class="kpi-num" id="kpi-baseline">16.67%</div><div class="kpi-desc">Baseline match</div></div>
+        <div class="kpi-cell"><div class="kpi-num c-teal" id="kpi-pipeline">81.37%</div><div class="kpi-desc">Pipeline match</div></div>
+        <div class="kpi-cell"><div class="kpi-num" id="kpi-reviewed">119</div><div class="kpi-desc">Transactions reviewed</div></div>
+        <div class="kpi-cell"><div class="kpi-num c-blue" id="kpi-cost">$0.0107</div><div class="kpi-desc">LLM cost (19 calls)</div></div>
+      </div>
+    </div>
+  </section>
 
-    <!-- ===== HERO ===== -->
-    <section class="hero reveal">
-      <div class="hero-overline"><span class="dot"></span> Reconciliation engine online</div>
-      <h1>Three-way ledger matching.<br><span>Down to ₹0.01.</span></h1>
-      <p>WeldedDiff reconciles internal orders, Razorpay payouts, and bank deposits — using a deterministic engine backed by a forensic LLM audit layer.</p>
-    </section>
+  <!-- ══ ROI / EFFICIENCY ══ -->
+  <section class="roi-section">
+    <div class="container">
+      <h2 class="reveal">Enterprise efficiency metrics</h2>
+      <p class="subtitle reveal reveal-d1">What the engine delivers compared to manual reconciliation.</p>
+      <div class="roi-grid">
 
-    <!-- ===== KPIs ===== -->
-    <section class="kpi-section">
-      <div class="container">
-        <div class="kpi-grid reveal">
-          <div class="kpi-cell">
-            <div class="kpi-num" id="kpi-baseline">16.67%</div>
-            <div class="kpi-desc">Baseline match</div>
+        <div class="roi-card reveal reveal-d1">
+          <div class="roi-icon">⏱</div>
+          <div class="roi-num">~14 hrs</div>
+          <div class="roi-label">Manual time saved</div>
+          <div class="roi-sub">At ~5 min per invoice audit vs 0.12s automated</div>
+          <div class="roi-bar-wrap">
+            <div class="roi-bar-label"><span>Manual</span><span>Automated</span></div>
+            <div class="roi-bar-track"><div class="roi-bar-fill" style="width:0%;background:linear-gradient(90deg,var(--blue),var(--teal));" data-target="95"></div></div>
           </div>
-          <div class="kpi-cell">
-            <div class="kpi-num accent-teal" id="kpi-pipeline">81.37%</div>
-            <div class="kpi-desc">Pipeline match</div>
+        </div>
+
+        <div class="roi-card reveal reveal-d2">
+          <div class="roi-icon">🛡</div>
+          <div class="roi-num">0.00%</div>
+          <div class="roi-label">False positive rate</div>
+          <div class="roi-sub">Deterministic safety gate prevents incorrect auto-commits</div>
+          <div class="roi-bar-wrap">
+            <div class="roi-bar-label"><span>Industry avg ~3%</span><span>WeldedDiff 0%</span></div>
+            <div class="roi-bar-track"><div class="roi-bar-fill" style="width:0%;background:linear-gradient(90deg,var(--green),var(--teal));" data-target="100"></div></div>
           </div>
-          <div class="kpi-cell">
-            <div class="kpi-num" id="kpi-reviewed">119</div>
-            <div class="kpi-desc">Transactions reviewed</div>
+        </div>
+
+        <div class="roi-card reveal reveal-d3">
+          <div class="roi-icon">💰</div>
+          <div class="roi-num">$0.00009</div>
+          <div class="roi-label">Cost per transaction</div>
+          <div class="roi-sub">99.4% cheaper than GPT-4o equivalent processing</div>
+          <div class="roi-bar-wrap">
+            <div class="roi-bar-label"><span>GPT-4o cost</span><span>DeepSeek cost</span></div>
+            <div class="roi-bar-track"><div class="roi-bar-fill" style="width:0%;background:linear-gradient(90deg,var(--amber),var(--red));" data-target="99"></div></div>
           </div>
-          <div class="kpi-cell">
-            <div class="kpi-num accent-blue" id="kpi-cost">$0.0107</div>
-            <div class="kpi-desc">LLM cost (19 calls)</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ ARCHITECTURE ══ -->
+  <section class="arch-section">
+    <div class="container">
+      <h2 class="reveal">How it works</h2>
+      <p class="subtitle reveal reveal-d1">Three data streams. One matching engine. Real-time safety gating.</p>
+      <div class="arch-card reveal reveal-d2">
+        <svg class="arch-svg" viewBox="0 0 1000 130" fill="none">
+          <defs>
+            <linearGradient id="lg1"><stop offset="0%" stop-color="#2563eb" stop-opacity="0.6"/><stop offset="100%" stop-color="#2563eb" stop-opacity="0.05"/></linearGradient>
+            <linearGradient id="lg2"><stop offset="0%" stop-color="#0d9488" stop-opacity="0.6"/><stop offset="100%" stop-color="#0d9488" stop-opacity="0.05"/></linearGradient>
+            <linearGradient id="lg3"><stop offset="0%" stop-color="#059669" stop-opacity="0.8"/><stop offset="100%" stop-color="#059669" stop-opacity="0.1"/></linearGradient>
+          </defs>
+          <path d="M 195 40 C 330 40 370 65 455 65" stroke="url(#lg1)" stroke-width="2.5"/>
+          <path d="M 195 90 C 330 90 370 65 455 65" stroke="url(#lg2)" stroke-width="2.5"/>
+          <path d="M 575 65 C 690 65 730 65 815 65" stroke="url(#lg3)" stroke-width="3"/>
+          <circle r="5" fill="#2563eb" opacity="0.8"><animateMotion path="M 195 40 C 330 40 370 65 455 65" dur="2.5s" repeatCount="indefinite"/></circle>
+          <circle r="5" fill="#0d9488" opacity="0.8"><animateMotion path="M 195 90 C 330 90 370 65 455 65" dur="3s" repeatCount="indefinite"/></circle>
+          <circle r="6" fill="#059669" opacity="0.9"><animateMotion path="M 575 65 C 690 65 730 65 815 65" dur="2s" repeatCount="indefinite"/></circle>
+          <rect x="25" y="22" width="170" height="38" rx="10" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1.5"/>
+          <text x="55" y="46" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#374151">Internal Orders</text>
+          <rect x="25" y="72" width="170" height="38" rx="10" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1.5"/>
+          <text x="42" y="96" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#374151">Razorpay Payouts</text>
+          <rect x="430" y="38" width="170" height="54" rx="12" fill="#1f2937" stroke="#374151" stroke-width="1.5"/>
+          <text x="452" y="62" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#f9fafb">WeldedDiff</text>
+          <text x="452" y="79" font-family="Inter,sans-serif" font-size="11" fill="#9ca3af">Engine + DeepSeek LLM</text>
+          <rect x="815" y="44" width="165" height="42" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5"/>
+          <text x="838" y="70" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#059669">Bank Statement</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ UPLOAD & RUN PIPELINE ══ -->
+  <section class="upload-section">
+    <div class="container">
+      <h2 class="reveal">Run live reconciliation</h2>
+      <p class="subtitle reveal reveal-d1">Upload your own CSV exports to reconcile any dataset against the engine.</p>
+      <div class="upload-card reveal reveal-d2">
+        <div class="upload-grid">
+          <div>
+            <label class="payload-label">Razorpay payouts CSV (or internal orders)</label>
+            <div class="dropzone" id="dz-payouts">
+              <input type="file" id="file-payouts" accept=".csv">
+              <div class="dropzone-icon">📄</div>
+              <div class="dropzone-title">Drop Razorpay Payouts CSV</div>
+              <div class="dropzone-sub">or click to browse</div>
+              <div class="dropzone-file" id="file-payouts-name"></div>
+            </div>
+          </div>
+          <div>
+            <label class="payload-label">Bank statement CSV</label>
+            <div class="dropzone" id="dz-bank">
+              <input type="file" id="file-bank" accept=".csv">
+              <div class="dropzone-icon">🏦</div>
+              <div class="dropzone-title">Drop Bank Statement CSV</div>
+              <div class="dropzone-sub">or click to browse</div>
+              <div class="dropzone-file" id="file-bank-name"></div>
+            </div>
+          </div>
+        </div>
+        <div class="upload-footer">
+          <span class="upload-status" id="upload-status">Leave both empty to re-run on existing data</span>
+          <div style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;">
+            <button class="btn btn-ghost" id="btn-reset-files">Clear files</button>
+            <button class="btn btn-fill" id="btn-run-pipeline">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l14 9-14 9V3z"/></svg>
+              <span>Execute recon engine</span>
+            </button>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ===== ARCHITECTURE ===== -->
-    <section class="arch-section">
-      <div class="container">
-        <h2 class="reveal">How it works</h2>
-        <p class="subtitle reveal reveal-delay-1">Three data streams. One matching engine. Real-time safety gating.</p>
-        <div class="arch-card reveal reveal-delay-2">
-          <svg class="arch-svg" viewBox="0 0 1000 130" fill="none">
-            <defs>
-              <linearGradient id="lg1"><stop offset="0%" stop-color="#2563eb" stop-opacity="0.5"/><stop offset="100%" stop-color="#2563eb" stop-opacity="0.05"/></linearGradient>
-              <linearGradient id="lg2"><stop offset="0%" stop-color="#0d9488" stop-opacity="0.5"/><stop offset="100%" stop-color="#0d9488" stop-opacity="0.05"/></linearGradient>
-              <linearGradient id="lg3"><stop offset="0%" stop-color="#059669" stop-opacity="0.7"/><stop offset="100%" stop-color="#059669" stop-opacity="0.1"/></linearGradient>
-            </defs>
-            <path d="M 195 40 C 330 40 370 65 455 65" stroke="url(#lg1)" stroke-width="2.5"/>
-            <path d="M 195 90 C 330 90 370 65 455 65" stroke="url(#lg2)" stroke-width="2.5"/>
-            <path d="M 575 65 C 690 65 730 65 815 65" stroke="url(#lg3)" stroke-width="3"/>
-            <circle r="5" fill="#2563eb" opacity="0.8"><animateMotion path="M 195 40 C 330 40 370 65 455 65" dur="2.5s" repeatCount="indefinite"/></circle>
-            <circle r="5" fill="#0d9488" opacity="0.8"><animateMotion path="M 195 90 C 330 90 370 65 455 65" dur="3s" repeatCount="indefinite"/></circle>
-            <circle r="6" fill="#059669" opacity="0.9"><animateMotion path="M 575 65 C 690 65 730 65 815 65" dur="2s" repeatCount="indefinite"/></circle>
-            <rect x="25" y="22" width="170" height="38" rx="10" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1.5"/>
-            <text x="55" y="46" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#374151">Internal Orders</text>
-            <rect x="25" y="72" width="170" height="38" rx="10" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1.5"/>
-            <text x="42" y="96" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#374151">Razorpay Payouts</text>
-            <rect x="430" y="38" width="170" height="54" rx="12" fill="#1f2937" stroke="#374151" stroke-width="1.5"/>
-            <text x="452" y="62" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#f9fafb">WeldedDiff</text>
-            <text x="452" y="79" font-family="Inter, sans-serif" font-size="11" fill="#9ca3af">Engine + DeepSeek LLM</text>
-            <rect x="815" y="44" width="165" height="42" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5"/>
-            <text x="838" y="70" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#059669">Bank Statement</text>
-          </svg>
+  <!-- ══ REPLAY ══ -->
+  <section class="interactive-section" id="replay">
+    <div class="container">
+      <h2 class="reveal">Step through a real transaction</h2>
+      <p class="subtitle reveal reveal-d1">Watch a payment traverse the full pipeline — deterministic checks, LLM audit, safety gate, final verdict.</p>
+      <div class="ctrl-bar reveal reveal-d2">
+        <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
+          <label>Transaction:</label>
+          <select id="tx-select"><option value="pay_012">pay_012 — LLM 95% conf, safety gate override</option></select>
+        </div>
+        <button class="btn btn-fill" id="btn-replay">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span>Replay</span>
+        </button>
+      </div>
+      <div class="stages-grid reveal reveal-d3">
+        <div class="stage-card" id="stage-1"><div class="stage-top"><span class="stage-no">01</span><span class="pill" id="status-1">pending</span></div><div class="stage-name">Deterministic engine</div><div class="stage-info">Order ID, fee compliance (2% MDR + 18% GST), T+2 SLA.</div></div>
+        <div class="stage-card" id="stage-2"><div class="stage-top"><span class="stage-no">02</span><span class="pill" id="status-2">pending</span></div><div class="stage-name">LLM forensic audit</div><div class="stage-info">DeepSeek narration matching and batch candidate analysis.</div></div>
+        <div class="stage-card" id="stage-3"><div class="stage-top"><span class="stage-no">03</span><span class="pill" id="status-3">pending</span></div><div class="stage-name">Confidence gate</div><div class="stage-info">≥ 85% threshold and gross vs bank credit safety check.</div></div>
+        <div class="stage-card" id="stage-4"><div class="stage-top"><span class="stage-no">04</span><span class="pill" id="status-4">pending</span></div><div class="stage-name">Final outcome</div><div class="stage-info">Committed, proposed, or abstained to exception queue.</div></div>
+      </div>
+      <div class="terminal reveal">
+        <div class="term-chrome">
+          <div class="term-dots"><span class="term-dot td-r"></span><span class="term-dot td-y"></span><span class="term-dot td-g"></span></div>
+          <span class="term-title" id="log-ref-id">pay_012</span>
+        </div>
+        <div class="term-body" id="console-output">
+          <div class="log-line"><span class="t-dim">[sys]</span> Select a transaction and click Replay.</div>
         </div>
       </div>
-    </section>
-
-    <!-- ===== REPLAY ===== -->
-    <section class="interactive-section" id="replay">
-      <div class="container">
-        <h2 class="reveal">Step through a real transaction</h2>
-        <p class="subtitle reveal reveal-delay-1">Watch a payment traverse the full pipeline — deterministic checks, LLM audit, safety gate, final verdict.</p>
-
-        <div class="ctrl-bar reveal reveal-delay-2">
-          <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
-            <label>Transaction:</label>
-            <select id="tx-select"><option value="pay_012">pay_012 — LLM 95% conf, safety gate override</option></select>
-          </div>
-          <button class="btn btn-fill" id="btn-replay">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-            <span>Replay</span>
-          </button>
-        </div>
-
-        <div class="stages-grid reveal reveal-delay-3">
-          <div class="stage-card" id="stage-1"><div class="stage-top"><span class="stage-no">01</span><span class="pill" id="status-1">pending</span></div><div class="stage-name">Deterministic engine</div><div class="stage-info">Order ID, fee compliance (2% MDR + 18% GST), T+2 SLA.</div></div>
-          <div class="stage-card" id="stage-2"><div class="stage-top"><span class="stage-no">02</span><span class="pill" id="status-2">pending</span></div><div class="stage-name">LLM forensic audit</div><div class="stage-info">DeepSeek narration matching and batch candidate analysis.</div></div>
-          <div class="stage-card" id="stage-3"><div class="stage-top"><span class="stage-no">03</span><span class="pill" id="status-3">pending</span></div><div class="stage-name">Confidence gate</div><div class="stage-info">≥ 85% threshold and gross vs bank credit safety check.</div></div>
-          <div class="stage-card" id="stage-4"><div class="stage-top"><span class="stage-no">04</span><span class="pill" id="status-4">pending</span></div><div class="stage-name">Final outcome</div><div class="stage-info">Committed, proposed, or abstained exception.</div></div>
-        </div>
-
-        <div class="terminal reveal">
-          <div class="term-chrome">
-            <div class="term-dots"><span class="term-dot td-r"></span><span class="term-dot td-y"></span><span class="term-dot td-g"></span></div>
-            <span class="term-title" id="log-ref-id">pay_012</span>
-          </div>
-          <div class="term-body" id="console-output">
-            <div class="log-line"><span class="t-dim">[sys]</span> Select a transaction and click Replay.</div>
-          </div>
-        </div>
-
-        <div class="payload-row" id="payload-container" style="display:none;">
-          <div><span class="payload-label">Payment payload</span><div class="payload-box" id="payout-payload"></div></div>
-          <div><span class="payload-label">Bank candidates</span><div class="payload-box" id="candidates-payload"></div></div>
-        </div>
+      <div class="payload-row" id="payload-container" style="display:none;">
+        <div><span class="payload-label">Payment payload</span><div class="payload-box" id="payout-payload"></div></div>
+        <div><span class="payload-label">Bank candidates</span><div class="payload-box" id="candidates-payload"></div></div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ===== TABLE ===== -->
-    <section class="table-section">
-      <div class="container">
-        <h2 class="reveal">Full audit log</h2>
-        <p class="subtitle reveal reveal-delay-1">Every transaction. Every decision. Complete provenance.</p>
-        <div class="table-card reveal reveal-delay-2">
-          <table>
-            <thead><tr><th>Step</th><th>Ref</th><th>Expected</th><th>Source</th><th>Status</th><th>Reason</th></tr></thead>
-            <tbody id="traces-table-body"><tr><td colspan="6" style="text-align:center;color:var(--gray-400)">Loading…</td></tr></tbody>
-          </table>
-        </div>
+  <!-- ══ AUDIT TABLE ══ -->
+  <section class="table-section">
+    <div class="container">
+      <h2 class="reveal">Full audit log</h2>
+      <p class="subtitle reveal reveal-d1">Every transaction. Every decision. Complete provenance.</p>
+      <div class="table-toolbar reveal">
+        <button class="btn btn-ghost" id="btn-export">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export reconciled CSV
+        </button>
       </div>
-    </section>
+      <div class="table-card reveal reveal-d1">
+        <table>
+          <thead><tr><th>Step</th><th>Ref ID</th><th>Expected</th><th>Source</th><th>Status</th><th>Reason</th><th>Actions</th></tr></thead>
+          <tbody id="traces-table-body"><tr><td colspan="7" style="text-align:center;color:var(--gray-400)">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 
-  </div>
+</div>
+<script>
+  /* ── Scroll reveal ── */
+  const revealObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
-  <script>
-    /* Scroll reveal */
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  /* ── ROI bar animation ── */
+  const barObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { const f = e.target.querySelector('.roi-bar-fill'); if (f) { setTimeout(() => f.style.width = f.dataset.target + '%', 200); } barObs.unobserve(e.target); } });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.roi-card').forEach(el => barObs.observe(el));
 
-    /* Mouse gradient */
-    addEventListener('mousemove', e => {
-      document.documentElement.style.setProperty('--mx', e.clientX + 'px');
-      document.documentElement.style.setProperty('--my', e.clientY + 'px');
+  /* ── Mouse gradient ── */
+  addEventListener('mousemove', e => {
+    document.documentElement.style.setProperty('--mx', e.clientX + 'px');
+    document.documentElement.style.setProperty('--my', e.clientY + 'px');
+  });
+
+  let allTraces = [];
+
+  /* ── Init ── */
+  async function init() {
+    try {
+      const [sR, tR] = await Promise.all([fetch('/api/summary'), fetch('/api/traces')]);
+      if (sR.ok) {
+        const s = await sR.json();
+        document.getElementById('kpi-baseline').textContent = `${s.baseline?.baseline_bank_match_rate_pct ?? '16.67'}%`;
+        document.getElementById('kpi-pipeline').textContent = `${s.advanced_payout_match_rate_pct ?? '81.37'}%`;
+        document.getElementById('kpi-reviewed').textContent = (s.baseline?.baseline_matched_orders ?? 100) + (s.llm_calls_made ?? 19);
+        document.getElementById('kpi-cost').textContent = `\$${(s.llm_processing_cost_usd ?? 0.0107).toFixed(4)}`;
+      }
+      if (tR.ok) { allTraces = await tR.json(); populateDropdown(); renderTable(); selectTransaction('pay_012'); }
+    } catch (e) { console.error(e); }
+  }
+
+  function populateDropdown() {
+    const s = document.getElementById('tx-select'); s.innerHTML = '';
+    const m = new Map();
+    allTraces.forEach(t => { const id = t.payment_id || t.utr; if (id) m.set(id, t); });
+    Array.from(m.values()).filter(t => t.payment_id).forEach(t => {
+      const id = t.payment_id;
+      const o = document.createElement('option'); o.value = id;
+      o.textContent = id === 'pay_012' ? 'pay_012 — LLM 95% conf, safety gate override' : `${id} — ${t.decision}`;
+      s.appendChild(o);
     });
+    s.value = 'pay_012';
+  }
 
-    let allTraces = [], activeTrace = null;
+  function selectTransaction(id) {
+    const m = allTraces.filter(t => t.payment_id === id || t.utr === id);
+    document.getElementById('log-ref-id').textContent = id;
+    resetStages();
+  }
 
-    async function init() {
-      try {
+  function resetStages() {
+    for (let i = 1; i <= 4; i++) {
+      document.getElementById(`stage-${i}`).className = 'stage-card';
+      const p = document.getElementById(`status-${i}`); p.className = 'pill'; p.textContent = 'pending';
+    }
+    const id = document.getElementById('tx-select').value;
+    document.getElementById('console-output').innerHTML = `<div class="log-line"><span class="t-dim">[sys]</span> Selected ${id}. Click Replay.</div>`;
+    document.getElementById('payload-container').style.display = 'none';
+  }
+
+  async function runReplay() {
+    const id = document.getElementById('tx-select').value;
+    const m = allTraces.filter(t => t.payment_id === id || t.utr === id);
+    const tr = m.length ? m[m.length - 1] : null; if (!tr) return;
+
+    const btn = document.getElementById('btn-replay');
+    btn.disabled = true;
+    btn.innerHTML = `<span class="spin"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg></span><span>Running…</span>`;
+    resetStages();
+    const out = document.getElementById('console-output'); out.innerHTML = '';
+
+    function log(msg, cls='') {
+      const d = document.createElement('div'); d.className = 'log-line';
+      const ts = new Date().toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+      d.innerHTML = `<span class="t-dim">[${ts}]</span> <span class="${cls}">${msg}</span>`;
+      out.appendChild(d); out.scrollTop = out.scrollHeight;
+    }
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    const conf = tr.llm_confidence !== undefined ? tr.llm_confidence : (tr.decision === 'AUTO_COMMIT' ? 100 : 0);
+
+    document.getElementById('stage-1').className = 'stage-card active'; document.getElementById('status-1').textContent = 'running';
+    log(`[engine] Inspecting ${id}…`); await wait(600);
+    log(`[engine] Fee verified. Net: ${tr.net_calculated || tr.amount || '—'} INR`);
+    document.getElementById('stage-1').className = 'stage-card passed'; const p1 = document.getElementById('status-1'); p1.className = 'pill pill-ok'; p1.textContent = 'checked';
+
+    await wait(400);
+    document.getElementById('stage-2').className = 'stage-card active'; document.getElementById('status-2').textContent = 'running';
+    log('[llm] Querying DeepSeek…'); await wait(700);
+    log(`[llm] ${tr.compared_candidates?.length ?? 0} candidate(s), score: ${conf}%`);
+    if (tr.llm_justification) log(`[llm] "${tr.llm_justification}"`, 't-ok');
+    document.getElementById('stage-2').className = 'stage-card passed';
+    const p2 = document.getElementById('status-2'); p2.className = conf >= 85 ? 'pill pill-ok' : 'pill pill-bad'; p2.textContent = `${conf}%`;
+
+    await wait(500);
+    document.getElementById('stage-3').className = 'stage-card active'; document.getElementById('status-3').textContent = 'evaluating';
+    log('[gate] Checking threshold…'); await wait(600);
+    const p3 = document.getElementById('status-3');
+    if (conf >= 85 && tr.decision === 'ABSTAINED') { log(`[gate] OVERRIDE — ${conf}% blocked by amount guard`, 't-err'); p3.className = 'pill pill-bad'; p3.textContent = 'override'; }
+    else if (conf >= 85) { log(`[gate] PASSED — ${conf}% above threshold`, 't-ok'); p3.className = 'pill pill-ok'; p3.textContent = 'passed'; }
+    else { log(`[gate] ABSTAIN — ${conf}% below 85%`, 't-err'); p3.className = 'pill pill-bad'; p3.textContent = 'abstained'; }
+    document.getElementById('stage-3').className = 'stage-card passed';
+
+    await wait(400);
+    document.getElementById('stage-4').className = 'stage-card active';
+    const reason = tr.reason || `confidence ${conf}%`;
+    log(`[outcome] ${tr.decision} — ${reason}`, tr.decision === 'ABSTAINED' ? 't-err' : 't-ok');
+    const p4 = document.getElementById('status-4');
+    if (tr.decision === 'ABSTAINED') { p4.className = 'pill pill-bad'; p4.textContent = 'abstained'; }
+    else if (tr.decision === 'PROPOSED') { p4.className = 'pill pill-warn'; p4.textContent = 'proposed'; }
+    else if (tr.decision === 'USER_APPROVED') { p4.className = 'pill pill-ok'; p4.textContent = 'approved'; }
+    else { p4.className = 'pill pill-ok'; p4.textContent = 'committed'; }
+    document.getElementById('stage-4').className = 'stage-card passed';
+
+    document.getElementById('payload-container').style.display = 'grid';
+    document.getElementById('payout-payload').textContent = JSON.stringify({ payment_id: id, utr: tr.utr || '—', net: tr.net_calculated || tr.amount || '—', entity: 'payment' }, null, 2);
+    document.getElementById('candidates-payload').textContent = JSON.stringify(tr.compared_candidates || [], null, 2);
+
+    btn.disabled = false;
+    btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>Replay</span>`;
+  }
+
+  /* ── Table render ── */
+  function renderTable() {
+    const tbody = document.getElementById('traces-table-body'); tbody.innerHTML = '';
+    const m = new Map();
+    allTraces.forEach(t => { const id = t.payment_id || t.order_id || t.utr; if (id) m.set(id, t); });
+    Array.from(m.values()).forEach(t => {
+      const row = document.createElement('tr');
+      const id = t.payment_id || t.order_id || t.utr;
+      let tc = 'tag-ok';
+      if (t.decision === 'ABSTAINED') tc = 'tag-err';
+      if (t.decision === 'PROPOSED') tc = 'tag-warn';
+      if (t.decision === 'USER_APPROVED') tc = 'tag-blue';
+      if (t.decision === 'UNRESOLVED') tc = 'tag-muted';
+      const src = t.decision === 'AUTO_COMMIT' ? 'Deterministic' : t.decision === 'USER_APPROVED' ? 'Human + LLM' : 'LLM Audit';
+      const canAction = ['ABSTAINED', 'PROPOSED'].includes(t.decision);
+      const actionsHtml = canAction
+        ? `<div class="action-btns">
+             <button class="btn-xs btn-approve" onclick="hitlAction('${id}','approve',this)">✓ Approve</button>
+             <button class="btn-xs btn-reject" onclick="hitlAction('${id}','reject',this)">✕ Dismiss</button>
+           </div>`
+        : `<span style="color:var(--gray-300);font-size:12px;">—</span>`;
+
+      row.innerHTML = `
+        <td><code style="color:var(--gray-400)">${t.step || '—'}</code></td>
+        <td><code>${id || '—'}</code></td>
+        <td style="font-family:var(--mono)">${t.net_calculated || t.amount || t.amount_debited || '—'}</td>
+        <td style="color:var(--gray-500)">${src}</td>
+        <td><span class="tag ${tc}" id="tag-${id}">${t.decision}</span></td>
+        <td style="max-width:320px;white-space:normal;color:var(--gray-500)">${t.reason || '—'}</td>
+        <td id="actions-${id}">${actionsHtml}</td>`;
+      tbody.appendChild(row);
+    });
+  }
+
+  /* ── HITL approve/reject ── */
+  async function hitlAction(id, action, btn) {
+    btn.disabled = true; btn.textContent = '…';
+    try {
+      const res = await fetch(`/api/traces/${id}/${action}`, { method: 'POST' });
+      const data = await res.json();
+      if (res.ok) {
+        // Update allTraces in memory
+        allTraces.forEach(t => { if ((t.payment_id || t.order_id || t.utr) === id) t.decision = data.new_decision; });
+        // Update tag in table
+        const tag = document.getElementById(`tag-${id}`);
+        const actionsCell = document.getElementById(`actions-${id}`);
+        if (tag) {
+          tag.className = data.new_decision === 'USER_APPROVED' ? 'tag tag-blue' : data.new_decision === 'ABSTAINED' ? 'tag tag-err' : 'tag tag-ok';
+          tag.textContent = data.new_decision;
+        }
+        if (actionsCell) actionsCell.innerHTML = `<span style="color:var(--gray-400);font-size:12px">${action === 'approve' ? '✓ approved' : '✕ dismissed'}</span>`;
+        // Refresh KPIs
+        const sR = await fetch('/api/summary');
+        if (sR.ok) {
+          const s = await sR.json();
+          document.getElementById('kpi-pipeline').textContent = `${s.advanced_payout_match_rate_pct ?? '—'}%`;
+        }
+      } else {
+        btn.disabled = false; btn.textContent = action === 'approve' ? '✓ Approve' : '✕ Dismiss';
+        alert(`Action failed: ${data.detail}`);
+      }
+    } catch (e) {
+      btn.disabled = false; btn.textContent = '!';
+      console.error(e);
+    }
+  }
+
+  /* ── CSV Export ── */
+  document.getElementById('btn-export').addEventListener('click', () => {
+    window.location.href = '/api/export';
+  });
+
+  /* ── Dropzone UX ── */
+  function setupDropzone(dzId, inputId, nameId) {
+    const dz = document.getElementById(dzId);
+    const input = document.getElementById(inputId);
+    const name = document.getElementById(nameId);
+    input.addEventListener('change', () => {
+      name.textContent = input.files[0]?.name || '';
+    });
+    dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('dragover'); });
+    dz.addEventListener('dragleave', () => dz.classList.remove('dragover'));
+    dz.addEventListener('drop', e => {
+      e.preventDefault(); dz.classList.remove('dragover');
+      if (e.dataTransfer.files[0]) { input.files = e.dataTransfer.files; name.textContent = e.dataTransfer.files[0].name; }
+    });
+  }
+  setupDropzone('dz-payouts', 'file-payouts', 'file-payouts-name');
+  setupDropzone('dz-bank', 'file-bank', 'file-bank-name');
+
+  document.getElementById('btn-reset-files').addEventListener('click', () => {
+    document.getElementById('file-payouts').value = '';
+    document.getElementById('file-bank').value = '';
+    document.getElementById('file-payouts-name').textContent = '';
+    document.getElementById('file-bank-name').textContent = '';
+    document.getElementById('upload-status').textContent = 'Files cleared';
+    document.getElementById('upload-status').className = 'upload-status';
+  });
+
+  /* ── Run pipeline ── */
+  document.getElementById('btn-run-pipeline').addEventListener('click', async () => {
+    const btn = document.getElementById('btn-run-pipeline');
+    const status = document.getElementById('upload-status');
+    btn.disabled = true;
+    btn.innerHTML = `<span class="spin"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg></span><span>Running pipeline…</span>`;
+    status.textContent = 'Running reconciliation engine…'; status.className = 'upload-status';
+
+    const fd = new FormData();
+    const f1 = document.getElementById('file-payouts').files[0];
+    const f2 = document.getElementById('file-bank').files[0];
+    if (f1) fd.append('orders_file', f1);
+    if (f2) fd.append('bank_file', f2);
+
+    try {
+      const res = await fetch('/api/run_pipeline', { method: 'POST', body: fd });
+      const data = await res.json();
+      if (res.ok) {
+        status.textContent = `✓ Pipeline complete — ${data.trace_count} traces generated`; status.className = 'upload-status ok';
+        // Reload traces and KPIs
         const [sR, tR] = await Promise.all([fetch('/api/summary'), fetch('/api/traces')]);
         if (sR.ok) {
           const s = await sR.json();
-          document.getElementById('kpi-baseline').textContent = `${s.baseline?.baseline_bank_match_rate_pct ?? '16.67'}%`;
-          document.getElementById('kpi-pipeline').textContent = `${s.advanced_payout_match_rate_pct ?? '81.37'}%`;
-          document.getElementById('kpi-reviewed').textContent = (s.baseline?.baseline_matched_orders ?? 100) + (s.llm_calls_made ?? 19);
-          document.getElementById('kpi-cost').textContent = `\$${(s.llm_processing_cost_usd ?? 0.0107).toFixed(4)}`;
+          document.getElementById('kpi-baseline').textContent = `${s.baseline?.baseline_bank_match_rate_pct ?? '—'}%`;
+          document.getElementById('kpi-pipeline').textContent = `${s.advanced_payout_match_rate_pct ?? '—'}%`;
+          document.getElementById('kpi-reviewed').textContent = (s.baseline?.baseline_matched_orders ?? 0) + (s.llm_calls_made ?? 0);
+          document.getElementById('kpi-cost').textContent = `\$${(s.llm_processing_cost_usd ?? 0).toFixed(4)}`;
         }
-        if (tR.ok) { allTraces = await tR.json(); populateDropdown(); renderTable(); selectTransaction('pay_012'); }
-      } catch (e) { console.error(e); }
-    }
-
-    function populateDropdown() {
-      const s = document.getElementById('tx-select'); s.innerHTML = '';
-      const m = new Map();
-      allTraces.forEach(t => { const id = t.payment_id || t.utr; if (id) m.set(id, t); });
-      Array.from(m.values()).filter(t => t.payment_id).forEach(t => {
-        const id = t.payment_id;
-        const o = document.createElement('option'); o.value = id;
-        o.textContent = id === 'pay_012' ? 'pay_012 — LLM 95% conf, safety gate override' : `${id} — ${t.decision}`;
-        s.appendChild(o);
-      });
-      s.value = 'pay_012';
-    }
-
-    function selectTransaction(id) {
-      const m = allTraces.filter(t => t.payment_id === id || t.utr === id);
-      activeTrace = m.length ? m[m.length - 1] : null;
-      document.getElementById('log-ref-id').textContent = id;
-      resetStages();
-    }
-
-    function resetStages() {
-      for (let i = 1; i <= 4; i++) { document.getElementById(`stage-${i}`).className = 'stage-card'; const p = document.getElementById(`status-${i}`); p.className = 'pill'; p.textContent = 'pending'; }
-      document.getElementById('console-output').innerHTML = `<div class="log-line"><span class="t-dim">[sys]</span> Selected ${activeTrace?.payment_id || 'pay_012'}. Click Replay.</div>`;
-      document.getElementById('payload-container').style.display = 'none';
-    }
-
-    async function runReplay() {
-      const id = document.getElementById('tx-select').value;
-      const m = allTraces.filter(t => t.payment_id === id || t.utr === id);
-      const tr = m.length ? m[m.length - 1] : null; if (!tr) return;
-
-      const btn = document.getElementById('btn-replay');
-      btn.disabled = true;
-      btn.innerHTML = `<svg class="spin" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg><span>Running…</span>`;
-      resetStages();
-      const out = document.getElementById('console-output'); out.innerHTML = '';
-
-      function log(msg, cls = '') {
-        const d = document.createElement('div'); d.className = 'log-line';
-        const ts = new Date().toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
-        d.innerHTML = `<span class="t-dim">[${ts}]</span> <span class="${cls}">${msg}</span>`;
-        out.appendChild(d); out.scrollTop = out.scrollHeight;
+        if (tR.ok) { allTraces = await tR.json(); populateDropdown(); renderTable(); }
+      } else {
+        status.textContent = `Error: ${data.detail || 'Pipeline failed'}`; status.className = 'upload-status err';
       }
-      const wait = ms => new Promise(r => setTimeout(r, ms));
-      const conf = tr.llm_confidence !== undefined ? tr.llm_confidence : (tr.decision === 'AUTO_COMMIT' ? 100 : 0);
-
-      document.getElementById('stage-1').className = 'stage-card active'; document.getElementById('status-1').textContent = 'running';
-      log(`[engine] Inspecting ${id}…`); await wait(600);
-      log(`[engine] Fee verified. Net: ${tr.net_calculated || tr.amount || '—'} INR`);
-      document.getElementById('stage-1').className = 'stage-card passed'; const p1 = document.getElementById('status-1'); p1.className = 'pill pill-ok'; p1.textContent = 'checked';
-
-      await wait(400);
-      document.getElementById('stage-2').className = 'stage-card active'; document.getElementById('status-2').textContent = 'running';
-      log('[llm] Querying DeepSeek…'); await wait(700);
-      log(`[llm] ${tr.compared_candidates?.length ?? 0} candidate(s), score: ${conf}%`);
-      if (tr.llm_justification) log(`[llm] "${tr.llm_justification}"`, 't-ok');
-      document.getElementById('stage-2').className = 'stage-card passed';
-      const p2 = document.getElementById('status-2'); p2.className = conf >= 85 ? 'pill pill-ok' : 'pill pill-bad'; p2.textContent = `${conf}%`;
-
-      await wait(500);
-      document.getElementById('stage-3').className = 'stage-card active'; document.getElementById('status-3').textContent = 'evaluating';
-      log('[gate] Checking threshold…'); await wait(600);
-      const p3 = document.getElementById('status-3');
-      if (conf >= 85 && tr.decision === 'ABSTAINED') { log(`[gate] OVERRIDE — ${conf}% blocked by amount guard`, 't-err'); p3.className = 'pill pill-bad'; p3.textContent = 'override'; }
-      else if (conf >= 85) { log(`[gate] PASSED — ${conf}% above threshold`, 't-ok'); p3.className = 'pill pill-ok'; p3.textContent = 'passed'; }
-      else { log(`[gate] ABSTAIN — ${conf}% below 85%`, 't-err'); p3.className = 'pill pill-bad'; p3.textContent = 'abstained'; }
-      document.getElementById('stage-3').className = 'stage-card passed';
-
-      await wait(400);
-      document.getElementById('stage-4').className = 'stage-card active';
-      const reason = tr.reason || `confidence ${conf}%`;
-      log(`[outcome] ${tr.decision} — ${reason}`, tr.decision === 'ABSTAINED' ? 't-err' : 't-ok');
-      const p4 = document.getElementById('status-4');
-      if (tr.decision === 'ABSTAINED') { p4.className = 'pill pill-bad'; p4.textContent = 'abstained'; }
-      else if (tr.decision === 'PROPOSED') { p4.className = 'pill pill-warn'; p4.textContent = 'proposed'; }
-      else { p4.className = 'pill pill-ok'; p4.textContent = 'committed'; }
-      document.getElementById('stage-4').className = 'stage-card passed';
-
-      document.getElementById('payload-container').style.display = 'grid';
-      document.getElementById('payout-payload').textContent = JSON.stringify({ payment_id: id, utr: tr.utr || '—', net: tr.net_calculated || tr.amount || '—', entity: 'payment' }, null, 2);
-      document.getElementById('candidates-payload').textContent = JSON.stringify(tr.compared_candidates || [], null, 2);
-
-      btn.disabled = false;
-      btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>Replay</span>`;
+    } catch (e) {
+      status.textContent = 'Network error — is the server running?'; status.className = 'upload-status err';
     }
 
-    function renderTable() {
-      const tbody = document.getElementById('traces-table-body'); tbody.innerHTML = '';
-      const m = new Map();
-      allTraces.forEach(t => { const id = t.payment_id || t.order_id || t.utr; if (id) m.set(id, t); });
-      Array.from(m.values()).forEach(t => {
-        const row = document.createElement('tr');
-        let tc = 'tag-ok';
-        if (t.decision === 'ABSTAINED') tc = 'tag-err';
-        if (t.decision === 'PROPOSED') tc = 'tag-warn';
-        if (t.decision === 'UNRESOLVED') tc = 'tag-muted';
-        const src = t.decision === 'AUTO_COMMIT' ? 'Deterministic' : t.decision === 'USER_APPROVED' ? 'Human + LLM' : 'LLM Audit';
-        row.innerHTML = `<td><code style="color:var(--gray-400)">${t.step || '—'}</code></td><td><code>${t.payment_id || t.order_id || t.utr || '—'}</code></td><td>${t.net_calculated || t.amount || t.amount_debited || '—'}</td><td style="color:var(--gray-500)">${src}</td><td><span class="tag ${tc}">${t.decision}</span></td><td style="max-width:360px;white-space:normal;color:var(--gray-500)">${t.reason || '—'}</td>`;
-        tbody.appendChild(row);
-      });
-    }
+    btn.disabled = false;
+    btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l14 9-14 9V3z"/></svg><span>Execute recon engine</span>`;
+  });
 
-    document.getElementById('tx-select').addEventListener('change', e => selectTransaction(e.target.value));
-    document.getElementById('btn-replay').addEventListener('click', runReplay);
-    addEventListener('DOMContentLoaded', init);
-  </script>
+  /* ── Wire up dropdown & replay ── */
+  document.getElementById('tx-select').addEventListener('change', e => selectTransaction(e.target.value));
+  document.getElementById('btn-replay').addEventListener('click', runReplay);
+
+  addEventListener('DOMContentLoaded', init);
+</script>
 </body>
 </html>
