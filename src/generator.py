@@ -202,12 +202,12 @@ def generate_synthetic_data(num_records=100, seed=42):
             # SLA Breach delay: Move it to Tuesday
             transfer_date = datetime(2026, 9, 1, 11, 0, 0)
             
-        # Fuzzy merchant formatting
+        # Fuzzy merchant formatting (authentic Indian bank settlement narration patterns)
         fuzzy_names = [
-            "RZRPY PAYOUT WELDEDDIF",
-            "RAZORPAY APY WELDEDDIFFA",
+            "NEFT-CMS-RAZORPAY-SETL",
+            "RAZORPAY PAYOUTS",
             "RZRPY SETTLEMENT",
-            "RAZORPAY SOFTWARE PRIVATE"
+            "INF-RAZORPAY SOFTWARE"
         ]
         desc = f"CMS/{random.choice(fuzzy_names)}/{sett_id}/"
         if len(payouts_in_settlement) == 1:
