@@ -5,16 +5,16 @@
     "baseline_matched_bank_credits": 2,
     "baseline_bank_match_rate_pct": 16.67
   },
-  "deterministic_reconciled_payouts": 83,
+  "deterministic_reconciled_payouts": 100,
   "deterministic_reconciled_debits": 1,
-  "llm_calls_made": 19,
+  "llm_calls_made": 2,
   "llm_proposed_payouts": 0,
   "llm_proposed_debits": 0,
-  "llm_abstained_payouts": 19,
+  "llm_abstained_payouts": 2,
   "llm_abstained_debits": 0,
-  "advanced_payout_match_rate_pct": 81.37,
+  "advanced_payout_match_rate_pct": 98.04,
   "advanced_debit_match_rate_pct": 100.0,
-  "llm_processing_cost_usd": 0.010715,
-  "llm_input_tokens": 8985,
-  "llm_output_tokens": 2636
+  "llm_processing_cost_usd": 0.00116,
+  "llm_input_tokens": 950,
+  "llm_output_tokens": 291
 }

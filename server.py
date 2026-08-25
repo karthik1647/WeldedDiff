@@ -92,14 +92,14 @@ def download_template(template_type: str):
     today = date.today().strftime("%Y-%m-%d")
 
     if template_type.lower() in ("payouts", "razorpay"):
-        writer.writerow(["payment_id", "order_id", "amount", "fee", "tax_gst", "settlement_id", "settled_at", "utr"])
-        writer.writerow(["pay_sample_01", "ord_sample_01", "12500.00", "250.00", "45.00", "set_sample_101", f"{today} 10:30:00", "UTR_SMPL001"])
-        writer.writerow(["pay_sample_02", "ord_sample_02", "8400.00", "168.00", "30.24", "set_sample_101", f"{today} 11:15:00", "UTR_SMPL002"])
-        writer.writerow(["pay_sample_03", "ord_sample_03", "19999.00", "399.98", "72.00", "set_sample_102", f"{today} 14:00:00", "UTR_SMPL003"])
+        writer.writerow(["payment_id", "order_id", "payment_method", "amount", "fee", "tax_gst", "settlement_id", "settled_at", "utr"])
+        writer.writerow(["pay_sample_01", "ord_sample_01", "upi", "12500.00", "0.00", "0.00", "set_sample_101", f"{today} 10:30:00", "UTR_SMPL001"])
+        writer.writerow(["pay_sample_02", "ord_sample_02", "debit_card", "8400.00", "42.00", "7.56", "set_sample_101", f"{today} 11:15:00", "UTR_SMPL002"])
+        writer.writerow(["pay_sample_03", "ord_sample_03", "credit_card", "19999.00", "399.98", "72.00", "set_sample_102", f"{today} 14:00:00", "UTR_SMPL003"])
         filename = "WeldedDiff_Payouts_Template.csv"
     elif template_type.lower() in ("bank", "statement"):
         writer.writerow(["date", "description", "amount_credited", "amount_debited"])
-        writer.writerow([today, "CMS/RAZORPAY PAYOUTS/set_sample_101/BATCH", "20406.76", "0.00"])
+        writer.writerow([today, "CMS/RAZORPAY PAYOUTS/set_sample_101/BATCH", "20850.44", "0.00"])
         writer.writerow([today, "CMS/RZRPY SETTLEMENT/set_sample_102/BATCH", "19527.02", "0.00"])
         writer.writerow([today, "BANK CHARGES / MONTHLY MAINTENANCE", "0.00", "150.00"])
         filename = "WeldedDiff_BankStatement_Template.csv"
@@ -175,15 +175,17 @@ def export_reconciliation_report(format: str = Query("standard", regex="^(standa
     else:
         # Standard format
         writer.writerow([
-            "Transaction_ID", "Matched_UTR", "Step",
+            "Transaction_ID", "Payment_Method", "Matched_UTR", "Step",
             "Gross_Amount_INR", "Net_Amount_INR",
             "Reconciliation_Status", "Matching_Source", "Audit_Reason"
         ])
         for t in seen.values():
             ref = t.get("payment_id") or t.get("order_id") or t.get("utr") or "—"
+            method = t.get("payment_method") or "credit_card"
             src = "Deterministic" if t.get("decision") == "AUTO_COMMIT" else "Human Override" if t.get("decision") == "USER_APPROVED" else "LLM Audit"
             writer.writerow([
                 ref,
+                method.upper(),
                 t.get("utr") or "—",
                 t.get("step") or "—",
                 t.get("amount") or t.get("amount_debited") or "—",

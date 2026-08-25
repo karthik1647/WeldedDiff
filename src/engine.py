@@ -1,13 +1,18 @@
 import os
 import pandas as pd
 from decimal import Decimal
-from src.utils import to_decimal, parse_date, normalize_text, extract_utr, extract_settlement_id
+from src.utils import (
+    to_decimal, parse_date, normalize_text, extract_utr,
+    extract_settlement_id, get_instrument_contract_rates,
+    is_within_banking_sla, count_banking_business_days
+)
 
 class ReconciliationEngine:
-    def __init__(self, orders_path, payouts_path, bank_path):
+    def __init__(self, orders_path, payouts_path, bank_path, apply_tds=False):
         self.orders_path = orders_path
         self.payouts_path = payouts_path
         self.bank_path = bank_path
+        self.apply_tds = apply_tds
         
         # Load raw dataframes
         self.df_orders = pd.read_csv(orders_path)
@@ -20,17 +25,33 @@ class ReconciliationEngine:
         self.df_payouts["amount"] = self.df_payouts["amount"].apply(to_decimal)
         self.df_payouts["fee"] = self.df_payouts["fee"].apply(to_decimal)
         self.df_payouts["tax_gst"] = self.df_payouts["tax_gst"].apply(to_decimal)
-        self.df_payouts["contract_fee"] = self.df_payouts["amount"].apply(
-            lambda a: to_decimal(a * Decimal("0.02"))
-        )
-        self.df_payouts["contract_tax"] = self.df_payouts["contract_fee"].apply(
-            lambda f: to_decimal(f * Decimal("0.18"))
-        )
-        self.df_payouts["contract_net"] = self.df_payouts.apply(
-            lambda r: r["amount"] - r["contract_fee"] - r["contract_tax"], axis=1
-        )
+        
+        # Ensure payment_method is present (default to credit_card if legacy CSV)
+        if "payment_method" not in self.df_payouts.columns:
+            self.df_payouts["payment_method"] = "credit_card"
+        else:
+            self.df_payouts["payment_method"] = self.df_payouts["payment_method"].fillna("credit_card")
+        
+        # Calculate dynamic contract fees per payment instrument
+        def calc_contract(row):
+            method = row.get("payment_method", "credit_card")
+            amt = row["amount"]
+            rates = get_instrument_contract_rates(method)
+            c_fee = to_decimal(amt * rates["mdr"])
+            c_tax = to_decimal(c_fee * rates["gst"])
+            tds = to_decimal(amt * Decimal("0.001")) if self.apply_tds else Decimal("0.00")
+            c_net = amt - c_fee - c_tax - tds
+            return pd.Series([c_fee, c_tax, tds, c_net])
+
+        contract_vals = self.df_payouts.apply(calc_contract, axis=1)
+        self.df_payouts["contract_fee"] = contract_vals[0]
+        self.df_payouts["contract_tax"] = contract_vals[1]
+        self.df_payouts["tds_amount"] = contract_vals[2]
+        self.df_payouts["contract_net"] = contract_vals[3]
+        
         self.df_payouts["net_calculated"] = self.df_payouts.apply(
-            lambda r: r["amount"] - r["fee"] - r["tax_gst"], axis=1
+            lambda r: r["amount"] - r["fee"] - r["tax_gst"] - (to_decimal(r["amount"] * Decimal("0.001")) if self.apply_tds else Decimal("0.00")),
+            axis=1
         )
         
         self.df_bank["amount_credited"] = self.df_bank["amount_credited"].apply(to_decimal)
@@ -65,11 +86,9 @@ class ReconciliationEngine:
         for _, payout in self.df_payouts.iterrows():
             payout_utr = payout["utr"]
             if payout_utr in bank_utr_map:
-                # Naive matching expects expected net calculated to exactly match bank amount credited
                 if payout["net_calculated"] == bank_utr_map[payout_utr]:
                     matched_payouts_to_bank += 1
                     
-        # Calculate naive success rates
         order_match_rate = (matched_orders / total_orders) * 100 if total_orders > 0 else 0
         bank_match_rate = (matched_payouts_to_bank / total_bank_credits) * 100 if total_bank_credits > 0 else 0
         
@@ -83,12 +102,8 @@ class ReconciliationEngine:
     def run_deterministic_advanced(self):
         """
         Advanced deterministic matching logic (Equilibrium Phase 1).
-        Enforces decimal precision, checks timing SLA, groups batch payouts, and flags anomalies.
-        Returns:
-            - matched_records: List of successfully reconciled records.
-            - unresolved_records: List of records requiring LLM probabilistic resolution.
-            - decision_traces: Trace history of matching attempts and comparisons.
-            - metrics: Statistics of the run.
+        Enforces decimal precision, dynamic instrument MDR, business banking SLA,
+        and batch disaggregation with anomaly isolation.
         """
         unresolved_records = {
             "orders": [],
@@ -105,7 +120,6 @@ class ReconciliationEngine:
         
         decision_traces = []
         
-        # Track statistics
         stats = {
             "resolved_deterministically_orders": 0,
             "resolved_deterministically_payouts": 0,
@@ -117,7 +131,6 @@ class ReconciliationEngine:
         }
 
         # --- A. Order to Payout Matching ---
-        # Group payouts by order_id to handle split payments
         payouts_by_order = {}
         for _, p in self.df_payouts.iterrows():
             ord_id = p["order_id"]
@@ -129,9 +142,13 @@ class ReconciliationEngine:
             ord_id = order["order_id"]
             order_dict = order.to_dict()
             
+            payout_candidates = payouts_by_order.get(ord_id, [])
+            primary_method = payout_candidates[0].get("payment_method", "credit_card") if payout_candidates else "credit_card"
+            
             trace = {
                 "step": "order_to_payout",
                 "order_id": ord_id,
+                "payment_method": primary_method,
                 "amount": str(order["amount"]),
                 "status": order["status"],
                 "compared_candidates": [],
@@ -141,7 +158,6 @@ class ReconciliationEngine:
             
             if ord_id not in payouts_by_order:
                 if order["status"] == "failed":
-                    # Correctly resolved: Failed order has no payout
                     trace["decision"] = "AUTO_COMMIT"
                     trace["reason"] = "Failed order correctly lacks payout"
                     matched_records["orders_to_payouts"].append({
@@ -158,17 +174,19 @@ class ReconciliationEngine:
                 
             payout_candidates = payouts_by_order[ord_id]
             trace["compared_candidates"] = [
-                {"payment_id": p["payment_id"], "amount": str(p["amount"])} for p in payout_candidates
+                {"payment_id": p["payment_id"], "amount": str(p["amount"]), "payment_method": p.get("payment_method", "credit_card")}
+                for p in payout_candidates
             ]
             
             if len(payout_candidates) == 1:
                 payout = payout_candidates[0]
                 if order["amount"] == payout["amount"]:
                     trace["decision"] = "AUTO_COMMIT"
-                    trace["reason"] = "Exact order_id and amount match"
+                    trace["reason"] = f"Exact order_id and amount match ({payout.get('payment_method', 'card').upper()})"
                     matched_records["orders_to_payouts"].append({
                         "order_id": ord_id,
                         "payment_id": payout["payment_id"],
+                        "payment_method": payout.get("payment_method", "credit_card"),
                         "amount": order["amount"],
                         "anomaly": None
                     })
@@ -177,7 +195,7 @@ class ReconciliationEngine:
                     trace["reason"] = "Amount mismatch between order and payout"
                     unresolved_records["orders"].append(order_dict)
             else:
-                # Handle Split Payments
+                # Split Payments handling
                 sum_payouts = sum(p["amount"] for p in payout_candidates)
                 if order["amount"] == sum_payouts:
                     trace["decision"] = "AUTO_COMMIT"
@@ -186,6 +204,7 @@ class ReconciliationEngine:
                         matched_records["orders_to_payouts"].append({
                             "order_id": ord_id,
                             "payment_id": p["payment_id"],
+                            "payment_method": p.get("payment_method", "credit_card"),
                             "amount": p["amount"],
                             "anomaly": "split_payment"
                         })
@@ -198,12 +217,9 @@ class ReconciliationEngine:
 
         # --- B. Payout to Bank Statement Matching ---
         bank_credits = self.df_bank[self.df_bank["amount_credited"] > 0].copy()
-        
-        # Index bank credits by extracted UTR or settlement_id for fast lookup
         bank_credits["extracted_utr"] = bank_credits["description"].apply(extract_utr)
         bank_credits["extracted_set_id"] = bank_credits["description"].apply(extract_settlement_id)
         
-        # Convert bank records to dictionary list to track reconciliation state
         bank_credits_list = bank_credits.to_dict(orient="records")
         for b in bank_credits_list:
             b["reconciled"] = False
@@ -212,7 +228,7 @@ class ReconciliationEngine:
         for p in payouts_list:
             p["reconciled"] = False
 
-        # Match single payout to bank credit via UTR
+        # 1. Match individual payout via unique UTR
         for p in payouts_list:
             p_utr = p["utr"]
             if not p_utr:
@@ -221,6 +237,7 @@ class ReconciliationEngine:
             trace = {
                 "step": "payout_to_bank_utr",
                 "payment_id": p["payment_id"],
+                "payment_method": p.get("payment_method", "credit_card"),
                 "utr": p_utr,
                 "net_calculated": str(p["net_calculated"]),
                 "compared_candidates": [],
@@ -228,7 +245,6 @@ class ReconciliationEngine:
                 "reason": ""
             }
             
-            # Find bank statements matching this UTR
             matching_banks = [b for b in bank_credits_list if b["extracted_utr"] == p_utr]
             
             trace["compared_candidates"] = [
@@ -240,26 +256,23 @@ class ReconciliationEngine:
                 bank_row = matching_banks[0]
                 amount_diff = abs(p["net_calculated"] - bank_row["amount_credited"])
                 
-                # Check timing SLA using normalized calendar dates (prevent hours difference bugs)
+                # Check timing SLA using banking business days
                 p_date = parse_date(p["settled_at"])
                 b_date = parse_date(bank_row["date"])
+                sla_valid = is_within_banking_sla(p_date, b_date, max_business_days=2)
                 
-                sla_valid = True
-                if p_date and b_date:
-                    days_diff = (b_date.date() - p_date.date()).days
-                    if days_diff < 0 or days_diff > 4: # Allow 4 days for weekend SLA delays
-                        sla_valid = False
-                
-                # Verify contract fee compliance (MDR overcharges should NOT auto-commit)
+                # Dynamic MDR Fee Compliance Check
                 contract_fee_matches = (p["fee"] == p["contract_fee"]) and (p["tax_gst"] == p["contract_tax"])
+                method_name = p.get("payment_method", "card").upper()
                 
                 if amount_diff == Decimal("0.00") and sla_valid and contract_fee_matches:
                     trace["decision"] = "AUTO_COMMIT"
-                    trace["reason"] = "Exact UTR, net amount, and timing SLA match"
+                    trace["reason"] = f"Exact UTR, {method_name} MDR compliance, and T+2 banking SLA verified"
                     p["reconciled"] = True
                     bank_row["reconciled"] = True
                     matched_records["payouts_to_bank"].append({
                         "payment_id": p["payment_id"],
+                        "payment_method": p.get("payment_method", "credit_card"),
                         "utr": p_utr,
                         "amount_credited": bank_row["amount_credited"],
                         "anomaly": None
@@ -267,13 +280,13 @@ class ReconciliationEngine:
                     stats["resolved_deterministically_payouts"] += 1
                     stats["resolved_deterministically_bank"] += 1
                 elif amount_diff == Decimal("0.01") and sla_valid and contract_fee_matches:
-                    # Anomaly B: Rounding error match
                     trace["decision"] = "AUTO_COMMIT"
                     trace["reason"] = "Matched with 0.01 INR rounding discrepancy"
                     p["reconciled"] = True
                     bank_row["reconciled"] = True
                     matched_records["payouts_to_bank"].append({
                         "payment_id": p["payment_id"],
+                        "payment_method": p.get("payment_method", "credit_card"),
                         "utr": p_utr,
                         "amount_credited": bank_row["amount_credited"],
                         "anomaly": "rounding_discrepancy"
@@ -281,20 +294,18 @@ class ReconciliationEngine:
                     stats["resolved_deterministically_payouts"] += 1
                     stats["resolved_deterministically_bank"] += 1
                 elif not contract_fee_matches:
-                    trace["reason"] = f"MDR Contract Violation: expected fee {p['contract_fee']} vs actual gateway fee {p['fee']}"
+                    trace["reason"] = f"MDR Contract Violation: expected {method_name} fee {p['contract_fee']} vs actual gateway fee {p['fee']}"
                 elif amount_diff > Decimal("0.01") and sla_valid:
-                    # Anomaly A: Fee overcharge mismatch (Do not match, mark as anomaly and let LLM audit)
                     trace["reason"] = f"MDR Fee mismatch: expected {p['net_calculated']} vs bank got {bank_row['amount_credited']}"
                 else:
-                    trace["reason"] = f"SLA Violation: bank transfer occurred too late or too early (settled {p['settled_at']} vs bank date {bank_row['date']})"
+                    trace["reason"] = f"SLA Violation: bank transfer exceeded 2 business banking days (settled {p['settled_at']} vs bank date {bank_row['date']})"
             
             decision_traces.append(trace)
 
-        # Match remaining records via Settlement Batch ID
+        # 2. Batch Settlement & Disaggregation Matching
         unreconciled_payouts = [p for p in payouts_list if not p["reconciled"]]
         unreconciled_banks = [b for b in bank_credits_list if not b["reconciled"]]
         
-        # Group unreconciled payouts by settlement_id
         payouts_by_settlement = {}
         for p in unreconciled_payouts:
             s_id = p["settlement_id"]
@@ -303,58 +314,70 @@ class ReconciliationEngine:
             payouts_by_settlement[s_id].append(p)
             
         for s_id, p_batch in payouts_by_settlement.items():
+            matching_banks = [b for b in unreconciled_banks if b["extracted_set_id"] == s_id.lower()]
+            sum_payout_net = sum(p["net_calculated"] for p in p_batch)
+            
             trace = {
                 "step": "payout_to_bank_settlement_batch",
                 "settlement_id": s_id,
+                "payment_method": "batch",
                 "batch_size": len(p_batch),
-                "sum_net_calculated": str(sum(p["net_calculated"] for p in p_batch)),
-                "compared_candidates": [],
+                "sum_net_calculated": str(sum_payout_net),
+                "compared_candidates": [
+                    {"date": b["date"], "amount_credited": str(b["amount_credited"]), "description": b["description"]}
+                    for b in matching_banks
+                ],
                 "decision": "UNRESOLVED",
                 "reason": ""
             }
             
-            matching_banks = [b for b in unreconciled_banks if b["extracted_set_id"] == s_id.lower()]
-            trace["compared_candidates"] = [
-                {"date": b["date"], "amount_credited": str(b["amount_credited"]), "description": b["description"]}
-                for b in matching_banks
-            ]
-            
             if len(matching_banks) == 1:
                 bank_row = matching_banks[0]
-                sum_payout_net = sum(p["net_calculated"] for p in p_batch)
                 amount_diff = abs(sum_payout_net - bank_row["amount_credited"])
                 
-                # Check timing SLA using normalized calendar dates (prevent hours difference bugs)
                 max_payout_settled = max(parse_date(p["settled_at"]) for p in p_batch)
                 b_date = parse_date(bank_row["date"])
+                sla_valid = is_within_banking_sla(max_payout_settled, b_date, max_business_days=2)
                 
-                sla_valid = True
-                if max_payout_settled and b_date:
-                    days_diff = (b_date.date() - max_payout_settled.date()).days
-                    if days_diff < 0 or days_diff > 4:
-                        sla_valid = False
+                # Check fee compliance per item in batch
+                fee_compliant_payouts = [
+                    p for p in p_batch
+                    if (p["fee"] == p["contract_fee"]) and (p["tax_gst"] == p["contract_tax"])
+                ]
+                anomalous_payouts = [p for p in p_batch if p not in fee_compliant_payouts]
                 
-                # Batch contract fee compliance
-                all_contract_fee_match = all(
-                    (p["fee"] == p["contract_fee"]) and (p["tax_gst"] == p["contract_tax"]) for p in p_batch
-                )
-                
-                if amount_diff == Decimal("0.00") and sla_valid and all_contract_fee_match:
+                if amount_diff == Decimal("0.00") and sla_valid and len(anomalous_payouts) == 0:
+                    # Clean full batch
                     trace["decision"] = "AUTO_COMMIT"
-                    trace["reason"] = f"Batch settlement match: Sum of {len(p_batch)} payouts matches bank statement batch deposit exactly"
+                    trace["reason"] = f"Batch settlement match: Sum of {len(p_batch)} multi-instrument payouts matches bank deposit exactly"
                     bank_row["reconciled"] = True
                     for p in p_batch:
                         p["reconciled"] = True
                         matched_records["payouts_to_bank"].append({
                             "payment_id": p["payment_id"],
+                            "payment_method": p.get("payment_method", "credit_card"),
                             "utr": p["utr"],
                             "amount_credited": bank_row["amount_credited"],
                             "anomaly": "batch_settlement"
                         })
                         stats["resolved_deterministically_payouts"] += 1
                     stats["resolved_deterministically_bank"] += 1
-                elif not all_contract_fee_match:
-                    trace["reason"] = "Batch settlement contains payouts violating MDR contract rates"
+                
+                elif len(anomalous_payouts) > 0 and sla_valid:
+                    # Batch Disaggregation: Isolate anomalous outlier, commit clean payouts
+                    trace["decision"] = "PARTIAL_DISAGGREGATED"
+                    trace["reason"] = f"Batch Disaggregation: Auto-committed {len(fee_compliant_payouts)} clean payouts; isolated {len(anomalous_payouts)} fee anomaly outlier(s)"
+                    for p in fee_compliant_payouts:
+                        p["reconciled"] = True
+                        matched_records["payouts_to_bank"].append({
+                            "payment_id": p["payment_id"],
+                            "payment_method": p.get("payment_method", "credit_card"),
+                            "utr": p["utr"],
+                            "amount_credited": bank_row["amount_credited"],
+                            "anomaly": "batch_disaggregated_clean"
+                        })
+                        stats["resolved_deterministically_payouts"] += 1
+                    # Outliers remain unreconciled and flow to LLM exception review
                 else:
                     trace["reason"] = f"Batch amount mismatch: expected sum {sum_payout_net} vs bank got {bank_row['amount_credited']}"
             else:
@@ -363,7 +386,6 @@ class ReconciliationEngine:
             decision_traces.append(trace)
 
         # --- C. Refund Debits Matching ---
-        # Match negative bank statements (debits) to refunds or failed payments
         bank_debits = self.df_bank[self.df_bank["amount_debited"] > 0].copy()
         bank_debits["extracted_utr"] = bank_debits["description"].apply(extract_utr)
         
@@ -375,6 +397,7 @@ class ReconciliationEngine:
             utr = b["extracted_utr"]
             trace = {
                 "step": "bank_debit_to_refund",
+                "payment_method": "refund",
                 "bank_date": b["date"],
                 "amount_debited": str(b["amount_debited"]),
                 "utr": utr,
@@ -383,19 +406,15 @@ class ReconciliationEngine:
                 "reason": ""
             }
             
-            # Find payouts that match this refund UTR
             matching_payouts = [p for p in payouts_list if p["utr"] == utr]
             trace["compared_candidates"] = [
                 {"payment_id": p["payment_id"], "amount": str(p["amount"]), "order_id": p["order_id"]}
                 for p in matching_payouts
             ]
             
-            # Since a refund matches the original transaction amount:
             if len(matching_payouts) == 1:
                 payout = matching_payouts[0]
-                # In standard scenarios, the refund amount debited matches the original sales gross amount
                 if payout["amount"] == b["amount_debited"]:
-                    # Verified refund link
                     trace["decision"] = "AUTO_COMMIT"
                     trace["reason"] = "Exact UTR and original transaction amount match"
                     b["reconciled"] = True

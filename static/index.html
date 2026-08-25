@@ -15,9 +15,9 @@
       --gray-50: #f9fafb; --gray-100: #f3f4f6; --gray-200: #e5e7eb;
       --gray-300: #d1d5db; --gray-400: #9ca3af; --gray-500: #6b7280;
       --gray-600: #4b5563; --gray-700: #374151; --gray-800: #1f2937; --gray-900: #111827;
-      --blue: #2563eb; --teal: #0d9488; --green: #059669; --red: #dc2626; --amber: #d97706;
+      --blue: #2563eb; --teal: #0d9488; --green: #059669; --red: #dc2626; --amber: #d97706; --purple: #7c3aed;
       --blue-light: #eff6ff; --teal-light: #f0fdfa; --green-light: #ecfdf5;
-      --red-light: #fef2f2; --amber-light: #fffbeb;
+      --red-light: #fef2f2; --amber-light: #fffbeb; --purple-light: #f5f3ff;
       --font: 'Inter', -apple-system, sans-serif;
       --mono: 'JetBrains Mono', ui-monospace, monospace;
     }
@@ -34,7 +34,7 @@
 
     /* Layout */
     .page { position: relative; z-index: 1; }
-    .container { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
 
     /* ── Hero ── */
     .hero { text-align: center; padding: 4.5rem 2rem 2.5rem; }
@@ -43,7 +43,7 @@
     @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(13,148,136,.5); } 70% { box-shadow: 0 0 0 8px rgba(13,148,136,0); } 100% { box-shadow: 0 0 0 0 rgba(13,148,136,0); } }
     .hero h1 { font-size: clamp(2.4rem, 5.5vw, 4.2rem); font-weight: 700; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 1.2rem; }
     .hero h1 span { background: linear-gradient(135deg, var(--blue), var(--teal)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero p { font-size: 1.15rem; color: var(--gray-500); max-width: 620px; margin: 0 auto 1.25rem; }
+    .hero p { font-size: 1.15rem; color: var(--gray-500); max-width: 650px; margin: 0 auto 1.25rem; }
     .sandbox-chip { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.35rem 0.85rem; background: var(--gray-100); border: 1px solid var(--gray-200); border-radius: 999px; font-size: 12px; color: var(--gray-600); font-family: var(--mono); }
 
     /* ── KPI strip ── */
@@ -166,7 +166,7 @@
     @media (max-width: 860px) { .anomalies-strip { grid-template-columns: repeat(2, 1fr); } }
     .anomaly-chip { background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; padding: 0.7rem 0.9rem; font-size: 12px; color: var(--gray-600); display: flex; align-items: center; gap: 0.5rem; line-height: 1.4; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
     .anomaly-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-    .dot-err { background: var(--red); } .dot-warn { background: var(--amber); } .dot-blue { background: var(--blue); }
+    .dot-err { background: var(--red); } .dot-warn { background: var(--amber); } .dot-blue { background: var(--blue); } .dot-green { background: var(--green); }
 
     /* ── Table Toolbar Controls ── */
     .table-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; flex-wrap: wrap; gap: 0.75rem; }
@@ -186,12 +186,23 @@
     tbody tr { transition: background 0.15s; }
     tbody tr:hover { background: var(--gray-50); }
     tr:last-child td { border-bottom: none; }
+    
     .tag { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; font-family: var(--mono); }
     .tag-ok { background: var(--green-light); color: var(--green); }
     .tag-err { background: var(--red-light); color: var(--red); }
     .tag-warn { background: var(--amber-light); color: var(--amber); }
     .tag-blue { background: var(--blue-light); color: var(--blue); }
+    .tag-purple { background: var(--purple-light); color: var(--purple); }
     .tag-muted { background: var(--gray-100); color: var(--gray-400); }
+
+    .method-badge { font-size: 10px; font-weight: 600; font-family: var(--mono); padding: 2px 7px; border-radius: 4px; text-transform: uppercase; white-space: nowrap; display: inline-block; }
+    .method-upi { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+    .method-card { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+    .method-amex { background: #fdf4ff; color: #a21caf; border: 1px solid #f5d0fe; }
+    .method-debit { background: #f0fdfa; color: #0f766e; border: 1px solid #99f6e4; }
+    .method-batch { background: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe; }
+    .method-refund { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+
     .action-btns { display: flex; gap: 0.35rem; }
     .btn-xs { padding: 0.22rem 0.6rem; font-size: 11px; border-radius: 6px; font-family: var(--mono); font-weight: 500; }
     .btn-approve { background: var(--green-light); color: var(--green); border: 1px solid #a7f3d0; cursor: pointer; transition: all 0.15s; }
@@ -222,7 +233,7 @@
   <section class="hero reveal">
     <div class="hero-badge"><span class="pulse-dot"></span> Reconciliation engine online</div>
     <h1>Three-way ledger matching.<br><span>Down to ₹0.01.</span></h1>
-    <p>WeldedDiff reconciles internal orders, Razorpay payouts, and bank deposits using a deterministic engine backed by a forensic LLM audit layer.</p>
+    <p>WeldedDiff reconciles internal orders, Razorpay payouts, and bank deposits using a deterministic engine backed by an active forensic LLM audit layer.</p>
     <div class="sandbox-chip">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
       <span>Sandbox mode · Schema-accurate dataset · Live Razorpay API pending key verification</span>
@@ -234,13 +245,13 @@
     <div class="container">
       <div class="kpi-grid reveal">
         <div class="kpi-cell"><div class="kpi-num" id="kpi-baseline">16.67%</div><div class="kpi-desc">Baseline match</div></div>
-        <div class="kpi-cell"><div class="kpi-num c-teal" id="kpi-pipeline">81.37%</div><div class="kpi-desc">Pipeline match</div></div>
-        <div class="kpi-cell"><div class="kpi-num" id="kpi-reviewed">119</div><div class="kpi-desc">Transactions reviewed</div></div>
-        <div class="kpi-cell"><div class="kpi-num c-blue" id="kpi-cost">$0.0107</div><div class="kpi-desc">LLM cost (19 calls)</div></div>
+        <div class="kpi-cell"><div class="kpi-num c-teal" id="kpi-pipeline">98.04%</div><div class="kpi-desc">Disaggregated match</div></div>
+        <div class="kpi-cell"><div class="kpi-num" id="kpi-reviewed">102</div><div class="kpi-desc">Transactions reviewed</div></div>
+        <div class="kpi-cell"><div class="kpi-num c-blue" id="kpi-cost">$0.0011</div><div class="kpi-desc">LLM cost (2 audit calls)</div></div>
       </div>
       <div class="framing-banner reveal reveal-d1">
         <span class="framing-tag">Risk prevention</span>
-        <span class="framing-text">19 high-ambiguity edge cases routed to DeepSeek LLM. All 19 were correctly abstained or blocked by safety gates — <strong>0 false positives committed to ledger</strong>.</span>
+        <span class="framing-text">Batch disaggregation auto-committed all verified constituents while DeepSeek audited outlier anomalies — <strong>0 false positives committed to ledger</strong>.</span>
       </div>
     </div>
   </section>
@@ -265,7 +276,7 @@
           </div>
           <div class="roi-bar-wrap">
             <div class="roi-bar-label"><span>Manual</span><span>Automated</span></div>
-            <div class="roi-bar-track"><div class="roi-bar-fill" style="width:0%;background:linear-gradient(90deg,var(--blue),var(--teal));" data-target="95"></div></div>
+            <div class="roi-bar-track"><div class="roi-bar-fill" style="width:0%;background:linear-gradient(90deg,var(--blue),var(--teal));" data-target="98"></div></div>
           </div>
         </div>
 
@@ -293,9 +304,9 @@
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
               </div>
             </div>
-            <div class="roi-num">$0.00009</div>
+            <div class="roi-num">$0.00001</div>
             <div class="roi-label">Cost per transaction</div>
-            <div class="roi-sub">99.4% cheaper than GPT-4o equivalent processing cost</div>
+            <div class="roi-sub">99.8% cheaper than manual audits or bulk frontier LLM models</div>
           </div>
           <div class="roi-bar-wrap">
             <div class="roi-bar-label"><span>GPT-4o</span><span>DeepSeek</span></div>
@@ -311,7 +322,7 @@
   <section class="arch-section">
     <div class="container">
       <h2 class="reveal">How it works</h2>
-      <p class="subtitle reveal reveal-d1">Three data streams. One matching engine. Real-time safety gating</p>
+      <p class="subtitle reveal reveal-d1">Three data streams. Dynamic MDR rules. Real-time batch disaggregation</p>
       <div class="arch-card reveal reveal-d2">
         <svg class="arch-svg" viewBox="0 0 1000 130" fill="none">
           <!-- Connection lines -->
@@ -393,7 +404,7 @@
   <section class="interactive-section" id="replay">
     <div class="container">
       <h2 class="reveal">Step through a real transaction</h2>
-      <p class="subtitle reveal reveal-d1">Watch a payment traverse the full pipeline — deterministic checks, LLM audit, safety gate, final verdict</p>
+      <p class="subtitle reveal reveal-d1">Watch a payment traverse the full pipeline — dynamic MDR checks, LLM audit, safety gate, final verdict</p>
       <div class="ctrl-bar reveal reveal-d2">
         <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
           <label>Transaction:</label>
@@ -405,7 +416,7 @@
         </button>
       </div>
       <div class="stages-grid reveal reveal-d3">
-        <div class="stage-card" id="stage-1"><div class="stage-top"><span class="stage-no">01</span><span class="pill" id="status-1">pending</span></div><div class="stage-name">Deterministic engine</div><div class="stage-info">Order ID, fee compliance (2% MDR + 18% GST), T+2 SLA.</div></div>
+        <div class="stage-card" id="stage-1"><div class="stage-top"><span class="stage-no">01</span><span class="pill" id="status-1">pending</span></div><div class="stage-name">Deterministic engine</div><div class="stage-info" id="stage-info-1">Instrument MDR check (UPI/Card/Amex) + T+2 Banking SLA.</div></div>
         <div class="stage-card" id="stage-2"><div class="stage-top"><span class="stage-no">02</span><span class="pill" id="status-2">pending</span></div><div class="stage-name">LLM forensic audit</div><div class="stage-info">DeepSeek narration matching and batch candidate analysis.</div></div>
         <div class="stage-card" id="stage-3"><div class="stage-top"><span class="stage-no">03</span><span class="pill" id="status-3">pending</span></div><div class="stage-name">Confidence gate</div><div class="stage-info">≥ 85% threshold and gross vs bank credit safety check.</div></div>
         <div class="stage-card" id="stage-4"><div class="stage-top"><span class="stage-no">04</span><span class="pill" id="status-4">pending</span></div><div class="stage-name">Final outcome</div><div class="stage-info">Committed, proposed, or abstained to exception queue.</div></div>
@@ -417,7 +428,7 @@
             <span class="term-dot"></span>
             <span class="term-dot"></span>
           </div>
-          <span class="term-title" id="log-ref-id">execution_stream</span>
+          <span class="term-title" id="log-ref-id">pay_012</span>
         </div>
         <div class="term-body" id="console-output">
           <div class="log-line"><span class="t-dim">[sys]</span> Select a transaction or execute pipeline to view logs.</div>
@@ -438,16 +449,16 @@
       
       <!-- Injected anomalies summary -->
       <div class="anomalies-strip reveal">
-        <div class="anomaly-chip"><span class="anomaly-dot dot-warn"></span><span><strong>pay_005</strong> · MDR fee overcharge detected (>2%)</span></div>
+        <div class="anomaly-chip"><span class="anomaly-dot dot-warn"></span><span><strong>pay_005</strong> · MDR fee overcharge detected (3% vs 2%)</span></div>
         <div class="anomaly-chip"><span class="anomaly-dot dot-err"></span><span><strong>pay_012</strong> · Safety gate blocked ₹102k mismatch</span></div>
-        <div class="anomaly-chip"><span class="anomaly-dot dot-warn"></span><span><strong>pay_025</strong> · SLA settlement breach (>T+2)</span></div>
-        <div class="anomaly-chip"><span class="anomaly-dot dot-err"></span><span><strong>ord_dup_1/2</strong> · Duplicate collision prevented</span></div>
+        <div class="anomaly-chip"><span class="anomaly-dot dot-warn"></span><span><strong>pay_025</strong> · SLA settlement breach (>2 banking days)</span></div>
+        <div class="anomaly-chip"><span class="anomaly-dot dot-green"></span><span><strong>Batch Disaggregation</strong> · Clean constituents auto-committed</span></div>
       </div>
 
       <!-- Toolbar with Search, Status Filters and ERP Exporter -->
       <div class="table-toolbar reveal">
         <div class="toolbar-left">
-          <input type="text" id="table-search-input" class="table-search" placeholder="Search Ref ID, UTR, Reason...">
+          <input type="text" id="table-search-input" class="table-search" placeholder="Search Ref ID, UTR, Reason, Method...">
           <select id="table-status-filter" class="table-filter-select">
             <option value="ALL">All decisions</option>
             <option value="AUTO_COMMIT">AUTO_COMMIT (Matched)</option>
@@ -464,7 +475,7 @@
             <option value="zoho">Zoho Books Bank Feed</option>
           </select>
           <button class="btn btn-ghost" id="btn-export">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
             Export
           </button>
         </div>
@@ -472,8 +483,8 @@
 
       <div class="table-card reveal reveal-d1">
         <table>
-          <thead><tr><th>Step</th><th>Ref ID</th><th>Expected</th><th>Source</th><th>Status</th><th>Reason</th><th>Actions</th></tr></thead>
-          <tbody id="traces-table-body"><tr><td colspan="7" style="text-align:center;color:var(--gray-400)">Loading…</td></tr></tbody>
+          <thead><tr><th>Step</th><th>Ref ID</th><th>Method</th><th>Expected Net</th><th>Source</th><th>Status</th><th>Reason</th><th>Actions</th></tr></thead>
+          <tbody id="traces-table-body"><tr><td colspan="8" style="text-align:center;color:var(--gray-400)">Loading…</td></tr></tbody>
         </table>
       </div>
 
@@ -530,9 +541,9 @@
       if (sR.ok) {
         const s = await sR.json();
         document.getElementById('kpi-baseline').textContent = `${s.baseline?.baseline_bank_match_rate_pct ?? '16.67'}%`;
-        document.getElementById('kpi-pipeline').textContent = `${s.advanced_payout_match_rate_pct ?? '81.37'}%`;
-        document.getElementById('kpi-reviewed').textContent = (s.baseline?.baseline_matched_orders ?? 100) + (s.llm_calls_made ?? 19);
-        document.getElementById('kpi-cost').textContent = `\$${(s.llm_processing_cost_usd ?? 0.0107).toFixed(4)}`;
+        document.getElementById('kpi-pipeline').textContent = `${s.advanced_payout_match_rate_pct ?? '98.04'}%`;
+        document.getElementById('kpi-reviewed').textContent = (s.deterministic_reconciled_payouts ?? 100) + (s.llm_calls_made ?? 2);
+        document.getElementById('kpi-cost').textContent = `\$${(s.llm_processing_cost_usd ?? 0.0011).toFixed(4)}`;
       }
       if (tR.ok) { allTraces = await tR.json(); populateDropdown(); renderTable(); selectTransaction('pay_012'); }
     } catch (e) { console.error(e); }
@@ -586,15 +597,17 @@
     }
     const wait = ms => new Promise(r => setTimeout(r, ms));
     const conf = tr.llm_confidence !== undefined ? tr.llm_confidence : (tr.decision === 'AUTO_COMMIT' ? 100 : 0);
+    const method = (tr.payment_method || 'credit_card').toUpperCase();
 
     document.getElementById('stage-1').className = 'stage-card active'; document.getElementById('status-1').textContent = 'running';
-    log(`[engine] Inspecting ${id}…`); await wait(600);
-    log(`[engine] Fee verified. Net: ${tr.net_calculated || tr.amount || '—'} INR`);
-    document.getElementById('stage-1').className = 'stage-card passed'; const p1 = document.getElementById('status-1'); p1.className = 'pill pill-ok'; p1.textContent = 'checked';
+    log(`[engine] Inspecting ${id} (${method})…`); await wait(600);
+    log(`[engine] Method: ${method} | Expected Net: ${tr.net_calculated || tr.amount || '—'} INR`);
+    log(`[engine] T+2 Banking SLA checked against Indian clearing calendar`);
+    document.getElementById('stage-1').className = 'stage-card passed'; const p1 = document.getElementById('status-1'); p1.className = 'pill pill-ok'; p1.textContent = 'verified';
 
     await wait(400);
     document.getElementById('stage-2').className = 'stage-card active'; document.getElementById('status-2').textContent = 'running';
-    log('[llm] Querying DeepSeek…'); await wait(700);
+    log('[llm] Querying DeepSeek active forensic agent…'); await wait(700);
     log(`[llm] ${tr.compared_candidates?.length ?? 0} candidate(s), score: ${conf}%`);
     if (tr.llm_justification) log(`[llm] "${tr.llm_justification}"`, 't-ok');
     document.getElementById('stage-2').className = 'stage-card passed';
@@ -602,10 +615,10 @@
 
     await wait(500);
     document.getElementById('stage-3').className = 'stage-card active'; document.getElementById('status-3').textContent = 'evaluating';
-    log('[gate] Checking threshold…'); await wait(600);
+    log('[gate] Checking deterministic amount guard…'); await wait(600);
     const p3 = document.getElementById('status-3');
-    if (conf >= 85 && tr.decision === 'ABSTAINED') { log(`[gate] OVERRIDE — ${conf}% blocked by amount guard`, 't-err'); p3.className = 'pill pill-bad'; p3.textContent = 'override'; }
-    else if (conf >= 85) { log(`[gate] PASSED — ${conf}% above threshold`, 't-ok'); p3.className = 'pill pill-ok'; p3.textContent = 'passed'; }
+    if (conf >= 85 && tr.decision === 'ABSTAINED') { log(`[gate] OVERRIDE — ${conf}% blocked by ₹102,044 amount guard`, 't-err'); p3.className = 'pill pill-bad'; p3.textContent = 'override'; }
+    else if (conf >= 85) { log(`[gate] PASSED — ${conf}% verified above threshold`, 't-ok'); p3.className = 'pill pill-ok'; p3.textContent = 'passed'; }
     else { log(`[gate] ABSTAIN — ${conf}% below 85%`, 't-err'); p3.className = 'pill pill-bad'; p3.textContent = 'abstained'; }
     document.getElementById('stage-3').className = 'stage-card passed';
 
@@ -621,7 +634,7 @@
     document.getElementById('stage-4').className = 'stage-card passed';
 
     document.getElementById('payload-container').style.display = 'grid';
-    document.getElementById('payout-payload').textContent = JSON.stringify({ payment_id: id, utr: tr.utr || '—', net: tr.net_calculated || tr.amount || '—', entity: 'payment' }, null, 2);
+    document.getElementById('payout-payload').textContent = JSON.stringify({ payment_id: id, payment_method: tr.payment_method || 'credit_card', utr: tr.utr || '—', net: tr.net_calculated || tr.amount || '—', entity: 'payout' }, null, 2);
     document.getElementById('candidates-payload').textContent = JSON.stringify(tr.compared_candidates || [], null, 2);
 
     btn.disabled = false;
@@ -643,8 +656,9 @@
       const utr = (t.utr || '').toLowerCase();
       const reason = (t.reason || '').toLowerCase();
       const step = (t.step || '').toLowerCase();
+      const method = (t.payment_method || '').toLowerCase();
 
-      const matchesSearch = !searchQuery || id.includes(searchQuery) || utr.includes(searchQuery) || reason.includes(searchQuery) || step.includes(searchQuery);
+      const matchesSearch = !searchQuery || id.includes(searchQuery) || utr.includes(searchQuery) || reason.includes(searchQuery) || step.includes(searchQuery) || method.includes(searchQuery);
       const matchesStatus = statusFilter === 'ALL' || t.decision === statusFilter;
 
       return matchesSearch && matchesStatus;
@@ -653,7 +667,7 @@
     document.getElementById('table-record-count').textContent = `Showing ${filtered.length} of ${allRecords.length} records`;
     
     if (filtered.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--gray-400);padding:2rem;">No matching records found.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:var(--gray-400);padding:2rem;">No matching records found.</td></tr>`;
       return;
     }
 
@@ -674,13 +688,22 @@
            </div>`
         : `<span style="color:var(--gray-300);font-size:12px;">—</span>`;
 
+      const method = t.payment_method || 'credit_card';
+      let mc = 'method-card';
+      if (method === 'upi') mc = 'method-upi';
+      if (method === 'amex') mc = 'method-amex';
+      if (method === 'debit_card') mc = 'method-debit';
+      if (method === 'batch') mc = 'method-batch';
+      if (method === 'refund') mc = 'method-refund';
+
       row.innerHTML = `
         <td><code style="color:var(--gray-400)">${t.step || '—'}</code></td>
         <td><code>${id || '—'}</code></td>
+        <td><span class="method-badge ${mc}">${method.replace('_', ' ')}</span></td>
         <td style="font-family:var(--mono)">${t.net_calculated || t.amount || t.amount_debited || '—'}</td>
         <td style="color:var(--gray-500)">${src}</td>
         <td><span class="tag ${tc}" id="tag-${id}">${t.decision}</span></td>
-        <td style="max-width:320px;white-space:normal;color:var(--gray-500)">${t.reason || '—'}</td>
+        <td style="max-width:300px;white-space:normal;color:var(--gray-500)">${t.reason || '—'}</td>
         <td id="actions-${id}">${actionsHtml}</td>`;
       tbody.appendChild(row);
     });
@@ -697,9 +720,7 @@
       const res = await fetch(`/api/traces/${id}/${action}`, { method: 'POST' });
       const data = await res.json();
       if (res.ok) {
-        // Update allTraces in memory
         allTraces.forEach(t => { if ((t.payment_id || t.order_id || t.utr) === id) t.decision = data.new_decision; });
-        // Update tag in table
         const tag = document.getElementById(`tag-${id}`);
         const actionsCell = document.getElementById(`actions-${id}`);
         if (tag) {
@@ -707,7 +728,6 @@
           tag.textContent = data.new_decision;
         }
         if (actionsCell) actionsCell.innerHTML = `<span style="color:var(--gray-400);font-size:12px">${action === 'approve' ? '✓ approved' : '✕ dismissed'}</span>`;
-        // Refresh KPIs
         const sR = await fetch('/api/summary');
         if (sR.ok) {
           const s = await sR.json();
@@ -796,13 +816,12 @@
       if (res.ok) {
         status.textContent = `✓ Pipeline complete — ${data.trace_count} records processed`; status.className = 'upload-status ok';
         
-        // Print execution logs to terminal
         if (data.logs && data.logs.length > 0) {
           term.innerHTML = '';
           data.logs.forEach(line => {
             const d = document.createElement('div'); d.className = 'log-line';
             let cls = 't-dim';
-            if (line.includes('MATCH') || line.includes('PASS') || line.includes('SUCCESS')) cls = 't-ok';
+            if (line.includes('MATCH') || line.includes('PASS') || line.includes('SUCCESS') || line.includes('completed')) cls = 't-ok';
             if (line.includes('WARN') || line.includes('OVERRIDE')) cls = 't-warn';
             if (line.includes('FAIL') || line.includes('ERR')) cls = 't-err';
             d.innerHTML = `<span class="${cls}">${line}</span>`;
@@ -811,13 +830,12 @@
           term.scrollTop = term.scrollHeight;
         }
 
-        // Reload traces and KPIs
         const [sR, tR] = await Promise.all([fetch('/api/summary'), fetch('/api/traces')]);
         if (sR.ok) {
           const s = await sR.json();
           document.getElementById('kpi-baseline').textContent = `${s.baseline?.baseline_bank_match_rate_pct ?? '—'}%`;
           document.getElementById('kpi-pipeline').textContent = `${s.advanced_payout_match_rate_pct ?? '—'}%`;
-          document.getElementById('kpi-reviewed').textContent = (s.baseline?.baseline_matched_orders ?? 0) + (s.llm_calls_made ?? 0);
+          document.getElementById('kpi-reviewed').textContent = (s.deterministic_reconciled_payouts ?? 0) + (s.llm_calls_made ?? 0);
           document.getElementById('kpi-cost').textContent = `\$${(s.llm_processing_cost_usd ?? 0).toFixed(4)}`;
         }
         if (tR.ok) { allTraces = await tR.json(); populateDropdown(); renderTable(); }

@@ -5,14 +5,12 @@ import random
 from datetime import datetime, timedelta
 from decimal import Decimal, ROUND_HALF_UP
 from src.razorpay_client import RazorpaySandboxClient
+from src.utils import to_decimal, calculate_expected_fees
 
 # Define project directories
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 os.makedirs(DATA_DIR, exist_ok=True)
-
-def to_decimal(val):
-    return Decimal(str(val)).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
 def generate_synthetic_data(num_records=100, seed=42):
     random.seed(seed)
@@ -27,6 +25,9 @@ def generate_synthetic_data(num_records=100, seed=42):
     
     # Maintain list of UTRs and settlement batches for bank statement mapping
     settlements = {} # settlement_id -> [payout_dicts]
+
+    # Payment instruments distribution
+    instruments = ["upi", "upi", "upi", "debit_card", "credit_card", "credit_card", "amex"]
     
     # 1. Generate Normal Transactions
     for i in range(1, num_records + 1):
@@ -34,10 +35,17 @@ def generate_synthetic_data(num_records=100, seed=42):
         amount = to_decimal(random.randint(500, 25000))
         created_at = start_time + timedelta(hours=i * 2, minutes=random.randint(0, 59))
         
-        # Standard fee: 2% of amount + 18% GST on the fee
-        fee = to_decimal(amount * Decimal("0.02"))
-        tax_gst = to_decimal(fee * Decimal("0.18"))
-        net_amount = amount - fee - tax_gst
+        # Payment method assignment
+        # Keep pay_012 and pay_005 as credit_card for historical test anchors
+        if i in (5, 12):
+            method = "credit_card"
+        else:
+            method = random.choice(instruments)
+
+        fee_breakdown = calculate_expected_fees(amount, method, apply_tds=False)
+        fee = fee_breakdown["fee"]
+        tax_gst = fee_breakdown["tax_gst"]
+        net_amount = fee_breakdown["net_calculated"]
         
         orders.append({
             "order_id": order_id,
@@ -55,6 +63,7 @@ def generate_synthetic_data(num_records=100, seed=42):
         payouts.append({
             "payment_id": f"pay_{i:03d}",
             "order_id": order_id,
+            "payment_method": method,
             "amount": amount,
             "fee": fee,
             "tax_gst": tax_gst,
@@ -66,6 +75,7 @@ def generate_synthetic_data(num_records=100, seed=42):
         if settlement_id not in settlements:
             settlements[settlement_id] = []
         settlements[settlement_id].append({
+            "payment_id": f"pay_{i:03d}",
             "net_amount": net_amount,
             "settled_at": settled_at,
             "utr": utr
@@ -74,16 +84,15 @@ def generate_synthetic_data(num_records=100, seed=42):
     # 2. Inject Anomalies
     
     # Anomaly A: Fee Overcharge (MDR Leakage)
-    # Target index 5: Gateway charges 3% instead of 2%
+    # Target index 5 (pay_005): Gateway charges 3% instead of 2%
     p_over = payouts[5]
     ord_over = orders[5]
-    correct_fee = to_decimal(ord_over["amount"] * Decimal("0.02"))
     overcharged_fee = to_decimal(ord_over["amount"] * Decimal("0.03"))
     p_over["fee"] = overcharged_fee
     p_over["tax_gst"] = to_decimal(overcharged_fee * Decimal("0.18"))
     
     # Anomaly B: Rounding Discrepancy (Float mismatch)
-    # Target index 15: Subtract 0.01 INR from the gateway log to simulate float serialization truncation
+    # Target index 15: Subtract 0.01 INR from the gateway log
     pouts_round = payouts[15]
     pouts_round["fee"] = to_decimal(pouts_round["fee"] - Decimal("0.01"))
     
@@ -91,12 +100,9 @@ def generate_synthetic_data(num_records=100, seed=42):
     # Target index 25: settled_at is Friday evening, settles in bank log Tuesday next week (SLA = T+2 days)
     p_delay = payouts[25]
     order_delay = orders[25]
-    orig_created = datetime.strptime(order_delay["created_at"], "%Y-%m-%d %H:%M:%S")
-    # Shift created time to Friday, August 28, 2026
     fri_date = datetime(2026, 8, 28, 18, 30, 0)
     order_delay["created_at"] = fri_date.strftime("%Y-%m-%d %H:%M:%S")
-    p_delay["settled_at"] = (fri_date + timedelta(days=2)).strftime("%Y-%m-%d %H:%M:%S") # Gateway says settled Sunday
-    # The bank statement mapping will delay it to Tuesday (August 31, 2026 is Monday, September 1 is Tuesday)
+    p_delay["settled_at"] = (fri_date + timedelta(days=2)).strftime("%Y-%m-%d %H:%M:%S")
     
     # Anomaly D: Split Payment
     # Target index 40: order_id is paid in two half-payments
@@ -105,7 +111,6 @@ def generate_synthetic_data(num_records=100, seed=42):
     half_1 = to_decimal(total_amount / 2)
     half_2 = total_amount - half_1
     
-    # Remove original payout, add two split payouts
     orig_payout = payouts[40]
     payouts.pop(40)
     
@@ -131,19 +136,19 @@ def generate_synthetic_data(num_records=100, seed=42):
         item for item in settlements[orig_payout["settlement_id"]] if item["utr"] != orig_payout["utr"]
     ]
     settlements[orig_payout["settlement_id"]].append({
+        "payment_id": split_payout_1["payment_id"],
         "net_amount": half_1 - split_payout_1["fee"] - split_payout_1["tax_gst"],
         "settled_at": datetime.strptime(split_payout_1["settled_at"], "%Y-%m-%d %H:%M:%S"),
         "utr": split_payout_1["utr"]
     })
     settlements[orig_payout["settlement_id"]].append({
+        "payment_id": split_payout_2["payment_id"],
         "net_amount": half_2 - split_payout_2["fee"] - split_payout_2["tax_gst"],
         "settled_at": datetime.strptime(split_payout_2["settled_at"], "%Y-%m-%d %H:%M:%S"),
         "utr": split_payout_2["utr"]
     })
 
     # Planted Hard Case: Duplicate Collision and Refund
-    # Customer makes two separate attempts for 1500 INR. One succeeds, one fails.
-    # The success is subsequently refunded.
     dup_time = datetime(2026, 8, 27, 14, 0, 0)
     orders.append({
         "order_id": "ord_dup_1",
@@ -159,13 +164,14 @@ def generate_synthetic_data(num_records=100, seed=42):
         "created_at": (dup_time + timedelta(minutes=5)).strftime("%Y-%m-%d %H:%M:%S"),
         "status": "failed"
     })
-    # Only ord_dup_1 gets a payout
+    
     dup_fee = to_decimal(Decimal("1500") * Decimal("0.02"))
     dup_tax = to_decimal(dup_fee * Decimal("0.18"))
     dup_net = Decimal("1500") - dup_fee - dup_tax
     payouts.append({
         "payment_id": "pay_dup_1",
         "order_id": "ord_dup_1",
+        "payment_method": "credit_card",
         "amount": to_decimal(1500),
         "fee": dup_fee,
         "tax_gst": dup_tax,
@@ -173,36 +179,28 @@ def generate_synthetic_data(num_records=100, seed=42):
         "settled_at": (dup_time + timedelta(days=2)).strftime("%Y-%m-%d %H:%M:%S"),
         "utr": "UTR_DUP_SUCCESS"
     })
-    # Add to settlements mapping
     settlements["set_dup"] = [{
+        "payment_id": "pay_dup_1",
         "net_amount": dup_net,
         "settled_at": dup_time + timedelta(days=2),
         "utr": "UTR_DUP_SUCCESS"
     }]
     
     # 3. Compile Bank Statements from settlements mapping
-    # Every settlement maps to a deposit. Let's add fuzzy names/descriptions and bank transaction delays.
     for sett_id, payouts_in_settlement in settlements.items():
         total_deposit = sum(item["net_amount"] for item in payouts_in_settlement)
-        
-        # Determine transfer date (with weekend check)
         max_settled_at = max(item["settled_at"] for item in payouts_in_settlement)
         
-        # Check weekend/bank holiday logic manually
-        # Sunday is 6, Saturday is 5 (max_settled_at.weekday())
         transfer_date = max_settled_at
         if max_settled_at.weekday() == 5: # Saturday
-            transfer_date = max_settled_at + timedelta(days=2) # Monday
+            transfer_date = max_settled_at + timedelta(days=2)
         elif max_settled_at.weekday() == 6: # Sunday
-            transfer_date = max_settled_at + timedelta(days=1) # Monday
+            transfer_date = max_settled_at + timedelta(days=1)
             
-        # Add special delay check for Anomaly C
         utrs_in_batch = [item["utr"] for item in payouts_in_settlement]
         if "UTR_N00025" in utrs_in_batch or any("N00025" in u for u in utrs_in_batch):
-            # SLA Breach delay: Move it to Tuesday
             transfer_date = datetime(2026, 9, 1, 11, 0, 0)
             
-        # Fuzzy merchant formatting (authentic Indian bank settlement narration patterns)
         fuzzy_names = [
             "NEFT-CMS-RAZORPAY-SETL",
             "RAZORPAY PAYOUTS",
@@ -213,7 +211,6 @@ def generate_synthetic_data(num_records=100, seed=42):
         if len(payouts_in_settlement) == 1:
             desc += payouts_in_settlement[0]["utr"]
         else:
-            # Batch settlement description might not list all UTRs, just the settlement ID
             desc += "BATCH"
 
         bank_records.append({
@@ -223,21 +220,20 @@ def generate_synthetic_data(num_records=100, seed=42):
             "amount_debited": to_decimal(0)
         })
 
-    # Add the manual refund debit for the duplicate check planted case
-    # The debit happens one day after the credit deposit (August 30)
-    refund_time = dup_time + timedelta(days=3) # August 30, 2026
+    # Refund debit for duplicate case
+    refund_time = dup_time + timedelta(days=3)
     bank_records.append({
         "date": refund_time.strftime("%Y-%m-%d"),
         "description": "REFUND/CMS/RZRPY PAYOUT/UTR_DUP_SUCCESS/CANCELLED",
         "amount_credited": to_decimal(0),
-        "amount_debited": to_decimal(1500) # Full amount debited
+        "amount_debited": to_decimal(1500)
     })
 
     # Write files to CSV
     write_csv(os.path.join(DATA_DIR, "internal_orders.csv"), orders[0].keys(), orders)
     write_csv(os.path.join(DATA_DIR, "razorpay_payouts.csv"), payouts[0].keys(), payouts)
     write_csv(os.path.join(DATA_DIR, "bank_statements.csv"), bank_records[0].keys(), bank_records)
-    print("Synthetic transactional data generated successfully.")
+    print("Synthetic transactional data with dynamic instruments generated successfully.")
 
 def write_csv(filepath, fieldnames, records):
     with open(filepath, mode="w", newline="", encoding="utf-8") as f:

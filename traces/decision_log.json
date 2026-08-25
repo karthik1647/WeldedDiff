@@ -2,576 +2,659 @@
   {
     "step": "order_to_payout",
     "order_id": "ord_001",
+    "payment_method": "upi",
     "amount": "21452.00",
     "status": "captured",
     "compared_candidates": [
       {
         "payment_id": "pay_001",
-        "amount": "21452.00"
+        "amount": "21452.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
     "order_id": "ord_002",
-    "amount": "24799.00",
+    "payment_method": "upi",
+    "amount": "8524.00",
     "status": "captured",
     "compared_candidates": [
       {
         "payment_id": "pay_002",
-        "amount": "24799.00"
+        "amount": "8524.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
     "order_id": "ord_003",
-    "amount": "7814.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_003",
-        "amount": "7814.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_004",
+    "payment_method": "credit_card",
     "amount": "22674.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_004",
-        "amount": "22674.00"
+        "payment_id": "pay_003",
+        "amount": "22674.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_005",
+    "order_id": "ord_004",
+    "payment_method": "upi",
     "amount": "19849.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_005",
-        "amount": "19849.00"
+        "payment_id": "pay_004",
+        "amount": "19849.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_005",
+    "payment_method": "credit_card",
+    "amount": "3570.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_005",
+        "amount": "3570.00",
+        "payment_method": "credit_card"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
     "order_id": "ord_006",
-    "amount": "1476.00",
+    "payment_method": "upi",
+    "amount": "17059.00",
     "status": "captured",
     "compared_candidates": [
       {
         "payment_id": "pay_006",
-        "amount": "1476.00"
+        "amount": "17059.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
     "order_id": "ord_007",
-    "amount": "8123.00",
+    "payment_method": "credit_card",
+    "amount": "23962.00",
     "status": "captured",
     "compared_candidates": [
       {
         "payment_id": "pay_007",
-        "amount": "8123.00"
+        "amount": "23962.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
     "order_id": "ord_008",
-    "amount": "18890.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_008",
-        "amount": "18890.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_009",
+    "payment_method": "credit_card",
     "amount": "7723.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_009",
-        "amount": "7723.00"
+        "payment_id": "pay_008",
+        "amount": "7723.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_010",
+    "order_id": "ord_009",
+    "payment_method": "amex",
     "amount": "712.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_010",
-        "amount": "712.00"
+        "payment_id": "pay_009",
+        "amount": "712.00",
+        "payment_method": "amex"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (AMEX)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_011",
+    "order_id": "ord_010",
+    "payment_method": "upi",
     "amount": "23376.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_011",
-        "amount": "23376.00"
+        "payment_id": "pay_010",
+        "amount": "23376.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_011",
+    "payment_method": "amex",
+    "amount": "5594.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_011",
+        "amount": "5594.00",
+        "payment_method": "amex"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (AMEX)"
   },
   {
     "step": "order_to_payout",
     "order_id": "ord_012",
-    "amount": "9605.00",
+    "payment_method": "credit_card",
+    "amount": "3849.00",
     "status": "captured",
     "compared_candidates": [
       {
         "payment_id": "pay_012",
-        "amount": "9605.00"
+        "amount": "3849.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
     "order_id": "ord_013",
-    "amount": "11529.00",
+    "payment_method": "amex",
+    "amount": "3669.00",
     "status": "captured",
     "compared_candidates": [
       {
         "payment_id": "pay_013",
-        "amount": "11529.00"
+        "amount": "3669.00",
+        "payment_method": "amex"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (AMEX)"
   },
   {
     "step": "order_to_payout",
     "order_id": "ord_014",
-    "amount": "12949.00",
+    "payment_method": "amex",
+    "amount": "20282.00",
     "status": "captured",
     "compared_candidates": [
       {
         "payment_id": "pay_014",
-        "amount": "12949.00"
+        "amount": "20282.00",
+        "payment_method": "amex"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (AMEX)"
   },
   {
     "step": "order_to_payout",
     "order_id": "ord_015",
-    "amount": "11770.00",
+    "payment_method": "credit_card",
+    "amount": "24411.00",
     "status": "captured",
     "compared_candidates": [
       {
         "payment_id": "pay_015",
-        "amount": "11770.00"
+        "amount": "24411.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
     "order_id": "ord_016",
-    "amount": "1923.00",
+    "payment_method": "credit_card",
+    "amount": "12903.00",
     "status": "captured",
     "compared_candidates": [
       {
         "payment_id": "pay_016",
-        "amount": "1923.00"
+        "amount": "12903.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
     "order_id": "ord_017",
-    "amount": "18071.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_017",
-        "amount": "18071.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_018",
-    "amount": "3082.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_018",
-        "amount": "3082.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_019",
+    "payment_method": "amex",
     "amount": "21099.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_019",
-        "amount": "21099.00"
+        "payment_id": "pay_017",
+        "amount": "21099.00",
+        "payment_method": "amex"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (AMEX)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_020",
+    "order_id": "ord_018",
+    "payment_method": "credit_card",
     "amount": "19418.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_020",
-        "amount": "19418.00"
+        "payment_id": "pay_018",
+        "amount": "19418.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_021",
+    "order_id": "ord_019",
+    "payment_method": "upi",
     "amount": "2001.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_021",
-        "amount": "2001.00"
+        "payment_id": "pay_019",
+        "amount": "2001.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_020",
+    "payment_method": "upi",
+    "amount": "3114.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_020",
+        "amount": "3114.00",
+        "payment_method": "upi"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (UPI)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_021",
+    "payment_method": "debit_card",
+    "amount": "12955.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_021",
+        "amount": "12955.00",
+        "payment_method": "debit_card"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (DEBIT_CARD)"
   },
   {
     "step": "order_to_payout",
     "order_id": "ord_022",
-    "amount": "9982.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_022",
-        "amount": "9982.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_023",
-    "amount": "3809.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_023",
-        "amount": "3809.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_024",
-    "amount": "15357.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_024",
-        "amount": "15357.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_025",
+    "payment_method": "upi",
     "amount": "5829.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_025",
-        "amount": "5829.00"
+        "payment_id": "pay_022",
+        "amount": "5829.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_026",
-    "amount": "7365.00",
+    "order_id": "ord_023",
+    "payment_method": "credit_card",
+    "amount": "22460.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_026",
-        "amount": "7365.00"
+        "payment_id": "pay_023",
+        "amount": "22460.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_027",
-    "amount": "23497.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_027",
-        "amount": "23497.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_028",
+    "order_id": "ord_024",
+    "payment_method": "upi",
     "amount": "20460.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_028",
-        "amount": "20460.00"
+        "payment_id": "pay_024",
+        "amount": "20460.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_029",
-    "amount": "18002.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_029",
-        "amount": "18002.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_030",
+    "order_id": "ord_025",
+    "payment_method": "debit_card",
     "amount": "5854.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_030",
-        "amount": "5854.00"
+        "payment_id": "pay_025",
+        "amount": "5854.00",
+        "payment_method": "debit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (DEBIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_031",
-    "amount": "9345.00",
+    "order_id": "ord_026",
+    "payment_method": "credit_card",
+    "amount": "21471.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_031",
-        "amount": "9345.00"
+        "payment_id": "pay_026",
+        "amount": "21471.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_032",
+    "order_id": "ord_027",
+    "payment_method": "amex",
     "amount": "22933.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_032",
-        "amount": "22933.00"
+        "payment_id": "pay_027",
+        "amount": "22933.00",
+        "payment_method": "amex"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (AMEX)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_033",
+    "order_id": "ord_028",
+    "payment_method": "upi",
     "amount": "8005.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_033",
-        "amount": "8005.00"
+        "payment_id": "pay_028",
+        "amount": "8005.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_034",
-    "amount": "10836.00",
+    "order_id": "ord_029",
+    "payment_method": "upi",
+    "amount": "13645.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_034",
-        "amount": "10836.00"
+        "payment_id": "pay_029",
+        "amount": "13645.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_035",
-    "amount": "2668.00",
+    "order_id": "ord_030",
+    "payment_method": "credit_card",
+    "amount": "19085.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_035",
-        "amount": "2668.00"
+        "payment_id": "pay_030",
+        "amount": "19085.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_036",
+    "order_id": "ord_031",
+    "payment_method": "debit_card",
     "amount": "7467.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_036",
-        "amount": "7467.00"
+        "payment_id": "pay_031",
+        "amount": "7467.00",
+        "payment_method": "debit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (DEBIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_037",
-    "amount": "13464.00",
+    "order_id": "ord_032",
+    "payment_method": "upi",
+    "amount": "21564.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_037",
-        "amount": "13464.00"
+        "payment_id": "pay_032",
+        "amount": "21564.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_038",
-    "amount": "5181.00",
+    "order_id": "ord_033",
+    "payment_method": "credit_card",
+    "amount": "5075.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_038",
-        "amount": "5181.00"
+        "payment_id": "pay_033",
+        "amount": "5075.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_039",
-    "amount": "8581.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_039",
-        "amount": "8581.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_040",
+    "order_id": "ord_034",
+    "payment_method": "debit_card",
     "amount": "24978.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_040",
-        "amount": "24978.00"
+        "payment_id": "pay_034",
+        "amount": "24978.00",
+        "payment_method": "debit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (DEBIT_CARD)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_035",
+    "payment_method": "upi",
+    "amount": "12361.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_035",
+        "amount": "12361.00",
+        "payment_method": "upi"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (UPI)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_036",
+    "payment_method": "upi",
+    "amount": "3478.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_036",
+        "amount": "3478.00",
+        "payment_method": "upi"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (UPI)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_037",
+    "payment_method": "upi",
+    "amount": "5508.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_037",
+        "amount": "5508.00",
+        "payment_method": "upi"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (UPI)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_038",
+    "payment_method": "debit_card",
+    "amount": "20043.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_038",
+        "amount": "20043.00",
+        "payment_method": "debit_card"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (DEBIT_CARD)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_039",
+    "payment_method": "credit_card",
+    "amount": "20026.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_039",
+        "amount": "20026.00",
+        "payment_method": "credit_card"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_040",
+    "payment_method": "upi",
+    "amount": "18628.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_040",
+        "amount": "18628.00",
+        "payment_method": "upi"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
     "order_id": "ord_041",
-    "amount": "19621.00",
+    "payment_method": "credit_card",
+    "amount": "22838.00",
     "status": "captured",
     "compared_candidates": [
       {
         "payment_id": "pay_041_S1",
-        "amount": "9810.50"
+        "amount": "11419.00",
+        "payment_method": "credit_card"
       },
       {
         "payment_id": "pay_041_S2",
-        "amount": "9810.50"
+        "amount": "11419.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
@@ -580,846 +663,967 @@
   {
     "step": "order_to_payout",
     "order_id": "ord_042",
-    "amount": "7686.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_042",
-        "amount": "7686.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_043",
-    "amount": "3478.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_043",
-        "amount": "3478.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_044",
-    "amount": "4092.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_044",
-        "amount": "4092.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_045",
-    "amount": "22798.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_045",
-        "amount": "22798.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_046",
-    "amount": "13108.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_046",
-        "amount": "13108.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_047",
-    "amount": "17838.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_047",
-        "amount": "17838.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_048",
-    "amount": "22791.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_048",
-        "amount": "22791.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_049",
-    "amount": "22838.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_049",
-        "amount": "22838.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_050",
+    "payment_method": "upi",
     "amount": "21503.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_050",
-        "amount": "21503.00"
+        "payment_id": "pay_042",
+        "amount": "21503.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_051",
-    "amount": "10117.00",
+    "order_id": "ord_043",
+    "payment_method": "debit_card",
+    "amount": "14746.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_051",
-        "amount": "10117.00"
+        "payment_id": "pay_043",
+        "amount": "14746.00",
+        "payment_method": "debit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (DEBIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_052",
-    "amount": "15367.00",
+    "order_id": "ord_044",
+    "payment_method": "credit_card",
+    "amount": "24161.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_052",
-        "amount": "15367.00"
+        "payment_id": "pay_044",
+        "amount": "24161.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_053",
+    "order_id": "ord_045",
+    "payment_method": "upi",
     "amount": "16903.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_053",
-        "amount": "16903.00"
+        "payment_id": "pay_045",
+        "amount": "16903.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_054",
-    "amount": "17135.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_054",
-        "amount": "17135.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_055",
+    "order_id": "ord_046",
+    "payment_method": "amex",
     "amount": "20989.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_055",
-        "amount": "20989.00"
+        "payment_id": "pay_046",
+        "amount": "20989.00",
+        "payment_method": "amex"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (AMEX)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_056",
+    "order_id": "ord_047",
+    "payment_method": "amex",
     "amount": "5508.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_056",
-        "amount": "5508.00"
+        "payment_id": "pay_047",
+        "amount": "5508.00",
+        "payment_method": "amex"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (AMEX)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_057",
+    "order_id": "ord_048",
+    "payment_method": "credit_card",
     "amount": "18174.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_057",
-        "amount": "18174.00"
+        "payment_id": "pay_048",
+        "amount": "18174.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_058",
+    "order_id": "ord_049",
+    "payment_method": "debit_card",
     "amount": "20126.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_058",
-        "amount": "20126.00"
+        "payment_id": "pay_049",
+        "amount": "20126.00",
+        "payment_method": "debit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (DEBIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_059",
-    "amount": "1138.00",
+    "order_id": "ord_050",
+    "payment_method": "upi",
+    "amount": "4165.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_059",
-        "amount": "1138.00"
+        "payment_id": "pay_050",
+        "amount": "4165.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_060",
-    "amount": "10576.00",
+    "order_id": "ord_051",
+    "payment_method": "upi",
+    "amount": "8346.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_060",
-        "amount": "10576.00"
+        "payment_id": "pay_051",
+        "amount": "8346.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_061",
-    "amount": "8392.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_061",
-        "amount": "8392.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_062",
+    "order_id": "ord_052",
+    "payment_method": "debit_card",
     "amount": "3306.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_062",
-        "amount": "3306.00"
+        "payment_id": "pay_052",
+        "amount": "3306.00",
+        "payment_method": "debit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (DEBIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_063",
-    "amount": "2767.00",
+    "order_id": "ord_053",
+    "payment_method": "upi",
+    "amount": "17955.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_063",
-        "amount": "2767.00"
+        "payment_id": "pay_053",
+        "amount": "17955.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_064",
-    "amount": "4707.00",
+    "order_id": "ord_054",
+    "payment_method": "credit_card",
+    "amount": "22118.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_064",
-        "amount": "4707.00"
+        "payment_id": "pay_054",
+        "amount": "22118.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_065",
-    "amount": "18515.00",
+    "order_id": "ord_055",
+    "payment_method": "amex",
+    "amount": "9185.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_065",
-        "amount": "18515.00"
+        "payment_id": "pay_055",
+        "amount": "9185.00",
+        "payment_method": "amex"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (AMEX)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_066",
-    "amount": "17790.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_066",
-        "amount": "17790.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_067",
+    "order_id": "ord_056",
+    "payment_method": "credit_card",
     "amount": "7440.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_067",
-        "amount": "7440.00"
+        "payment_id": "pay_056",
+        "amount": "7440.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_068",
+    "order_id": "ord_057",
+    "payment_method": "debit_card",
     "amount": "23861.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_068",
-        "amount": "23861.00"
+        "payment_id": "pay_057",
+        "amount": "23861.00",
+        "payment_method": "debit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (DEBIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_069",
-    "amount": "22509.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_069",
-        "amount": "22509.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_070",
+    "order_id": "ord_058",
+    "payment_method": "credit_card",
     "amount": "14855.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_070",
-        "amount": "14855.00"
+        "payment_id": "pay_058",
+        "amount": "14855.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_071",
+    "order_id": "ord_059",
+    "payment_method": "upi",
     "amount": "4465.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_071",
-        "amount": "4465.00"
+        "payment_id": "pay_059",
+        "amount": "4465.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_072",
-    "amount": "2598.00",
+    "order_id": "ord_060",
+    "payment_method": "credit_card",
+    "amount": "11578.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_072",
-        "amount": "2598.00"
+        "payment_id": "pay_060",
+        "amount": "11578.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_073",
-    "amount": "19777.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_073",
-        "amount": "19777.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_074",
+    "order_id": "ord_061",
+    "payment_method": "upi",
     "amount": "19782.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_074",
-        "amount": "19782.00"
+        "payment_id": "pay_061",
+        "amount": "19782.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_075",
-    "amount": "2826.00",
+    "order_id": "ord_062",
+    "payment_method": "upi",
+    "amount": "23694.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_075",
-        "amount": "2826.00"
+        "payment_id": "pay_062",
+        "amount": "23694.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_076",
-    "amount": "8001.00",
+    "order_id": "ord_063",
+    "payment_method": "upi",
+    "amount": "2708.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_076",
-        "amount": "8001.00"
+        "payment_id": "pay_063",
+        "amount": "2708.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_077",
-    "amount": "11327.00",
+    "order_id": "ord_064",
+    "payment_method": "upi",
+    "amount": "2821.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_077",
-        "amount": "11327.00"
+        "payment_id": "pay_064",
+        "amount": "2821.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_078",
-    "amount": "9625.00",
+    "order_id": "ord_065",
+    "payment_method": "upi",
+    "amount": "22421.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_078",
-        "amount": "9625.00"
+        "payment_id": "pay_065",
+        "amount": "22421.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_079",
-    "amount": "7520.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_079",
-        "amount": "7520.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_080",
+    "order_id": "ord_066",
+    "payment_method": "credit_card",
     "amount": "24202.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_080",
-        "amount": "24202.00"
+        "payment_id": "pay_066",
+        "amount": "24202.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_081",
+    "order_id": "ord_067",
+    "payment_method": "debit_card",
     "amount": "8462.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_081",
-        "amount": "8462.00"
+        "payment_id": "pay_067",
+        "amount": "8462.00",
+        "payment_method": "debit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (DEBIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_082",
-    "amount": "13838.00",
+    "order_id": "ord_068",
+    "payment_method": "upi",
+    "amount": "6739.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_082",
-        "amount": "13838.00"
+        "payment_id": "pay_068",
+        "amount": "6739.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_083",
-    "amount": "3676.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_083",
-        "amount": "3676.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_084",
+    "order_id": "ord_069",
+    "payment_method": "debit_card",
     "amount": "12109.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_084",
-        "amount": "12109.00"
+        "payment_id": "pay_069",
+        "amount": "12109.00",
+        "payment_method": "debit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (DEBIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_085",
-    "amount": "15803.00",
+    "order_id": "ord_070",
+    "payment_method": "credit_card",
+    "amount": "24390.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_085",
-        "amount": "15803.00"
+        "payment_id": "pay_070",
+        "amount": "24390.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_086",
-    "amount": "22564.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_086",
-        "amount": "22564.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_087",
+    "order_id": "ord_071",
+    "payment_method": "credit_card",
     "amount": "2486.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_087",
-        "amount": "2486.00"
+        "payment_id": "pay_071",
+        "amount": "2486.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_088",
+    "order_id": "ord_072",
+    "payment_method": "upi",
     "amount": "4080.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_088",
-        "amount": "4080.00"
+        "payment_id": "pay_072",
+        "amount": "4080.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_089",
-    "amount": "6732.00",
+    "order_id": "ord_073",
+    "payment_method": "upi",
+    "amount": "18073.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_089",
-        "amount": "6732.00"
+        "payment_id": "pay_073",
+        "amount": "18073.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_090",
-    "amount": "5093.00",
+    "order_id": "ord_074",
+    "payment_method": "debit_card",
+    "amount": "6512.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_090",
-        "amount": "5093.00"
+        "payment_id": "pay_074",
+        "amount": "6512.00",
+        "payment_method": "debit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (DEBIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_091",
-    "amount": "9627.00",
-    "status": "captured",
-    "compared_candidates": [
-      {
-        "payment_id": "pay_091",
-        "amount": "9627.00"
-      }
-    ],
-    "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
-  },
-  {
-    "step": "order_to_payout",
-    "order_id": "ord_092",
+    "order_id": "ord_075",
+    "payment_method": "amex",
     "amount": "2970.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_092",
-        "amount": "2970.00"
+        "payment_id": "pay_075",
+        "amount": "2970.00",
+        "payment_method": "amex"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (AMEX)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_093",
+    "order_id": "ord_076",
+    "payment_method": "credit_card",
     "amount": "2157.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_093",
-        "amount": "2157.00"
+        "payment_id": "pay_076",
+        "amount": "2157.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_094",
+    "order_id": "ord_077",
+    "payment_method": "amex",
     "amount": "3556.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_094",
-        "amount": "3556.00"
+        "payment_id": "pay_077",
+        "amount": "3556.00",
+        "payment_method": "amex"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (AMEX)"
   },
   {
     "step": "order_to_payout",
-    "order_id": "ord_095",
+    "order_id": "ord_078",
+    "payment_method": "debit_card",
     "amount": "5949.00",
     "status": "captured",
     "compared_candidates": [
       {
-        "payment_id": "pay_095",
-        "amount": "5949.00"
+        "payment_id": "pay_078",
+        "amount": "5949.00",
+        "payment_method": "debit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (DEBIT_CARD)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_079",
+    "payment_method": "debit_card",
+    "amount": "7504.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_079",
+        "amount": "7504.00",
+        "payment_method": "debit_card"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (DEBIT_CARD)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_080",
+    "payment_method": "upi",
+    "amount": "5894.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_080",
+        "amount": "5894.00",
+        "payment_method": "upi"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (UPI)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_081",
+    "payment_method": "amex",
+    "amount": "9190.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_081",
+        "amount": "9190.00",
+        "payment_method": "amex"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (AMEX)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_082",
+    "payment_method": "credit_card",
+    "amount": "9847.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_082",
+        "amount": "9847.00",
+        "payment_method": "credit_card"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_083",
+    "payment_method": "upi",
+    "amount": "5572.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_083",
+        "amount": "5572.00",
+        "payment_method": "upi"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (UPI)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_084",
+    "payment_method": "credit_card",
+    "amount": "2416.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_084",
+        "amount": "2416.00",
+        "payment_method": "credit_card"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_085",
+    "payment_method": "upi",
+    "amount": "10776.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_085",
+        "amount": "10776.00",
+        "payment_method": "upi"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (UPI)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_086",
+    "payment_method": "amex",
+    "amount": "16977.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_086",
+        "amount": "16977.00",
+        "payment_method": "amex"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (AMEX)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_087",
+    "payment_method": "upi",
+    "amount": "2363.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_087",
+        "amount": "2363.00",
+        "payment_method": "upi"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (UPI)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_088",
+    "payment_method": "upi",
+    "amount": "2745.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_088",
+        "amount": "2745.00",
+        "payment_method": "upi"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (UPI)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_089",
+    "payment_method": "credit_card",
+    "amount": "13730.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_089",
+        "amount": "13730.00",
+        "payment_method": "credit_card"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_090",
+    "payment_method": "upi",
+    "amount": "19470.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_090",
+        "amount": "19470.00",
+        "payment_method": "upi"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (UPI)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_091",
+    "payment_method": "credit_card",
+    "amount": "14237.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_091",
+        "amount": "14237.00",
+        "payment_method": "credit_card"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_092",
+    "payment_method": "credit_card",
+    "amount": "9044.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_092",
+        "amount": "9044.00",
+        "payment_method": "credit_card"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_093",
+    "payment_method": "debit_card",
+    "amount": "8321.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_093",
+        "amount": "8321.00",
+        "payment_method": "debit_card"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (DEBIT_CARD)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_094",
+    "payment_method": "upi",
+    "amount": "22509.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_094",
+        "amount": "22509.00",
+        "payment_method": "upi"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (UPI)"
+  },
+  {
+    "step": "order_to_payout",
+    "order_id": "ord_095",
+    "payment_method": "amex",
+    "amount": "10860.00",
+    "status": "captured",
+    "compared_candidates": [
+      {
+        "payment_id": "pay_095",
+        "amount": "10860.00",
+        "payment_method": "amex"
+      }
+    ],
+    "decision": "AUTO_COMMIT",
+    "reason": "Exact order_id and amount match (AMEX)"
   },
   {
     "step": "order_to_payout",
     "order_id": "ord_096",
-    "amount": "16273.00",
+    "payment_method": "credit_card",
+    "amount": "805.00",
     "status": "captured",
     "compared_candidates": [
       {
         "payment_id": "pay_096",
-        "amount": "16273.00"
+        "amount": "805.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
     "order_id": "ord_097",
-    "amount": "2421.00",
+    "payment_method": "upi",
+    "amount": "2900.00",
     "status": "captured",
     "compared_candidates": [
       {
         "payment_id": "pay_097",
-        "amount": "2421.00"
+        "amount": "2900.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
     "order_id": "ord_098",
-    "amount": "570.00",
+    "payment_method": "upi",
+    "amount": "4840.00",
     "status": "captured",
     "compared_candidates": [
       {
         "payment_id": "pay_098",
-        "amount": "570.00"
+        "amount": "4840.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
     "order_id": "ord_099",
-    "amount": "15409.00",
+    "payment_method": "upi",
+    "amount": "8504.00",
     "status": "captured",
     "compared_candidates": [
       {
         "payment_id": "pay_099",
-        "amount": "15409.00"
+        "amount": "8504.00",
+        "payment_method": "upi"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (UPI)"
   },
   {
     "step": "order_to_payout",
     "order_id": "ord_100",
-    "amount": "23325.00",
+    "payment_method": "credit_card",
+    "amount": "14858.00",
     "status": "captured",
     "compared_candidates": [
       {
         "payment_id": "pay_100",
-        "amount": "23325.00"
+        "amount": "14858.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
     "order_id": "ord_dup_1",
+    "payment_method": "credit_card",
     "amount": "1500.00",
     "status": "captured",
     "compared_candidates": [
       {
         "payment_id": "pay_dup_1",
-        "amount": "1500.00"
+        "amount": "1500.00",
+        "payment_method": "credit_card"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact order_id and amount match"
+    "reason": "Exact order_id and amount match (CREDIT_CARD)"
   },
   {
     "step": "order_to_payout",
     "order_id": "ord_dup_2",
+    "payment_method": "credit_card",
     "amount": "1500.00",
     "status": "failed",
     "compared_candidates": [],
@@ -1429,8 +1633,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_001",
+    "payment_method": "upi",
     "utr": "UTR_N00001",
-    "net_calculated": "20945.73",
+    "net_calculated": "21452.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1438,8 +1643,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_002",
+    "payment_method": "upi",
     "utr": "UTR_N00002",
-    "net_calculated": "24213.74",
+    "net_calculated": "8524.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1447,16 +1653,8 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_003",
+    "payment_method": "credit_card",
     "utr": "UTR_N00003",
-    "net_calculated": "7629.59",
-    "compared_candidates": [],
-    "decision": "UNRESOLVED",
-    "reason": ""
-  },
-  {
-    "step": "payout_to_bank_utr",
-    "payment_id": "pay_004",
-    "utr": "UTR_N00004",
     "net_calculated": "22138.89",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
@@ -1464,9 +1662,20 @@
   },
   {
     "step": "payout_to_bank_utr",
+    "payment_id": "pay_004",
+    "payment_method": "upi",
+    "utr": "UTR_N00004",
+    "net_calculated": "19849.00",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
     "payment_id": "pay_005",
+    "payment_method": "credit_card",
     "utr": "UTR_N00005",
-    "net_calculated": "19380.56",
+    "net_calculated": "3485.75",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1474,8 +1683,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_006",
+    "payment_method": "upi",
     "utr": "UTR_N00006",
-    "net_calculated": "1423.75",
+    "net_calculated": "16455.11",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1483,8 +1693,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_007",
+    "payment_method": "credit_card",
     "utr": "UTR_N00007",
-    "net_calculated": "7931.30",
+    "net_calculated": "23396.50",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1492,16 +1703,8 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_008",
+    "payment_method": "credit_card",
     "utr": "UTR_N00008",
-    "net_calculated": "18444.20",
-    "compared_candidates": [],
-    "decision": "UNRESOLVED",
-    "reason": ""
-  },
-  {
-    "step": "payout_to_bank_utr",
-    "payment_id": "pay_009",
-    "utr": "UTR_N00009",
     "net_calculated": "7540.74",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
@@ -1509,9 +1712,20 @@
   },
   {
     "step": "payout_to_bank_utr",
+    "payment_id": "pay_009",
+    "payment_method": "amex",
+    "utr": "UTR_N00009",
+    "net_calculated": "682.59",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
     "payment_id": "pay_010",
+    "payment_method": "upi",
     "utr": "UTR_N00010",
-    "net_calculated": "695.20",
+    "net_calculated": "23376.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1519,8 +1733,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_011",
+    "payment_method": "amex",
     "utr": "UTR_N00011",
-    "net_calculated": "22824.33",
+    "net_calculated": "5362.97",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1528,8 +1743,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_012",
+    "payment_method": "credit_card",
     "utr": "UTR_N00012",
-    "net_calculated": "9378.32",
+    "net_calculated": "3758.16",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1537,8 +1753,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_013",
+    "payment_method": "amex",
     "utr": "UTR_N00013",
-    "net_calculated": "11256.92",
+    "net_calculated": "3517.46",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1546,8 +1763,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_014",
+    "payment_method": "amex",
     "utr": "UTR_N00014",
-    "net_calculated": "12643.40",
+    "net_calculated": "19444.35",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1555,8 +1773,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_015",
+    "payment_method": "credit_card",
     "utr": "UTR_N00015",
-    "net_calculated": "11492.23",
+    "net_calculated": "23834.90",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1564,8 +1783,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_016",
+    "payment_method": "credit_card",
     "utr": "UTR_N00016",
-    "net_calculated": "1877.63",
+    "net_calculated": "12598.50",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1573,8 +1793,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_017",
+    "payment_method": "amex",
     "utr": "UTR_N00017",
-    "net_calculated": "17644.52",
+    "net_calculated": "20227.61",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1582,25 +1803,8 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_018",
+    "payment_method": "credit_card",
     "utr": "UTR_N00018",
-    "net_calculated": "3009.26",
-    "compared_candidates": [],
-    "decision": "UNRESOLVED",
-    "reason": ""
-  },
-  {
-    "step": "payout_to_bank_utr",
-    "payment_id": "pay_019",
-    "utr": "UTR_N00019",
-    "net_calculated": "20601.06",
-    "compared_candidates": [],
-    "decision": "UNRESOLVED",
-    "reason": ""
-  },
-  {
-    "step": "payout_to_bank_utr",
-    "payment_id": "pay_020",
-    "utr": "UTR_N00020",
     "net_calculated": "18959.74",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
@@ -1608,9 +1812,30 @@
   },
   {
     "step": "payout_to_bank_utr",
+    "payment_id": "pay_019",
+    "payment_method": "upi",
+    "utr": "UTR_N00019",
+    "net_calculated": "2001.00",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_020",
+    "payment_method": "upi",
+    "utr": "UTR_N00020",
+    "net_calculated": "3114.00",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
     "payment_id": "pay_021",
+    "payment_method": "debit_card",
     "utr": "UTR_N00021",
-    "net_calculated": "1953.78",
+    "net_calculated": "12878.56",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1618,8 +1843,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_022",
+    "payment_method": "upi",
     "utr": "UTR_N00022",
-    "net_calculated": "9746.42",
+    "net_calculated": "5829.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1627,8 +1853,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_023",
+    "payment_method": "credit_card",
     "utr": "UTR_N00023",
-    "net_calculated": "3719.11",
+    "net_calculated": "21929.94",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1636,8 +1863,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_024",
+    "payment_method": "upi",
     "utr": "UTR_N00024",
-    "net_calculated": "14994.57",
+    "net_calculated": "20460.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1645,8 +1873,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_025",
+    "payment_method": "debit_card",
     "utr": "UTR_N00025",
-    "net_calculated": "5691.44",
+    "net_calculated": "5819.46",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1654,8 +1883,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_026",
+    "payment_method": "credit_card",
     "utr": "UTR_N00026",
-    "net_calculated": "7191.19",
+    "net_calculated": "20964.28",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1663,8 +1893,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_027",
+    "payment_method": "amex",
     "utr": "UTR_N00027",
-    "net_calculated": "22942.47",
+    "net_calculated": "21985.86",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1672,8 +1903,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_028",
+    "payment_method": "upi",
     "utr": "UTR_N00028",
-    "net_calculated": "19977.14",
+    "net_calculated": "8005.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1681,8 +1913,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_029",
+    "payment_method": "upi",
     "utr": "UTR_N00029",
-    "net_calculated": "17577.15",
+    "net_calculated": "13645.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1690,8 +1923,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_030",
+    "payment_method": "credit_card",
     "utr": "UTR_N00030",
-    "net_calculated": "5715.85",
+    "net_calculated": "18634.59",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1699,8 +1933,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_031",
+    "payment_method": "debit_card",
     "utr": "UTR_N00031",
-    "net_calculated": "9124.46",
+    "net_calculated": "7422.94",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1708,8 +1943,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_032",
+    "payment_method": "upi",
     "utr": "UTR_N00032",
-    "net_calculated": "22391.78",
+    "net_calculated": "21564.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1717,8 +1953,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_033",
+    "payment_method": "credit_card",
     "utr": "UTR_N00033",
-    "net_calculated": "7816.08",
+    "net_calculated": "4955.23",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1726,8 +1963,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_034",
+    "payment_method": "debit_card",
     "utr": "UTR_N00034",
-    "net_calculated": "10580.27",
+    "net_calculated": "24830.63",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1735,8 +1973,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_035",
+    "payment_method": "upi",
     "utr": "UTR_N00035",
-    "net_calculated": "2605.04",
+    "net_calculated": "12361.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1744,8 +1983,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_036",
+    "payment_method": "upi",
     "utr": "UTR_N00036",
-    "net_calculated": "7290.78",
+    "net_calculated": "3478.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1753,8 +1993,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_037",
+    "payment_method": "upi",
     "utr": "UTR_N00037",
-    "net_calculated": "13146.25",
+    "net_calculated": "5508.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1762,8 +2003,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_038",
+    "payment_method": "debit_card",
     "utr": "UTR_N00038",
-    "net_calculated": "5058.73",
+    "net_calculated": "19924.74",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1771,8 +2013,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_039",
+    "payment_method": "credit_card",
     "utr": "UTR_N00039",
-    "net_calculated": "8378.49",
+    "net_calculated": "19553.39",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1780,8 +2023,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_040",
+    "payment_method": "upi",
     "utr": "UTR_N00040",
-    "net_calculated": "24388.52",
+    "net_calculated": "18628.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1789,8 +2033,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_041_S1",
+    "payment_method": "credit_card",
     "utr": "UTR_N00041_S1",
-    "net_calculated": "9578.97",
+    "net_calculated": "11149.51",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1798,8 +2043,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_041_S2",
+    "payment_method": "credit_card",
     "utr": "UTR_N00041_S2",
-    "net_calculated": "9578.97",
+    "net_calculated": "11149.51",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1807,8 +2053,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_042",
+    "payment_method": "upi",
     "utr": "UTR_N00042",
-    "net_calculated": "7504.61",
+    "net_calculated": "21503.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1816,8 +2063,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_043",
+    "payment_method": "debit_card",
     "utr": "UTR_N00043",
-    "net_calculated": "3395.92",
+    "net_calculated": "14659.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1825,8 +2073,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_044",
+    "payment_method": "credit_card",
     "utr": "UTR_N00044",
-    "net_calculated": "3995.43",
+    "net_calculated": "23590.80",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1834,8 +2083,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_045",
+    "payment_method": "upi",
     "utr": "UTR_N00045",
-    "net_calculated": "22259.97",
+    "net_calculated": "16903.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1843,8 +2093,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_046",
+    "payment_method": "amex",
     "utr": "UTR_N00046",
-    "net_calculated": "12798.65",
+    "net_calculated": "20122.15",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1852,8 +2103,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_047",
+    "payment_method": "amex",
     "utr": "UTR_N00047",
-    "net_calculated": "17417.02",
+    "net_calculated": "5280.52",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -1861,88 +2113,8 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_048",
+    "payment_method": "credit_card",
     "utr": "UTR_N00048",
-    "net_calculated": "22253.13",
-    "compared_candidates": [],
-    "decision": "UNRESOLVED",
-    "reason": ""
-  },
-  {
-    "step": "payout_to_bank_utr",
-    "payment_id": "pay_049",
-    "utr": "UTR_N00049",
-    "net_calculated": "22299.02",
-    "compared_candidates": [],
-    "decision": "UNRESOLVED",
-    "reason": ""
-  },
-  {
-    "step": "payout_to_bank_utr",
-    "payment_id": "pay_050",
-    "utr": "UTR_N00050",
-    "net_calculated": "20995.53",
-    "compared_candidates": [],
-    "decision": "UNRESOLVED",
-    "reason": ""
-  },
-  {
-    "step": "payout_to_bank_utr",
-    "payment_id": "pay_051",
-    "utr": "UTR_N00051",
-    "net_calculated": "9878.24",
-    "compared_candidates": [],
-    "decision": "UNRESOLVED",
-    "reason": ""
-  },
-  {
-    "step": "payout_to_bank_utr",
-    "payment_id": "pay_052",
-    "utr": "UTR_N00052",
-    "net_calculated": "15004.34",
-    "compared_candidates": [],
-    "decision": "UNRESOLVED",
-    "reason": ""
-  },
-  {
-    "step": "payout_to_bank_utr",
-    "payment_id": "pay_053",
-    "utr": "UTR_N00053",
-    "net_calculated": "16504.09",
-    "compared_candidates": [],
-    "decision": "UNRESOLVED",
-    "reason": ""
-  },
-  {
-    "step": "payout_to_bank_utr",
-    "payment_id": "pay_054",
-    "utr": "UTR_N00054",
-    "net_calculated": "16730.61",
-    "compared_candidates": [],
-    "decision": "UNRESOLVED",
-    "reason": ""
-  },
-  {
-    "step": "payout_to_bank_utr",
-    "payment_id": "pay_055",
-    "utr": "UTR_N00055",
-    "net_calculated": "20493.66",
-    "compared_candidates": [],
-    "decision": "UNRESOLVED",
-    "reason": ""
-  },
-  {
-    "step": "payout_to_bank_utr",
-    "payment_id": "pay_056",
-    "utr": "UTR_N00056",
-    "net_calculated": "5378.01",
-    "compared_candidates": [],
-    "decision": "UNRESOLVED",
-    "reason": ""
-  },
-  {
-    "step": "payout_to_bank_utr",
-    "payment_id": "pay_057",
-    "utr": "UTR_N00057",
     "net_calculated": "17745.09",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
@@ -1950,89 +2122,79 @@
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_058",
-    "utr": "UTR_N00058",
-    "net_calculated": "19651.03",
+    "payment_id": "pay_049",
+    "payment_method": "debit_card",
+    "utr": "UTR_N00049",
+    "net_calculated": "20007.26",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_059",
-    "utr": "UTR_N00059",
-    "net_calculated": "1111.14",
+    "payment_id": "pay_050",
+    "payment_method": "upi",
+    "utr": "UTR_N00050",
+    "net_calculated": "4165.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_060",
-    "utr": "UTR_N00060",
-    "net_calculated": "10326.41",
+    "payment_id": "pay_051",
+    "payment_method": "upi",
+    "utr": "UTR_N00051",
+    "net_calculated": "8346.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_061",
-    "utr": "UTR_N00061",
-    "net_calculated": "8193.95",
+    "payment_id": "pay_052",
+    "payment_method": "debit_card",
+    "utr": "UTR_N00052",
+    "net_calculated": "3286.49",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_062",
-    "utr": "UTR_N00062",
-    "net_calculated": "3227.98",
+    "payment_id": "pay_053",
+    "payment_method": "upi",
+    "utr": "UTR_N00053",
+    "net_calculated": "17955.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_063",
-    "utr": "UTR_N00063",
-    "net_calculated": "2701.70",
+    "payment_id": "pay_054",
+    "payment_method": "credit_card",
+    "utr": "UTR_N00054",
+    "net_calculated": "21596.02",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_064",
-    "utr": "UTR_N00064",
-    "net_calculated": "4595.91",
+    "payment_id": "pay_055",
+    "payment_method": "amex",
+    "utr": "UTR_N00055",
+    "net_calculated": "8805.65",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_065",
-    "utr": "UTR_N00065",
-    "net_calculated": "18078.05",
-    "compared_candidates": [],
-    "decision": "UNRESOLVED",
-    "reason": ""
-  },
-  {
-    "step": "payout_to_bank_utr",
-    "payment_id": "pay_066",
-    "utr": "UTR_N00066",
-    "net_calculated": "17370.16",
-    "compared_candidates": [],
-    "decision": "UNRESOLVED",
-    "reason": ""
-  },
-  {
-    "step": "payout_to_bank_utr",
-    "payment_id": "pay_067",
-    "utr": "UTR_N00067",
+    "payment_id": "pay_056",
+    "payment_method": "credit_card",
+    "utr": "UTR_N00056",
     "net_calculated": "7264.42",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
@@ -2040,26 +2202,19 @@
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_068",
-    "utr": "UTR_N00068",
-    "net_calculated": "23297.88",
+    "payment_id": "pay_057",
+    "payment_method": "debit_card",
+    "utr": "UTR_N00057",
+    "net_calculated": "23720.21",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_069",
-    "utr": "UTR_N00069",
-    "net_calculated": "21977.79",
-    "compared_candidates": [],
-    "decision": "UNRESOLVED",
-    "reason": ""
-  },
-  {
-    "step": "payout_to_bank_utr",
-    "payment_id": "pay_070",
-    "utr": "UTR_N00070",
+    "payment_id": "pay_058",
+    "payment_method": "credit_card",
+    "utr": "UTR_N00058",
     "net_calculated": "14504.42",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
@@ -2067,89 +2222,79 @@
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_071",
-    "utr": "UTR_N00071",
-    "net_calculated": "4359.63",
+    "payment_id": "pay_059",
+    "payment_method": "upi",
+    "utr": "UTR_N00059",
+    "net_calculated": "4465.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_072",
-    "utr": "UTR_N00072",
-    "net_calculated": "2536.69",
+    "payment_id": "pay_060",
+    "payment_method": "credit_card",
+    "utr": "UTR_N00060",
+    "net_calculated": "11304.76",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_073",
-    "utr": "UTR_N00073",
-    "net_calculated": "19310.26",
+    "payment_id": "pay_061",
+    "payment_method": "upi",
+    "utr": "UTR_N00061",
+    "net_calculated": "19782.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_074",
-    "utr": "UTR_N00074",
-    "net_calculated": "19315.14",
+    "payment_id": "pay_062",
+    "payment_method": "upi",
+    "utr": "UTR_N00062",
+    "net_calculated": "23694.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_075",
-    "utr": "UTR_N00075",
-    "net_calculated": "2759.31",
+    "payment_id": "pay_063",
+    "payment_method": "upi",
+    "utr": "UTR_N00063",
+    "net_calculated": "2708.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_076",
-    "utr": "UTR_N00076",
-    "net_calculated": "7812.18",
+    "payment_id": "pay_064",
+    "payment_method": "upi",
+    "utr": "UTR_N00064",
+    "net_calculated": "2821.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_077",
-    "utr": "UTR_N00077",
-    "net_calculated": "11059.68",
+    "payment_id": "pay_065",
+    "payment_method": "upi",
+    "utr": "UTR_N00065",
+    "net_calculated": "22421.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_078",
-    "utr": "UTR_N00078",
-    "net_calculated": "9397.85",
-    "compared_candidates": [],
-    "decision": "UNRESOLVED",
-    "reason": ""
-  },
-  {
-    "step": "payout_to_bank_utr",
-    "payment_id": "pay_079",
-    "utr": "UTR_N00079",
-    "net_calculated": "7342.53",
-    "compared_candidates": [],
-    "decision": "UNRESOLVED",
-    "reason": ""
-  },
-  {
-    "step": "payout_to_bank_utr",
-    "payment_id": "pay_080",
-    "utr": "UTR_N00080",
+    "payment_id": "pay_066",
+    "payment_method": "credit_card",
+    "utr": "UTR_N00066",
     "net_calculated": "23630.83",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
@@ -2157,62 +2302,49 @@
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_081",
-    "utr": "UTR_N00081",
-    "net_calculated": "8262.30",
+    "payment_id": "pay_067",
+    "payment_method": "debit_card",
+    "utr": "UTR_N00067",
+    "net_calculated": "8412.07",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_082",
-    "utr": "UTR_N00082",
-    "net_calculated": "13511.42",
+    "payment_id": "pay_068",
+    "payment_method": "upi",
+    "utr": "UTR_N00068",
+    "net_calculated": "6739.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_083",
-    "utr": "UTR_N00083",
-    "net_calculated": "3589.25",
+    "payment_id": "pay_069",
+    "payment_method": "debit_card",
+    "utr": "UTR_N00069",
+    "net_calculated": "12037.55",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_084",
-    "utr": "UTR_N00084",
-    "net_calculated": "11823.23",
+    "payment_id": "pay_070",
+    "payment_method": "credit_card",
+    "utr": "UTR_N00070",
+    "net_calculated": "23814.40",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_085",
-    "utr": "UTR_N00085",
-    "net_calculated": "15430.05",
-    "compared_candidates": [],
-    "decision": "UNRESOLVED",
-    "reason": ""
-  },
-  {
-    "step": "payout_to_bank_utr",
-    "payment_id": "pay_086",
-    "utr": "UTR_N00086",
-    "net_calculated": "22031.49",
-    "compared_candidates": [],
-    "decision": "UNRESOLVED",
-    "reason": ""
-  },
-  {
-    "step": "payout_to_bank_utr",
-    "payment_id": "pay_087",
-    "utr": "UTR_N00087",
+    "payment_id": "pay_071",
+    "payment_method": "credit_card",
+    "utr": "UTR_N00071",
     "net_calculated": "2427.33",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
@@ -2220,53 +2352,49 @@
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_088",
-    "utr": "UTR_N00088",
-    "net_calculated": "3983.71",
+    "payment_id": "pay_072",
+    "payment_method": "upi",
+    "utr": "UTR_N00072",
+    "net_calculated": "4080.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_089",
-    "utr": "UTR_N00089",
-    "net_calculated": "6573.12",
+    "payment_id": "pay_073",
+    "payment_method": "upi",
+    "utr": "UTR_N00073",
+    "net_calculated": "18073.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_090",
-    "utr": "UTR_N00090",
-    "net_calculated": "4972.81",
+    "payment_id": "pay_074",
+    "payment_method": "debit_card",
+    "utr": "UTR_N00074",
+    "net_calculated": "6473.58",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_091",
-    "utr": "UTR_N00091",
-    "net_calculated": "9399.80",
+    "payment_id": "pay_075",
+    "payment_method": "amex",
+    "utr": "UTR_N00075",
+    "net_calculated": "2847.34",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
   },
   {
     "step": "payout_to_bank_utr",
-    "payment_id": "pay_092",
-    "utr": "UTR_N00092",
-    "net_calculated": "2899.91",
-    "compared_candidates": [],
-    "decision": "UNRESOLVED",
-    "reason": ""
-  },
-  {
-    "step": "payout_to_bank_utr",
-    "payment_id": "pay_093",
-    "utr": "UTR_N00093",
+    "payment_id": "pay_076",
+    "payment_method": "credit_card",
+    "utr": "UTR_N00076",
     "net_calculated": "2106.09",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
@@ -2274,9 +2402,180 @@
   },
   {
     "step": "payout_to_bank_utr",
+    "payment_id": "pay_077",
+    "payment_method": "amex",
+    "utr": "UTR_N00077",
+    "net_calculated": "3409.14",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_078",
+    "payment_method": "debit_card",
+    "utr": "UTR_N00078",
+    "net_calculated": "5913.89",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_079",
+    "payment_method": "debit_card",
+    "utr": "UTR_N00079",
+    "net_calculated": "7459.73",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_080",
+    "payment_method": "upi",
+    "utr": "UTR_N00080",
+    "net_calculated": "5894.00",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_081",
+    "payment_method": "amex",
+    "utr": "UTR_N00081",
+    "net_calculated": "8810.45",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_082",
+    "payment_method": "credit_card",
+    "utr": "UTR_N00082",
+    "net_calculated": "9614.61",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_083",
+    "payment_method": "upi",
+    "utr": "UTR_N00083",
+    "net_calculated": "5572.00",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_084",
+    "payment_method": "credit_card",
+    "utr": "UTR_N00084",
+    "net_calculated": "2358.98",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_085",
+    "payment_method": "upi",
+    "utr": "UTR_N00085",
+    "net_calculated": "10776.00",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_086",
+    "payment_method": "amex",
+    "utr": "UTR_N00086",
+    "net_calculated": "16275.84",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_087",
+    "payment_method": "upi",
+    "utr": "UTR_N00087",
+    "net_calculated": "2363.00",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_088",
+    "payment_method": "upi",
+    "utr": "UTR_N00088",
+    "net_calculated": "2745.00",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_089",
+    "payment_method": "credit_card",
+    "utr": "UTR_N00089",
+    "net_calculated": "13405.97",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_090",
+    "payment_method": "upi",
+    "utr": "UTR_N00090",
+    "net_calculated": "19470.00",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_091",
+    "payment_method": "credit_card",
+    "utr": "UTR_N00091",
+    "net_calculated": "13901.01",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_092",
+    "payment_method": "credit_card",
+    "utr": "UTR_N00092",
+    "net_calculated": "8830.56",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
+    "payment_id": "pay_093",
+    "payment_method": "debit_card",
+    "utr": "UTR_N00093",
+    "net_calculated": "8271.90",
+    "compared_candidates": [],
+    "decision": "UNRESOLVED",
+    "reason": ""
+  },
+  {
+    "step": "payout_to_bank_utr",
     "payment_id": "pay_094",
+    "payment_method": "upi",
     "utr": "UTR_N00094",
-    "net_calculated": "3472.08",
+    "net_calculated": "22509.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -2284,8 +2583,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_095",
+    "payment_method": "amex",
     "utr": "UTR_N00095",
-    "net_calculated": "5808.60",
+    "net_calculated": "10411.48",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -2293,8 +2593,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_096",
+    "payment_method": "credit_card",
     "utr": "UTR_N00096",
-    "net_calculated": "15888.96",
+    "net_calculated": "786.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -2302,8 +2603,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_097",
+    "payment_method": "upi",
     "utr": "UTR_N00097",
-    "net_calculated": "2363.86",
+    "net_calculated": "2900.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -2311,8 +2613,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_098",
+    "payment_method": "upi",
     "utr": "UTR_N00098",
-    "net_calculated": "556.55",
+    "net_calculated": "4840.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -2320,8 +2623,9 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_099",
+    "payment_method": "upi",
     "utr": "UTR_N00099",
-    "net_calculated": "15045.35",
+    "net_calculated": "8504.00",
     "compared_candidates": [],
     "decision": "UNRESOLVED",
     "reason": ""
@@ -2329,185 +2633,198 @@
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_100",
+    "payment_method": "credit_card",
     "utr": "UTR_N00100",
-    "net_calculated": "22774.53",
+    "net_calculated": "14507.35",
     "compared_candidates": [
       {
         "date": "2026-08-31",
-        "amount_credited": "22774.53",
+        "amount_credited": "14507.35",
         "description": "CMS/RAZORPAY PAYOUTS/set_110/UTR_N00100"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact UTR, net amount, and timing SLA match"
+    "reason": "Exact UTR, CREDIT_CARD MDR compliance, and T+2 banking SLA verified"
   },
   {
     "step": "payout_to_bank_utr",
     "payment_id": "pay_dup_1",
+    "payment_method": "credit_card",
     "utr": "UTR_DUP_SUCCESS",
     "net_calculated": "1464.60",
     "compared_candidates": [
       {
         "date": "2026-08-31",
         "amount_credited": "1464.60",
-        "description": "CMS/NEFT-CMS-RAZORPAY-SETL/set_dup/UTR_DUP_SUCCESS"
+        "description": "CMS/RZRPY SETTLEMENT/set_dup/UTR_DUP_SUCCESS"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Exact UTR, net amount, and timing SLA match"
+    "reason": "Exact UTR, CREDIT_CARD MDR compliance, and T+2 banking SLA verified"
   },
   {
     "step": "payout_to_bank_settlement_batch",
     "settlement_id": "set_100",
+    "payment_method": "batch",
     "batch_size": 9,
-    "sum_net_calculated": "129648.50",
+    "sum_net_calculated": "123524.58",
     "compared_candidates": [
       {
         "date": "2026-08-24",
-        "amount_credited": "129665.92",
-        "description": "CMS/RAZORPAY PAYOUTS/set_100/BATCH"
+        "amount_credited": "124128.47",
+        "description": "CMS/NEFT-CMS-RAZORPAY-SETL/set_100/BATCH"
       }
     ],
-    "decision": "UNRESOLVED",
-    "reason": "Batch settlement contains payouts violating MDR contract rates"
+    "decision": "PARTIAL_DISAGGREGATED",
+    "reason": "Batch Disaggregation: Auto-committed 8 clean payouts; isolated 1 fee anomaly outlier(s)"
   },
   {
     "step": "payout_to_bank_settlement_batch",
     "settlement_id": "set_101",
+    "payment_method": "batch",
     "batch_size": 10,
-    "sum_net_calculated": "111422.87",
+    "sum_net_calculated": "133080.69",
     "compared_candidates": [
       {
         "date": "2026-08-24",
-        "amount_credited": "111422.86",
-        "description": "CMS/RAZORPAY PAYOUTS/set_101/BATCH"
+        "amount_credited": "133080.68",
+        "description": "CMS/RZRPY SETTLEMENT/set_101/BATCH"
       }
     ],
-    "decision": "UNRESOLVED",
-    "reason": "Batch settlement contains payouts violating MDR contract rates"
+    "decision": "PARTIAL_DISAGGREGATED",
+    "reason": "Batch Disaggregation: Auto-committed 9 clean payouts; isolated 1 fee anomaly outlier(s)"
   },
   {
     "step": "payout_to_bank_settlement_batch",
     "settlement_id": "set_102",
+    "payment_method": "batch",
     "batch_size": 10,
-    "sum_net_calculated": "122753.01",
+    "sum_net_calculated": "134631.10",
     "compared_candidates": [
       {
         "date": "2026-09-01",
-        "amount_credited": "122753.01",
-        "description": "CMS/RZRPY SETTLEMENT/set_102/BATCH"
+        "amount_credited": "134631.10",
+        "description": "CMS/NEFT-CMS-RAZORPAY-SETL/set_102/BATCH"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Batch settlement match: Sum of 10 payouts matches bank statement batch deposit exactly"
+    "reason": "Batch settlement match: Sum of 10 multi-instrument payouts matches bank deposit exactly"
   },
   {
     "step": "payout_to_bank_settlement_batch",
     "settlement_id": "set_103",
+    "payment_method": "batch",
     "batch_size": 10,
-    "sum_net_calculated": "92107.73",
+    "sum_net_calculated": "138232.52",
     "compared_candidates": [
       {
         "date": "2026-08-25",
-        "amount_credited": "92107.73",
+        "amount_credited": "138232.52",
         "description": "CMS/RAZORPAY PAYOUTS/set_103/BATCH"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Batch settlement match: Sum of 10 payouts matches bank statement batch deposit exactly"
+    "reason": "Batch settlement match: Sum of 10 multi-instrument payouts matches bank deposit exactly"
   },
   {
     "step": "payout_to_bank_settlement_batch",
     "settlement_id": "set_104",
+    "payment_method": "batch",
     "batch_size": 11,
-    "sum_net_calculated": "155470.21",
+    "sum_net_calculated": "180737.84",
     "compared_candidates": [
       {
         "date": "2026-08-26",
-        "amount_credited": "155470.21",
-        "description": "CMS/NEFT-CMS-RAZORPAY-SETL/set_104/BATCH"
+        "amount_credited": "180737.84",
+        "description": "CMS/RZRPY SETTLEMENT/set_104/BATCH"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Batch settlement match: Sum of 11 payouts matches bank statement batch deposit exactly"
+    "reason": "Batch settlement match: Sum of 11 multi-instrument payouts matches bank deposit exactly"
   },
   {
     "step": "payout_to_bank_settlement_batch",
     "settlement_id": "set_105",
+    "payment_method": "batch",
     "batch_size": 10,
-    "sum_net_calculated": "143491.74",
+    "sum_net_calculated": "114108.21",
     "compared_candidates": [
       {
         "date": "2026-08-27",
-        "amount_credited": "143491.74",
+        "amount_credited": "114108.21",
         "description": "CMS/NEFT-CMS-RAZORPAY-SETL/set_105/BATCH"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Batch settlement match: Sum of 10 payouts matches bank statement batch deposit exactly"
+    "reason": "Batch settlement match: Sum of 10 multi-instrument payouts matches bank deposit exactly"
   },
   {
     "step": "payout_to_bank_settlement_batch",
     "settlement_id": "set_106",
+    "payment_method": "batch",
     "batch_size": 10,
-    "sum_net_calculated": "117034.25",
+    "sum_net_calculated": "133550.21",
     "compared_candidates": [
       {
         "date": "2026-08-28",
-        "amount_credited": "117034.25",
-        "description": "CMS/RZRPY SETTLEMENT/set_106/BATCH"
+        "amount_credited": "133550.21",
+        "description": "CMS/NEFT-CMS-RAZORPAY-SETL/set_106/BATCH"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Batch settlement match: Sum of 10 payouts matches bank statement batch deposit exactly"
+    "reason": "Batch settlement match: Sum of 10 multi-instrument payouts matches bank deposit exactly"
   },
   {
     "step": "payout_to_bank_settlement_batch",
     "settlement_id": "set_107",
+    "payment_method": "batch",
     "batch_size": 10,
-    "sum_net_calculated": "98397.69",
+    "sum_net_calculated": "76604.50",
     "compared_candidates": [
       {
         "date": "2026-08-31",
-        "amount_credited": "98397.69",
-        "description": "CMS/NEFT-CMS-RAZORPAY-SETL/set_107/BATCH"
+        "amount_credited": "76604.50",
+        "description": "CMS/RAZORPAY PAYOUTS/set_107/BATCH"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Batch settlement match: Sum of 10 payouts matches bank statement batch deposit exactly"
+    "reason": "Batch settlement match: Sum of 10 multi-instrument payouts matches bank deposit exactly"
   },
   {
     "step": "payout_to_bank_settlement_batch",
     "settlement_id": "set_108",
+    "payment_method": "batch",
     "batch_size": 10,
-    "sum_net_calculated": "111262.73",
+    "sum_net_calculated": "77815.85",
     "compared_candidates": [
       {
         "date": "2026-08-31",
-        "amount_credited": "111262.73",
-        "description": "CMS/NEFT-CMS-RAZORPAY-SETL/set_108/BATCH"
+        "amount_credited": "77815.85",
+        "description": "CMS/RZRPY SETTLEMENT/set_108/BATCH"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Batch settlement match: Sum of 10 payouts matches bank statement batch deposit exactly"
+    "reason": "Batch settlement match: Sum of 10 multi-instrument payouts matches bank deposit exactly"
   },
   {
     "step": "payout_to_bank_settlement_batch",
     "settlement_id": "set_109",
+    "payment_method": "batch",
     "batch_size": 10,
-    "sum_net_calculated": "62514.01",
+    "sum_net_calculated": "100423.95",
     "compared_candidates": [
       {
         "date": "2026-08-31",
-        "amount_credited": "62514.01",
-        "description": "CMS/INF-RAZORPAY SOFTWARE/set_109/BATCH"
+        "amount_credited": "100423.95",
+        "description": "CMS/RZRPY SETTLEMENT/set_109/BATCH"
       }
     ],
     "decision": "AUTO_COMMIT",
-    "reason": "Batch settlement match: Sum of 10 payouts matches bank statement batch deposit exactly"
+    "reason": "Batch settlement match: Sum of 10 multi-instrument payouts matches bank deposit exactly"
   },
   {
     "step": "bank_debit_to_refund",
+    "payment_method": "refund",
     "bank_date": "2026-08-30",
     "amount_debited": "1500.00",
     "utr": "UTR_DUP_SUCCESS",
@@ -2523,420 +2840,46 @@
   },
   {
     "step": "llm_payout_audit",
-    "payment_id": "pay_001",
-    "utr": "UTR_N00001",
-    "net_calculated": "20945.73",
-    "compared_candidates": [
-      {
-        "date": "2026-08-24",
-        "amount_credited": "129665.92",
-        "description": "CMS/RAZORPAY PAYOUTS/set_100/BATCH"
-      },
-      {
-        "date": "2026-08-24",
-        "amount_credited": "111422.86",
-        "description": "CMS/RAZORPAY PAYOUTS/set_101/BATCH"
-      }
-    ],
-    "decision": "ABSTAINED",
-    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
-    "llm_confidence": 0,
-    "llm_justification": "Candidate [0] has a narration containing 'set_100' which matches the settlement ID, and the date is within T+2 days (2026-08-24 vs 2026-08-22). However, the credited amount is 129665.92 INR, which is significantly higher than the expected net payout of 20945.73 INR. This amount mismatch is too large to be explained by fees or other adjustments. Candidate [1] has a different settlement ID 'set_101' and also a mismatched amount. No candidate matches the expected net payout amount, and the UTR reference is not present in the narration. Therefore, no candidate qualifies as a match."
-  },
-  {
-    "step": "llm_payout_audit",
-    "payment_id": "pay_002",
-    "utr": "UTR_N00002",
-    "net_calculated": "24213.74",
-    "compared_candidates": [
-      {
-        "date": "2026-08-24",
-        "amount_credited": "129665.92",
-        "description": "CMS/RAZORPAY PAYOUTS/set_100/BATCH"
-      },
-      {
-        "date": "2026-08-24",
-        "amount_credited": "111422.86",
-        "description": "CMS/RAZORPAY PAYOUTS/set_101/BATCH"
-      }
-    ],
-    "decision": "ABSTAINED",
-    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
-    "llm_confidence": 0,
-    "llm_justification": "Candidate [0] has narration containing set_100 matching the settlement ID, but the credited amount (129665.92 INR) does not match the expected net payout (24213.74 INR). Candidate [1] has a different settlement ID (set_101) and amount (111422.86 INR). No candidate has a UTR matching UTR_N00002. The amounts are significantly higher, indicating these are batch payouts, not individual payouts. Therefore, no candidate qualifies as a match."
-  },
-  {
-    "step": "llm_payout_audit",
-    "payment_id": "pay_003",
-    "utr": "UTR_N00003",
-    "net_calculated": "7629.59",
-    "compared_candidates": [
-      {
-        "date": "2026-08-24",
-        "amount_credited": "129665.92",
-        "description": "CMS/RAZORPAY PAYOUTS/set_100/BATCH"
-      },
-      {
-        "date": "2026-08-24",
-        "amount_credited": "111422.86",
-        "description": "CMS/RAZORPAY PAYOUTS/set_101/BATCH"
-      }
-    ],
-    "decision": "ABSTAINED",
-    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
-    "llm_confidence": 0,
-    "llm_justification": "Candidate [0] has narration containing set_100 matching the settlement ID, but the bank credited amount is 129665.92 INR, which is far higher than the expected net payout of 7629.59 INR. This indicates the bank deposit aggregates multiple payouts, not a one-to-one match. Candidate [1] has a different settlement ID (set_101) and also a mismatched amount. No candidate matches the expected net payout amount, and the UTR is not present in the narration. Therefore, no candidate qualifies as a match."
-  },
-  {
-    "step": "llm_payout_audit",
-    "payment_id": "pay_004",
-    "utr": "UTR_N00004",
-    "net_calculated": "22138.89",
-    "compared_candidates": [
-      {
-        "date": "2026-08-24",
-        "amount_credited": "129665.92",
-        "description": "CMS/RAZORPAY PAYOUTS/set_100/BATCH"
-      },
-      {
-        "date": "2026-08-24",
-        "amount_credited": "111422.86",
-        "description": "CMS/RAZORPAY PAYOUTS/set_101/BATCH"
-      }
-    ],
-    "decision": "ABSTAINED",
-    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
-    "llm_confidence": 0,
-    "llm_justification": "Candidate [0] has narration containing set_100 matching the settlement ID, but the credited amount (129665.92 INR) does not match the expected net payout (22138.89 INR). Candidate [1] has a different settlement ID (set_101) and amount mismatch. No UTR match found. Therefore, no candidate qualifies."
-  },
-  {
-    "step": "llm_payout_audit",
-    "payment_id": "pay_005",
-    "utr": "UTR_N00005",
-    "net_calculated": "19380.56",
-    "compared_candidates": [
-      {
-        "date": "2026-08-24",
-        "amount_credited": "129665.92",
-        "description": "CMS/RAZORPAY PAYOUTS/set_100/BATCH"
-      },
-      {
-        "date": "2026-08-24",
-        "amount_credited": "111422.86",
-        "description": "CMS/RAZORPAY PAYOUTS/set_101/BATCH"
-      }
-    ],
-    "decision": "ABSTAINED",
-    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
-    "llm_confidence": 0,
-    "llm_justification": "Candidate [0] has narration containing set_100 matching the settlement ID, but the credited amount is 129665.92 INR, which is significantly higher than the expected net payout of 19380.56 INR. This indicates a batch payout containing multiple settlements, not a one-to-one match. Candidate [1] has a different settlement ID (set_101) and amount mismatch. No candidate matches the exact amount or UTR. Therefore, no valid match."
-  },
-  {
-    "step": "llm_payout_audit",
     "payment_id": "pay_006",
     "utr": "UTR_N00006",
-    "net_calculated": "1423.75",
+    "net_calculated": "16455.11",
     "compared_candidates": [
       {
         "date": "2026-08-24",
-        "amount_credited": "129665.92",
-        "description": "CMS/RAZORPAY PAYOUTS/set_100/BATCH"
+        "amount_credited": "124128.47",
+        "description": "CMS/NEFT-CMS-RAZORPAY-SETL/set_100/BATCH"
       },
       {
         "date": "2026-08-24",
-        "amount_credited": "111422.86",
-        "description": "CMS/RAZORPAY PAYOUTS/set_101/BATCH"
+        "amount_credited": "133080.68",
+        "description": "CMS/RZRPY SETTLEMENT/set_101/BATCH"
       }
     ],
     "decision": "ABSTAINED",
     "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
     "llm_confidence": 0,
-    "llm_justification": "Candidate [0] has settlement ID set_100 matching the payout, but the bank credited amount is 129665.92 INR, which is far higher than the expected net payout of 1423.75 INR. This indicates the bank deposit aggregates multiple payouts, not a one-to-one match. Candidate [1] has a different settlement ID (set_101) and also a much larger amount. Neither candidate matches the expected amount, and the UTR is not present in the narration. Therefore, no candidate qualifies as a match."
-  },
-  {
-    "step": "llm_payout_audit",
-    "payment_id": "pay_007",
-    "utr": "UTR_N00007",
-    "net_calculated": "7931.30",
-    "compared_candidates": [
-      {
-        "date": "2026-08-24",
-        "amount_credited": "129665.92",
-        "description": "CMS/RAZORPAY PAYOUTS/set_100/BATCH"
-      },
-      {
-        "date": "2026-08-24",
-        "amount_credited": "111422.86",
-        "description": "CMS/RAZORPAY PAYOUTS/set_101/BATCH"
-      }
-    ],
-    "decision": "ABSTAINED",
-    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
-    "llm_confidence": 0,
-    "llm_justification": "Candidate [0] has narration containing set_100, matching the settlement ID, and date 2026-08-24 is within T+2 of settlement date 2026-08-23. However, the credited amount is 129665.92 INR, which is vastly different from the expected net payout of 7931.30 INR. The UTR reference UTR_N00007 is not present in the narration. Candidate [1] has a different settlement ID (set_101) and amount mismatch. No candidate matches the expected payout amount or UTR, so no match is proposed."
-  },
-  {
-    "step": "llm_payout_audit",
-    "payment_id": "pay_008",
-    "utr": "UTR_N00008",
-    "net_calculated": "18444.20",
-    "compared_candidates": [
-      {
-        "date": "2026-08-24",
-        "amount_credited": "129665.92",
-        "description": "CMS/RAZORPAY PAYOUTS/set_100/BATCH"
-      },
-      {
-        "date": "2026-08-24",
-        "amount_credited": "111422.86",
-        "description": "CMS/RAZORPAY PAYOUTS/set_101/BATCH"
-      }
-    ],
-    "decision": "ABSTAINED",
-    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
-    "llm_confidence": 0,
-    "llm_justification": "Candidate [0] has settlement ID set_100 matching the payout, but the bank credited amount is 129665.92 INR, which is significantly higher than the expected net payout of 18444.20 INR. The UTR reference UTR_N00008 is not present in the narration. Candidate [1] has a different settlement ID set_101 and amount 111422.86 INR, also not matching. No candidate matches the expected amount or UTR, and the amounts are far too large to be a fee mismatch. Therefore, no match is proposed."
-  },
-  {
-    "step": "llm_payout_audit",
-    "payment_id": "pay_009",
-    "utr": "UTR_N00009",
-    "net_calculated": "7540.74",
-    "compared_candidates": [
-      {
-        "date": "2026-08-24",
-        "amount_credited": "129665.92",
-        "description": "CMS/RAZORPAY PAYOUTS/set_100/BATCH"
-      },
-      {
-        "date": "2026-08-24",
-        "amount_credited": "111422.86",
-        "description": "CMS/RAZORPAY PAYOUTS/set_101/BATCH"
-      }
-    ],
-    "decision": "ABSTAINED",
-    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
-    "llm_confidence": 0,
-    "llm_justification": "Candidate [0] has settlement ID set_100 matching the payout, but the bank credited amount is 129665.92 INR, which is significantly higher than the expected net payout of 7540.74 INR. This indicates a batch payout containing multiple transactions, not a single payout. The UTR reference UTR_N00009 is not present in the narration. Candidate [1] has a different settlement ID set_101 and also a mismatched amount. No candidate matches the expected amount or UTR, and the date difference is within the allowed window but the amount mismatch is critical. Therefore, no match is proposed."
-  },
-  {
-    "step": "llm_payout_audit",
-    "payment_id": "pay_010",
-    "utr": "UTR_N00010",
-    "net_calculated": "695.20",
-    "compared_candidates": [
-      {
-        "date": "2026-08-24",
-        "amount_credited": "129665.92",
-        "description": "CMS/RAZORPAY PAYOUTS/set_100/BATCH"
-      },
-      {
-        "date": "2026-08-24",
-        "amount_credited": "111422.86",
-        "description": "CMS/RAZORPAY PAYOUTS/set_101/BATCH"
-      }
-    ],
-    "decision": "ABSTAINED",
-    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
-    "llm_confidence": 0,
-    "llm_justification": "The settlement date is 2026-08-23, and the bank statement date is 2026-08-24, which is within the allowed T+2 days. However, the bank statement amount for set_101 is 111422.86 INR, which does not match the expected net payout of 695.20 INR. The narration mentions set_101, but the amount is significantly larger, indicating this is a batch payout containing multiple transactions. The UTR reference UTR_N00010 is not present in the narration. No candidate matches the expected amount or UTR, so no match is proposed."
-  },
-  {
-    "step": "llm_payout_audit",
-    "payment_id": "pay_011",
-    "utr": "UTR_N00011",
-    "net_calculated": "22824.33",
-    "compared_candidates": [
-      {
-        "date": "2026-08-24",
-        "amount_credited": "129665.92",
-        "description": "CMS/RAZORPAY PAYOUTS/set_100/BATCH"
-      },
-      {
-        "date": "2026-08-24",
-        "amount_credited": "111422.86",
-        "description": "CMS/RAZORPAY PAYOUTS/set_101/BATCH"
-      }
-    ],
-    "decision": "ABSTAINED",
-    "reason": "LLM proposed match but engine failed to map to concrete candidate safely",
-    "llm_confidence": 95,
-    "llm_justification": "Candidate [1] has settlement ID set_101 matching the payout's settlement ID, and the bank credit date (2026-08-24) is within T+2 days of the settlement date (2026-08-23). The amount credited (111422.86 INR) is higher than the expected net payout (22824.33 INR), which is typical for a batch payout containing multiple transactions. The narration includes 'RAZORPAY PAYOUTS' and 'set_101', confirming the match. No fee mismatch or duplicate amount issue is present. Candidate [0] has a different settlement ID (set_100) and is therefore not a match."
-  },
-  {
-    "step": "llm_payout_audit",
-    "payment_id": "pay_012",
-    "utr": "UTR_N00012",
-    "net_calculated": "9378.32",
-    "compared_candidates": [
-      {
-        "date": "2026-08-24",
-        "amount_credited": "129665.92",
-        "description": "CMS/RAZORPAY PAYOUTS/set_100/BATCH"
-      },
-      {
-        "date": "2026-08-24",
-        "amount_credited": "111422.86",
-        "description": "CMS/RAZORPAY PAYOUTS/set_101/BATCH"
-      }
-    ],
-    "decision": "ABSTAINED",
-    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
-    "llm_confidence": 0,
-    "llm_justification": "Candidate [1] has settlement ID set_101 matching the payout, but the bank credited amount is 111422.86 INR, which is far higher than the expected net payout of 9378.32 INR. The UTR is not present in the narration, and the amount mismatch is too large to be a fee difference. Candidate [0] has a different settlement ID (set_100) and also a much larger amount. No candidate matches the expected amount or UTR, so no match is proposed."
-  },
-  {
-    "step": "llm_payout_audit",
-    "payment_id": "pay_013",
-    "utr": "UTR_N00013",
-    "net_calculated": "11256.92",
-    "compared_candidates": [
-      {
-        "date": "2026-08-24",
-        "amount_credited": "129665.92",
-        "description": "CMS/RAZORPAY PAYOUTS/set_100/BATCH"
-      },
-      {
-        "date": "2026-08-24",
-        "amount_credited": "111422.86",
-        "description": "CMS/RAZORPAY PAYOUTS/set_101/BATCH"
-      }
-    ],
-    "decision": "ABSTAINED",
-    "reason": "LLM proposed match but engine failed to map to concrete candidate safely",
-    "llm_confidence": 95,
-    "llm_justification": "Candidate [1] matches the unresolved payout. The settlement ID 'set_101' appears in the narration, and the bank credit date (2026-08-24) is within T+2 days of the settlement date (2026-08-23). The credited amount (111422.86 INR) is lower than the expected net payout (11256.92 INR), indicating a possible fee mismatch or MDR leakage, but the UTR reference is not present in the narration. However, the settlement ID match and date proximity provide high confidence. Candidate [0] has a different settlement ID (set_100) and a much larger amount, so it is not a match."
-  },
-  {
-    "step": "llm_payout_audit",
-    "payment_id": "pay_014",
-    "utr": "UTR_N00014",
-    "net_calculated": "12643.40",
-    "compared_candidates": [
-      {
-        "date": "2026-08-24",
-        "amount_credited": "129665.92",
-        "description": "CMS/RAZORPAY PAYOUTS/set_100/BATCH"
-      },
-      {
-        "date": "2026-08-24",
-        "amount_credited": "111422.86",
-        "description": "CMS/RAZORPAY PAYOUTS/set_101/BATCH"
-      }
-    ],
-    "decision": "ABSTAINED",
-    "reason": "LLM proposed match but engine failed to map to concrete candidate safely",
-    "llm_confidence": 95,
-    "llm_justification": "Candidate [1] matches the unresolved payout. Settlement ID set_101 appears in the narration, and the date (2026-08-24) is within T+2 days of settlement date (2026-08-23). The amount credited (111422.86 INR) is lower than expected net payout (12643.40 INR), but this is a batch payout containing multiple transactions, so the amount mismatch is expected. The UTR reference is not present in the narration, but the settlement ID match is strong. No other candidate matches the settlement ID. Confidence is high due to exact settlement ID match and date proximity."
-  },
-  {
-    "step": "llm_payout_audit",
-    "payment_id": "pay_015",
-    "utr": "UTR_N00015",
-    "net_calculated": "11492.23",
-    "compared_candidates": [
-      {
-        "date": "2026-08-24",
-        "amount_credited": "129665.92",
-        "description": "CMS/RAZORPAY PAYOUTS/set_100/BATCH"
-      },
-      {
-        "date": "2026-08-24",
-        "amount_credited": "111422.86",
-        "description": "CMS/RAZORPAY PAYOUTS/set_101/BATCH"
-      }
-    ],
-    "decision": "ABSTAINED",
-    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
-    "llm_confidence": 0,
-    "llm_justification": "Candidate [1] has settlement ID set_101 matching the payout, but the bank credited amount is 111422.86 INR, which is significantly higher than the expected net payout of 11492.23 INR. The amount mismatch is too large to be a valid match. Candidate [0] has a different settlement ID (set_100) and also a mismatched amount. No candidate matches the expected payout amount or UTR, so no match is proposed."
+    "llm_justification": "Candidate [0] has narration containing 'set_100' matching the settlement ID, but the credited amount (124128.47 INR) is far higher than the expected net payout (16455.11 INR), indicating it is a batch settlement for multiple transactions. The UTR in the bank description is not provided, so cannot verify UTR match. Candidate [1] has a different settlement ID (set_101) and amount (133080.68 INR), also not matching. Neither candidate matches the expected amount, and no UTR is available to confirm a match. Therefore, no candidate qualifies as a match."
   },
   {
     "step": "llm_payout_audit",
     "payment_id": "pay_016",
     "utr": "UTR_N00016",
-    "net_calculated": "1877.63",
+    "net_calculated": "12598.50",
     "compared_candidates": [
       {
         "date": "2026-08-24",
-        "amount_credited": "129665.92",
-        "description": "CMS/RAZORPAY PAYOUTS/set_100/BATCH"
+        "amount_credited": "124128.47",
+        "description": "CMS/NEFT-CMS-RAZORPAY-SETL/set_100/BATCH"
       },
       {
         "date": "2026-08-24",
-        "amount_credited": "111422.86",
-        "description": "CMS/RAZORPAY PAYOUTS/set_101/BATCH"
+        "amount_credited": "133080.68",
+        "description": "CMS/RZRPY SETTLEMENT/set_101/BATCH"
       }
     ],
     "decision": "ABSTAINED",
     "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
     "llm_confidence": 0,
-    "llm_justification": "The only candidate with settlement ID set_101 has an amount of 111422.86 INR, which is vastly different from the expected net payout of 1877.63 INR. The date is within the allowed window (2026-08-24 vs settlement 2026-08-23), and the narration contains the correct settlement ID, but the amount mismatch is extreme, indicating this is a batch payout containing multiple transactions, not the individual payout. No other candidate matches the amount or UTR. Therefore, no high-confidence match exists."
-  },
-  {
-    "step": "llm_payout_audit",
-    "payment_id": "pay_017",
-    "utr": "UTR_N00017",
-    "net_calculated": "17644.52",
-    "compared_candidates": [
-      {
-        "date": "2026-08-24",
-        "amount_credited": "129665.92",
-        "description": "CMS/RAZORPAY PAYOUTS/set_100/BATCH"
-      },
-      {
-        "date": "2026-08-24",
-        "amount_credited": "111422.86",
-        "description": "CMS/RAZORPAY PAYOUTS/set_101/BATCH"
-      }
-    ],
-    "decision": "ABSTAINED",
-    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
-    "llm_confidence": 0,
-    "llm_justification": "Candidate [1] has settlement ID set_101 matching the payout's settlement ID, and the date is within T+2 days. However, the bank credited amount is 111422.86 INR, which is significantly higher than the expected net payout of 17644.52 INR. This indicates that the bank deposit likely aggregates multiple payouts, not just this single payout. The UTR reference UTR_N00017 is not present in the narration, and the amount mismatch is too large to be explained by fees or rounding. Therefore, no direct mapping can be established with high confidence."
-  },
-  {
-    "step": "llm_payout_audit",
-    "payment_id": "pay_018",
-    "utr": "UTR_N00018",
-    "net_calculated": "3009.26",
-    "compared_candidates": [
-      {
-        "date": "2026-08-24",
-        "amount_credited": "129665.92",
-        "description": "CMS/RAZORPAY PAYOUTS/set_100/BATCH"
-      },
-      {
-        "date": "2026-08-24",
-        "amount_credited": "111422.86",
-        "description": "CMS/RAZORPAY PAYOUTS/set_101/BATCH"
-      }
-    ],
-    "decision": "ABSTAINED",
-    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
-    "llm_confidence": 0,
-    "llm_justification": "Candidate [1] has settlement ID set_101 matching the payout's settlement ID, but the bank credited amount is 111422.86 INR, which is far greater than the expected net payout of 3009.26 INR. This indicates the bank deposit is a batch payout containing multiple transactions, not a single payout. The UTR reference UTR_N00018 is not present in the narration. Candidate [0] has a different settlement ID (set_100) and also a much larger amount. No candidate matches the expected amount or UTR, so no valid match."
-  },
-  {
-    "step": "llm_payout_audit",
-    "payment_id": "pay_019",
-    "utr": "UTR_N00019",
-    "net_calculated": "20601.06",
-    "compared_candidates": [
-      {
-        "date": "2026-08-24",
-        "amount_credited": "129665.92",
-        "description": "CMS/RAZORPAY PAYOUTS/set_100/BATCH"
-      },
-      {
-        "date": "2026-08-24",
-        "amount_credited": "111422.86",
-        "description": "CMS/RAZORPAY PAYOUTS/set_101/BATCH"
-      }
-    ],
-    "decision": "ABSTAINED",
-    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
-    "llm_confidence": 0,
-    "llm_justification": "Candidate [1] has settlement ID set_101 matching the payout's settlement ID, and the date is within T+2 days. However, the bank credited amount is 111422.86 INR, which is significantly higher than the expected net payout of 20601.06 INR. This indicates the bank deposit likely aggregates multiple payouts, not just this single payout. The UTR reference UTR_N00019 is not present in the narration. Candidate [0] has a different settlement ID (set_100) and also a mismatched amount. Therefore, no candidate can be confidently matched to this specific payout."
+    "llm_justification": "Candidate [1] has settlement ID set_101 matching the payout, but the credited amount is 133080.68 INR, which is far greater than the expected net payout of 12598.50 INR. The narration does not contain the UTR reference UTR_N00016. Candidate [0] has a different settlement ID set_100 and amount 124128.47 INR, also not matching. No candidate matches the expected amount or UTR, and the amounts are significantly higher, indicating these are aggregated settlements, not the individual payout. Therefore, no match is proposed."
   }
 ]
