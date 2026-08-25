@@ -1,4 +1,4 @@
-# WeldedDifff: Hybrid Transaction Reconciliation & Forensic Audit Engine
+# WeldedDiff: Hybrid Transaction Reconciliation & Forensic Audit Engine
 
 WeldedDifff is a transaction reconciliation and audit engine designed for multi-gateway merchant settlements. It matches transactions across internal order ledgers, gateway reports, and bank statements using a hybrid deterministic-probabilistic pipeline.
 
