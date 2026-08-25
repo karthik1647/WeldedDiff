@@ -2,4 +2,5 @@ pandas
 streamlit
 pytest
 google-genai
+openai
 python-dotenv

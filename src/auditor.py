@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field
 from google import genai
 from google.genai import types
 from google.genai.errors import APIError
+from openai import OpenAI
 from dotenv import load_dotenv
 
 # Setup logs
@@ -22,44 +23,71 @@ class MatchProposal(BaseModel):
 
 class ForensicAuditor:
     def __init__(self, api_key=None):
-        # Allow passing key directly or pulling from environment
-        self.api_key = api_key or os.getenv("GEMINI_API_KEY")
-        self.client = None
+        # 1. Determine key and API provider
+        # Prioritize DeepSeek if key is present
+        self.deepseek_key = api_key or os.getenv("DEEPSEEK_API_KEY")
+        self.gemini_key = api_key or os.getenv("GEMINI_API_KEY")
         
-        # Token and cost tracking (Gemini 2.5 Flash rates: input $0.075/1M, output $0.30/1M)
+        self.client = None
+        self.client_type = None
+        
+        # Token and cost tracking
         self.total_input_tokens = 0
         self.total_output_tokens = 0
         self.total_cost = 0.0
         
-        if self.api_key:
+        if self.deepseek_key and not api_key: # If DEEPSEEK_API_KEY is found in env
             try:
-                self.client = genai.Client(api_key=self.api_key)
+                self.client = OpenAI(api_key=self.deepseek_key, base_url="https://api.deepseek.com/v1")
+                self.client_type = "deepseek"
+                logger.info("Initialized DeepSeek client.")
+            except Exception as e:
+                logger.error(f"Failed to initialize DeepSeek Client: {e}")
+        elif self.gemini_key:
+            try:
+                self.client = genai.Client(api_key=self.gemini_key)
+                self.client_type = "gemini"
+                logger.info("Initialized Gemini client.")
             except Exception as e:
                 logger.error(f"Failed to initialize Gemini Client: {e}")
         else:
-            logger.warning("GEMINI_API_KEY not found. LLM Auditor will run in dry-run/abstain mode.")
+            logger.warning("No valid API keys found (GEMINI_API_KEY or DEEPSEEK_API_KEY). LLM Auditor will run in dry-run mode.")
 
-    def _track_cost(self, response):
+    def _track_cost(self, response_or_usage):
         """
         Calculates and accumulates actual model execution costs.
         """
-        if not response or not hasattr(response, "usage_metadata"):
-            return
-        
-        usage = response.usage_metadata
-        input_tokens = usage.prompt_token_count or 0
-        output_tokens = usage.candidates_token_count or 0
-        
-        self.total_input_tokens += input_tokens
-        self.total_output_tokens += output_tokens
-        
-        # Calculate cost
-        cost = (input_tokens * 0.075 / 1_000_000) + (output_tokens * 0.30 / 1_000_000)
-        self.total_cost += cost
+        if self.client_type == "gemini":
+            if not response_or_usage or not hasattr(response_or_usage, "usage_metadata"):
+                return
+            usage = response_or_usage.usage_metadata
+            input_tokens = usage.prompt_token_count or 0
+            output_tokens = usage.candidates_token_count or 0
+            
+            self.total_input_tokens += input_tokens
+            self.total_output_tokens += output_tokens
+            
+            # Gemini 2.5 Flash rates: input $0.075/1M, output $0.30/1M
+            cost = (input_tokens * 0.075 / 1_000_000) + (output_tokens * 0.30 / 1_000_000)
+            self.total_cost += cost
+            
+        elif self.client_type == "deepseek":
+            if not response_or_usage or not hasattr(response_or_usage, "usage"):
+                return
+            usage = response_or_usage.usage
+            input_tokens = usage.prompt_tokens or 0
+            output_tokens = usage.completion_tokens or 0
+            
+            self.total_input_tokens += input_tokens
+            self.total_output_tokens += output_tokens
+            
+            # DeepSeek Chat rates (non-cached): input $0.55/1M, output $2.19/1M
+            cost = (input_tokens * 0.55 / 1_000_000) + (output_tokens * 2.19 / 1_000_000)
+            self.total_cost += cost
 
     def audit_unresolved_payout(self, payout, bank_candidates):
         """
-        Audits an unresolved payout against potential bank statement deposits using Gemini 2.5 Flash.
+        Audits an unresolved payout against potential bank statement deposits.
         """
         if not self.client:
             return MatchProposal(
@@ -95,35 +123,49 @@ Rule Guidelines:
 3. Check for fee mismatches (MDR Leakage) where the bank credited amount is lower than the expected net payout, but the UTR in the bank description matches the payout UTR.
 4. Verify duplicates to avoid matching the wrong order ID for transactions with identical amounts.
 
-Evaluate each candidate. Select the best match and output the structured JSON response. If no candidate qualifies with high confidence, set proposed_match to false.
+Evaluate each candidate. Select the best match and output a structured JSON response matching the following schema:
+{
+  "proposed_match": boolean,
+  "confidence_score": integer (0 to 100),
+  "justification": "text trace explaining compared fields and specific mismatches"
+}
+If no candidate qualifies with high confidence, set proposed_match to false.
 """
 
         try:
-            response = self.client.models.generate_content(
-                model="gemini-2.5-flash",
-                contents=prompt,
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json",
-                    response_schema=MatchProposal,
+            if self.client_type == "gemini":
+                response = self.client.models.generate_content(
+                    model="gemini-2.5-flash",
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        response_mime_type="application/json",
+                        response_schema=MatchProposal,
+                        temperature=0.1
+                    )
+                )
+                self._track_cost(response)
+                result_dict = json.loads(response.text)
+                return MatchProposal(**result_dict)
+                
+            elif self.client_type == "deepseek":
+                response = self.client.chat.completions.create(
+                    model="deepseek-chat",
+                    messages=[
+                        {
+                            "role": "system",
+                            "content": "You are a forensic financial auditor. You must output only a valid JSON object matching the requested schema. No markdown formatting, no code fences, just raw JSON."
+                        },
+                        {"role": "user", "content": prompt}
+                    ],
+                    response_format={"type": "json_object"},
                     temperature=0.1
                 )
-            )
-            self._track_cost(response)
+                self._track_cost(response)
+                result_dict = json.loads(response.choices[0].message.content)
+                return MatchProposal(**result_dict)
             
-            # Parse structured JSON output
-            result_dict = json.loads(response.text)
-            proposal = MatchProposal(**result_dict)
-            return proposal
-            
-        except APIError as api_err:
-            logger.error(f"Gemini API error during audit: {api_err}")
-            return MatchProposal(
-                proposed_match=False,
-                confidence_score=0,
-                justification=f"Gemini API execution failed: {str(api_err)}"
-            )
         except Exception as e:
-            logger.error(f"Unexpected error during audit: {e}")
+            logger.error(f"Unexpected error during payout audit: {e}")
             return MatchProposal(
                 proposed_match=False,
                 confidence_score=0,
@@ -168,24 +210,46 @@ Rule Guidelines:
 3. Check if the UTR extracted from the bank description matches the candidate's UTR.
 4. Watch out for duplicate transaction collisions. Ensure you link the refund to the correct transaction timestamp.
 
-Evaluate each candidate. Select the best match and output the structured JSON response. If no candidate matches, set proposed_match to false.
+Evaluate each candidate. Select the best match and output a structured JSON response matching the following schema:
+{
+  "proposed_match": boolean,
+  "confidence_score": integer (0 to 100),
+  "justification": "text trace explaining compared fields and specific mismatches"
+}
+If no candidate matches, set proposed_match to false.
 """
 
         try:
-            response = self.client.models.generate_content(
-                model="gemini-2.5-flash",
-                contents=prompt,
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json",
-                    response_schema=MatchProposal,
+            if self.client_type == "gemini":
+                response = self.client.models.generate_content(
+                    model="gemini-2.5-flash",
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        response_mime_type="application/json",
+                        response_schema=MatchProposal,
+                        temperature=0.1
+                    )
+                )
+                self._track_cost(response)
+                result_dict = json.loads(response.text)
+                return MatchProposal(**result_dict)
+                
+            elif self.client_type == "deepseek":
+                response = self.client.chat.completions.create(
+                    model="deepseek-chat",
+                    messages=[
+                        {
+                            "role": "system",
+                            "content": "You are a forensic financial auditor. You must output only a valid JSON object matching the requested schema. No markdown formatting, no code fences, just raw JSON."
+                        },
+                        {"role": "user", "content": prompt}
+                    ],
+                    response_format={"type": "json_object"},
                     temperature=0.1
                 )
-            )
-            self._track_cost(response)
-            
-            result_dict = json.loads(response.text)
-            proposal = MatchProposal(**result_dict)
-            return proposal
+                self._track_cost(response)
+                result_dict = json.loads(response.choices[0].message.content)
+                return MatchProposal(**result_dict)
             
         except Exception as e:
             logger.error(f"Unexpected error during refund audit: {e}")
