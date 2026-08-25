@@ -135,7 +135,7 @@ If no candidate qualifies with high confidence, set proposed_match to false.
         try:
             if self.client_type == "gemini":
                 response = self.client.models.generate_content(
-                    model="gemini-2.5-flash",
+                    model="gemini-3.6-flash",
                     contents=prompt,
                     config=types.GenerateContentConfig(
                         response_mime_type="application/json",
@@ -222,7 +222,7 @@ If no candidate matches, set proposed_match to false.
         try:
             if self.client_type == "gemini":
                 response = self.client.models.generate_content(
-                    model="gemini-2.5-flash",
+                    model="gemini-3.6-flash",
                     contents=prompt,
                     config=types.GenerateContentConfig(
                         response_mime_type="application/json",

@@ -2541,7 +2541,7 @@
     "decision": "ABSTAINED",
     "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
     "llm_confidence": 0,
-    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+    "llm_justification": "Candidate [0] has settlement ID set_100 matching the payout, but the bank credited amount is 129665.92 INR, which is significantly higher than the expected net payout of 20945.73 INR. The UTR reference UTR_N00001 is not present in the narration. Candidate [1] has a different settlement ID (set_101) and amount 111422.86 INR, also not matching. Neither candidate matches the expected amount or UTR, and the dates are within the allowed window but the amounts are far off. Therefore, no candidate qualifies as a match."
   },
   {
     "step": "llm_payout_audit",
@@ -2563,7 +2563,7 @@
     "decision": "ABSTAINED",
     "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
     "llm_confidence": 0,
-    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+    "llm_justification": "Candidate [0] has settlement ID set_100 matching the payout, but the bank credited amount is 129665.92 INR, which is significantly higher than the expected net payout of 24213.74 INR. The UTR is not mentioned in the narration, and the amount mismatch is too large to be explained by fees or other adjustments. Candidate [1] has a different settlement ID (set_101) and also a mismatched amount. Neither candidate matches the expected amount or UTR, so no valid match is found."
   },
   {
     "step": "llm_payout_audit",
@@ -2585,7 +2585,7 @@
     "decision": "ABSTAINED",
     "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
     "llm_confidence": 0,
-    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+    "llm_justification": "Candidate [0] has narration containing 'set_100' which matches the settlement ID, but the credited amount (129665.92 INR) is far higher than the expected net payout (7629.59 INR), indicating a batch settlement. The UTR reference UTR_N00003 is not present in the narration. Candidate [1] has a different settlement ID (set_101) and amount (111422.86 INR), also not matching. Neither candidate matches the expected amount or UTR, and the dates are within the allowed window but the amounts are inconsistent with a single payout. Therefore, no candidate qualifies as a match."
   },
   {
     "step": "llm_payout_audit",
@@ -2607,7 +2607,7 @@
     "decision": "ABSTAINED",
     "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
     "llm_confidence": 0,
-    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+    "llm_justification": "Candidate [0] has amount 129665.92 INR, which does not match expected net payout 22138.89 INR. Candidate [1] has amount 111422.86 INR, also not matching. Neither candidate's amount matches the expected payout. Additionally, the settlement ID in candidate [0] is set_100, which matches the gateway settlement ID, but the amount mismatch is significant. Candidate [1] has set_101, not matching. No candidate has a UTR matching UTR_N00004. Therefore, no candidate qualifies as a match."
   },
   {
     "step": "llm_payout_audit",
@@ -2629,7 +2629,7 @@
     "decision": "ABSTAINED",
     "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
     "llm_confidence": 0,
-    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+    "llm_justification": "Candidate [0] has a narration containing 'set_100' which matches the settlement ID, but the credited amount (129665.92 INR) is significantly higher than the expected net payout (19380.56 INR), indicating a mismatch. Candidate [1] has a different settlement ID 'set_101' and amount (111422.86 INR) also mismatched. Neither candidate's amount aligns with the expected payout, and no UTR reference is present in the narrations. Therefore, no candidate qualifies as a match."
   },
   {
     "step": "llm_payout_audit",
@@ -2651,7 +2651,7 @@
     "decision": "ABSTAINED",
     "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
     "llm_confidence": 0,
-    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+    "llm_justification": "Candidate [0] has settlement ID set_100 matching the payout, but the bank credited amount is 129665.92 INR, which is far higher than the expected net payout of 1423.75 INR. Candidate [1] has settlement ID set_101, which does not match. Neither candidate's amount aligns with the expected payout, and no UTR reference is present in the narrations. Therefore, no candidate qualifies as a match."
   },
   {
     "step": "llm_payout_audit",
@@ -2673,7 +2673,7 @@
     "decision": "ABSTAINED",
     "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
     "llm_confidence": 0,
-    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+    "llm_justification": "Candidate [0] has settlement ID set_100 matching the payout, but the bank credited amount is 129665.92 INR, which is far higher than the expected net payout of 7931.30 INR. The narration does not contain the UTR reference UTR_N00007. Candidate [1] has a different settlement ID set_101 and also a mismatched amount. Neither candidate matches the expected amount or UTR, so no valid match is found."
   },
   {
     "step": "llm_payout_audit",
@@ -2695,7 +2695,7 @@
     "decision": "ABSTAINED",
     "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
     "llm_confidence": 0,
-    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+    "llm_justification": "Candidate [0] has settlement ID set_100 matching the payout, but the credited amount (129665.92 INR) is significantly higher than the expected net payout (18444.20 INR), indicating a mismatch in amount. Candidate [1] has a different settlement ID (set_101) and also a mismatched amount (111422.86 INR). Neither candidate matches the expected amount, and no UTR reference is present in the narrations to confirm a match. Therefore, no candidate qualifies as a match."
   },
   {
     "step": "llm_payout_audit",
@@ -2717,7 +2717,7 @@
     "decision": "ABSTAINED",
     "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
     "llm_confidence": 0,
-    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+    "llm_justification": "Candidate [0] has settlement ID set_100 matching the payout, but the bank credited amount is 129665.92 INR, which is far higher than the expected net payout of 7540.74 INR. This indicates the bank deposit aggregates multiple payouts, not a one-to-one match. Candidate [1] has settlement ID set_101, which does not match the payout's set_100. Neither candidate has a UTR matching UTR_N00009. Therefore, no candidate qualifies as a direct match."
   },
   {
     "step": "llm_payout_audit",
@@ -2739,7 +2739,7 @@
     "decision": "ABSTAINED",
     "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
     "llm_confidence": 0,
-    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+    "llm_justification": "Candidate [1] has settlement ID set_101 matching the payout, but the bank credited amount is 111422.86 INR, which is far greater than the expected net payout of 695.20 INR. The narration does not contain the UTR reference UTR_N00010. Candidate [0] has a different settlement ID set_100 and also a mismatched amount. No candidate matches the expected amount or UTR, so no match is proposed."
   },
   {
     "step": "llm_payout_audit",
@@ -2761,7 +2761,7 @@
     "decision": "ABSTAINED",
     "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
     "llm_confidence": 0,
-    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+    "llm_justification": "Candidate [1] has settlement ID set_101 matching the payout, but the bank credited amount is 111422.86 INR, which is significantly higher than the expected net payout of 22824.33 INR. The UTR is not present in the narration, and the amount mismatch is too large to be explained by fees or other adjustments. Candidate [0] has a different settlement ID (set_100) and also a mismatched amount. No candidate matches the expected payout amount or UTR, so no match is proposed."
   },
   {
     "step": "llm_payout_audit",
@@ -2781,9 +2781,9 @@
       }
     ],
     "decision": "ABSTAINED",
-    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
-    "llm_confidence": 0,
-    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+    "reason": "LLM proposed match but engine failed to map to concrete candidate safely",
+    "llm_confidence": 95,
+    "llm_justification": "Candidate [1] has settlement ID set_101 matching the payout's settlement ID, and the bank date 2026-08-24 is within T+2 days of the settlement date 2026-08-23. The narration 'CMS/RAZORPAY APY WELDEDDIFFA/set_101/BATCH' contains 'RAZORPAY APY' which is equivalent to Razorpay. The credited amount 111422.86 INR is higher than the expected net payout 9378.32 INR, which is acceptable as it may include multiple payouts. No fee mismatch or duplicate issue detected. Candidate [0] has settlement ID set_100, which does not match, so it is rejected."
   },
   {
     "step": "llm_payout_audit",
@@ -2803,9 +2803,9 @@
       }
     ],
     "decision": "ABSTAINED",
-    "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
-    "llm_confidence": 0,
-    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+    "reason": "LLM proposed match but engine failed to map to concrete candidate safely",
+    "llm_confidence": 95,
+    "llm_justification": "Candidate [1] matches the payout: settlement ID set_101 appears in the narration, amount 111422.86 is close to expected net payout 11256.92 but differs significantly, however the UTR is not present in the narration. The date 2026-08-24 is within T+2 of settlement date 2026-08-23. The narration contains 'RAZORPAY APY' which is equivalent to Razorpay. The amount mismatch is large, but the settlement ID match and date proximity provide high confidence. Candidate [0] has settlement ID set_100, which does not match, so it is rejected."
   },
   {
     "step": "llm_payout_audit",
@@ -2827,7 +2827,7 @@
     "decision": "ABSTAINED",
     "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
     "llm_confidence": 0,
-    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+    "llm_justification": "Candidate [1] has settlement ID set_101 matching the payout, but the credited amount (111422.86 INR) is significantly lower than the expected net payout (12643.40 INR), indicating a mismatch. Candidate [0] has a different settlement ID (set_100) and amount (129665.92 INR). Neither candidate matches the expected amount, and the UTR is not present in the narration. Therefore, no candidate qualifies as a match."
   },
   {
     "step": "llm_payout_audit",
@@ -2849,7 +2849,7 @@
     "decision": "ABSTAINED",
     "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
     "llm_confidence": 0,
-    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+    "llm_justification": "Candidate [0] has settlement ID set_100, not set_101, and amount 129665.92 does not match expected net payout 11492.23. Candidate [1] has settlement ID set_101 matching, but amount 111422.86 is significantly higher than expected net payout 11492.23, and no UTR match is found. Neither candidate matches the expected amount or UTR, so no match is proposed."
   },
   {
     "step": "llm_payout_audit",
@@ -2871,7 +2871,7 @@
     "decision": "ABSTAINED",
     "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
     "llm_confidence": 0,
-    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+    "llm_justification": "Candidate [1] has settlement ID set_101 matching the payout, but the bank credited amount is 111422.86 INR, which is far greater than the expected net payout of 1877.63 INR. The amount mismatch is significant and cannot be explained by fees or currency conversion. Candidate [0] has a different settlement ID (set_100) and also a large amount mismatch. No candidate matches the expected payout amount, and the UTR is not present in the narration. Therefore, no candidate qualifies as a match."
   },
   {
     "step": "llm_payout_audit",
@@ -2893,7 +2893,7 @@
     "decision": "ABSTAINED",
     "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
     "llm_confidence": 0,
-    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+    "llm_justification": "Candidate [1] has settlement ID set_101 matching the payout's settlement ID, and the date is within T+2 days. However, the bank credited amount is 111422.86 INR, which is significantly higher than the expected net payout of 17644.52 INR. This indicates that the bank deposit likely aggregates multiple payouts, not just this single payout. The narration does not contain the UTR reference UTR_N00017, and the amount mismatch is too large to be explained by fees or rounding. Candidate [0] has a different settlement ID (set_100) and also a mismatched amount. Therefore, no candidate can be confidently matched to this specific payout."
   },
   {
     "step": "llm_payout_audit",
@@ -2915,7 +2915,7 @@
     "decision": "ABSTAINED",
     "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
     "llm_confidence": 0,
-    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+    "llm_justification": "The settlement ID in candidate [1] matches (set_101) and the date is within T+2, but the credited amount (111422.86 INR) is vastly different from the expected net payout (3009.26 INR). The narration does not contain the UTR reference UTR_N00018, and the amount mismatch is too large to be explained by fees or MDR leakage. Candidate [0] has a different settlement ID (set_100) and also a mismatched amount. No candidate matches the expected payout amount or UTR, so no valid match is found."
   },
   {
     "step": "llm_payout_audit",
@@ -2937,6 +2937,6 @@
     "decision": "ABSTAINED",
     "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
     "llm_confidence": 0,
-    "llm_justification": "LLM Client not authenticated. Defaulted to Abstained."
+    "llm_justification": "Candidate [1] has settlement ID set_101 matching the payout, but the bank credited amount is 111422.86 INR, which is significantly higher than the expected net payout of 20601.06 INR. The narration does not contain the UTR reference UTR_N00019. Candidate [0] has a different settlement ID set_100 and also a mismatched amount. No candidate matches the expected amount or UTR, so no match is proposed."
   }
 ]

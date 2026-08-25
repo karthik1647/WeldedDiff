@@ -77,6 +77,10 @@ class ReconciliationPipeline:
                 
             # Execute LLM match
             llm_payout_calls += 1
+            if self.auditor.client_type == "gemini" and llm_payout_calls > 1:
+                import time
+                print("Rate limit mitigation: sleeping 12s...")
+                time.sleep(12)
             proposal = self.auditor.audit_unresolved_payout(p, candidates)
             
             trace["llm_confidence"] = proposal.confidence_score
@@ -149,6 +153,10 @@ class ReconciliationPipeline:
                 continue
                 
             llm_refund_calls += 1
+            if self.auditor.client_type == "gemini":
+                import time
+                print("Rate limit mitigation: sleeping 12s...")
+                time.sleep(12)
             proposal = self.auditor.audit_unresolved_refund(b_debit, candidates)
             
             trace["llm_confidence"] = proposal.confidence_score
