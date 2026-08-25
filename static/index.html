@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WeldedDiff Reconciliation Review</title>
-  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
     /* Reset & CSS Variables (Restrained Stripe/Apple Aesthetic) */
     * {
       box-sizing: border-box;
@@ -80,6 +77,11 @@
       border-left: 3px solid var(--accent);
       border-radius: 6px;
       padding: 1rem 1.25rem;
+      transition: border-color 0.2s ease, transform 0.15s ease;
+    }
+
+    .metric-card:hover {
+      border-color: #cbd5e1;
     }
 
     .metric-label {
@@ -131,9 +133,11 @@
       color: var(--text-main);
       outline: none;
       min-width: 260px;
+      cursor: pointer;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
-    select:focus {
+    select:focus, select:hover {
       border-color: var(--accent);
     }
 
@@ -146,11 +150,23 @@
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
-      transition: background-color 0.15s ease;
+      transition: background-color 0.2s ease, transform 0.1s ease, opacity 0.1s ease;
     }
 
     .btn-primary:hover {
       background-color: #0d655e;
+    }
+
+    .btn-primary:active {
+      transform: scale(0.97);
+      opacity: 0.9;
+    }
+
+    .btn-primary:disabled {
+      background-color: #94a3b8;
+      cursor: not-allowed;
+      transform: none;
+      opacity: 0.8;
     }
 
     .btn-secondary {
@@ -162,10 +178,16 @@
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
+      transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
     }
 
     .btn-secondary:hover {
       border-color: var(--text-muted);
+      background-color: #f1f5f9;
+    }
+
+    .btn-secondary:active {
+      transform: scale(0.97);
     }
 
     /* Stage Progression Architecture */
@@ -349,6 +371,50 @@
       padding: 0.85rem 1rem;
       border-bottom: 1px solid var(--border-color);
       color: var(--text-main);
+    }
+
+    /* Custom Thin Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    .console-log::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+
+    .console-log::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 3px;
+    }
+
+    .console-log::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+
+    .payload-box::-webkit-scrollbar-track,
+    .table-container::-webkit-scrollbar-track {
+      background: var(--bg-color);
+    }
+
+    .payload-box::-webkit-scrollbar-thumb,
+    .table-container::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+
+    .payload-box::-webkit-scrollbar-thumb:hover,
+    .table-container::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    tbody tr {
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+    }
+
+    tbody tr:hover {
+      background-color: #f8fafc;
     }
 
     tr:last-child td {
@@ -640,6 +706,10 @@
       const trace = matchingTraces.length > 0 ? matchingTraces[matchingTraces.length - 1] : null;
       if (!trace) return;
 
+      const btnReplay = document.getElementById('btn-replay');
+      btnReplay.disabled = true;
+      btnReplay.textContent = 'Running replay...';
+
       resetStages();
       const consoleOut = document.getElementById('console-output');
       consoleOut.innerHTML = '';
@@ -754,6 +824,9 @@
       }, null, 2);
 
       document.getElementById('candidates-payload').textContent = JSON.stringify(trace.compared_candidates || [], null, 2);
+
+      btnReplay.disabled = false;
+      btnReplay.textContent = 'Replay transaction';
     }
 
     function renderTable() {
