@@ -138,7 +138,7 @@ else:
     tab1, tab2, tab3 = st.tabs([
         f"Proposed Matches ({len(proposed_traces)})",
         f"Abstained Exceptions ({len(abstained_traces)})",
-        f"Auto-Committed ({len(auto_committed_traces)})"
+        f"Committed Matches ({len(auto_committed_traces)})"
     ])
 
     with tab1:
@@ -206,10 +206,12 @@ else:
         else:
             commit_data = []
             for trace in auto_committed_traces:
+                provenance = "Deterministic (100% Certain)" if trace.get("decision") == "AUTO_COMMIT" else "Human-Approved (LLM Proposal)"
                 commit_data.append({
                     "Step": trace.get("step"),
                     "Order ID/Ref": trace.get("order_id") or trace.get("payment_id") or "N/A",
                     "Amount": trace.get("amount") or trace.get("net_calculated") or trace.get("amount_debited") or "N/A",
+                    "Matching Source": provenance,
                     "Resolution Detail": trace.get("reason")
                 })
             st.dataframe(pd.DataFrame(commit_data), use_container_width=True)
