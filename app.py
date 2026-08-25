@@ -14,37 +14,42 @@ SUMMARY_REPORT_PATH = os.path.join(TRACES_DIR, "summary_report.json")
 
 st.set_page_config(page_title="WeldedDiff Reconciliation Review", layout="wide")
 
-# Inject custom styling for visual hierarchy and Slate Teal corporate aesthetic
+# Inject theme-aware custom styling for visual hierarchy and Slate Teal corporate aesthetic
 st.markdown("""
 <style>
-    /* Metric Card Container */
+    /* Metric Card Container (Theme-aware background and border) */
     div[data-testid="stMetric"] {
-        background-color: #ffffff !important;
-        border: 1px solid #e2e8f0 !important;
+        background-color: var(--background-color, #ffffff) !important;
+        border: 1px solid var(--border-color, #e2e8f0) !important;
         border-left: 4px solid #0f766e !important;
-        padding: 1.25rem !important;
+        padding: 1rem !important;
         border-radius: 6px !important;
         box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05) !important;
     }
-    /* Muted, uppercase metric labels to enforce hierarchy */
+    /* Muted, uppercase metric labels with wrapping enabled to prevent truncation */
     div[data-testid="stMetricLabel"] {
         font-size: 0.75rem !important;
         font-weight: 600 !important;
-        color: #475569 !important;
+        color: var(--secondary-text-color, #475569) !important;
         text-transform: uppercase !important;
         letter-spacing: 0.05em !important;
     }
-    /* Large bold numeric values */
+    div[data-testid="stMetricLabel"] > div {
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        overflow: visible !important;
+    }
+    /* Large bold numeric values with theme-aware contrast */
     [data-testid="stMetricValue"] {
-        font-size: 2.25rem !important;
+        font-size: 2rem !important;
         font-weight: 800 !important;
-        color: #0f172a !important;
+        color: var(--text-color, #0f172a) !important;
         margin-top: 4px !important;
     }
     /* Tab Navigation with Slate Teal Accent */
     button[data-baseweb="tab"] {
         font-weight: 600 !important;
-        color: #64748b !important;
+        color: var(--secondary-text-color, #64748b) !important;
     }
     button[data-baseweb="tab"][aria-selected="true"] {
         color: #0f766e !important;
@@ -54,7 +59,7 @@ st.markdown("""
     .stButton>button {
         border-radius: 6px !important;
         font-weight: 600 !important;
-        border-color: #cbd5e1 !important;
+        border-color: var(--border-color, #cbd5e1) !important;
     }
     .stButton>button:hover {
         color: #0f766e !important;
@@ -112,7 +117,7 @@ else:
     
     with col1:
         st.metric(
-            label="Baseline Match Rate (Exact Matches)",
+            label="Baseline Match",
             value=f"{round(baseline_payout_rate, 2)}%",
             help=f"Exact matches: {baseline_matched_payouts} / {total_payout_count} payouts",
             delta=None
@@ -121,7 +126,7 @@ else:
     with col2:
         delta_val = f"+{round(advanced_payout_rate - baseline_payout_rate, 2)}%"
         st.metric(
-            label="Pipeline Match Rate (With LLM Review)",
+            label="Pipeline Match",
             value=f"{round(advanced_payout_rate, 2)}%",
             help=f"Reconciled payouts (Deterministic + LLM): {advanced_matched_payouts} / {total_payout_count} payouts",
             delta=delta_val
@@ -129,13 +134,13 @@ else:
         
     with col3:
         st.metric(
-            label="Total Transactions Reviewed",
+            label="Total Reviewed",
             value=str(total_orders + llm_calls_made)
         )
         
     with col4:
         st.metric(
-            label="LLM Execution Cost",
+            label="LLM Cost",
             value=f"${summary.get('llm_processing_cost_usd', 0.00):.4f}",
             delta=f"{llm_calls_made} API Calls"
         )
