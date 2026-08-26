@@ -17,15 +17,29 @@ DECISION_LOG_PATH = os.path.join(TRACES_DIR, "decision_log.json")
 SUMMARY_REPORT_PATH = os.path.join(TRACES_DIR, "summary_report.json")
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI(title="WeldedDiff Reconciliation Review API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def load_json_file(filepath):
     if not os.path.exists(filepath):
         return None
-    with open(filepath, "r", encoding="utf-8") as f:
-        return json.load(f)
+    try:
+        with open(filepath, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return None
 
 def save_json_file(filepath, data):
+    os.makedirs(os.path.dirname(filepath), exist_ok=True)
     with open(filepath, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
 
@@ -34,16 +48,23 @@ def save_json_file(filepath, data):
 def get_summary():
     data = load_json_file(SUMMARY_REPORT_PATH)
     if not data:
-        raise HTTPException(status_code=404, detail="Summary report not found")
-    return data
+        # Auto-run standard scenario to generate initial data
+        from src.generator import generate_synthetic_data
+        generate_synthetic_data(num_records=100, seed=42, scenario="standard")
+        subprocess.run([sys.executable, "-m", "src.pipeline"], cwd=BASE_DIR, capture_output=True, text=True)
+        data = load_json_file(SUMMARY_REPORT_PATH) or {}
+    return JSONResponse(content=data)
 
 # ── Traces ────────────────────────────────────────────────────────────────────
 @app.get("/api/traces")
 def get_traces():
     data = load_json_file(DECISION_LOG_PATH)
     if not data:
-        raise HTTPException(status_code=404, detail="Decision log not found")
-    return data
+        from src.generator import generate_synthetic_data
+        generate_synthetic_data(num_records=100, seed=42, scenario="standard")
+        subprocess.run([sys.executable, "-m", "src.pipeline"], cwd=BASE_DIR, capture_output=True, text=True)
+        data = load_json_file(DECISION_LOG_PATH) or []
+    return JSONResponse(content=data)
 
 @app.get("/api/traces/{ref_id}")
 def get_trace_by_id(ref_id: str):
