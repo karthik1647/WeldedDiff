@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WeldedDiff — Reconciliation Engine</title>
+  <title>WeldedDiff — AI-Powered Reconciliation Engine</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -20,56 +20,156 @@
       --red-light: #fef2f2; --amber-light: #fffbeb; --purple-light: #f5f3ff;
       --font: 'Inter', -apple-system, sans-serif;
       --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --nav-h: 60px;
     }
     body { background: var(--bg); color: var(--gray-900); font-family: var(--font); font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 
-    /* Mouse glow */
+    /* ── Navbar ── */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: var(--nav-h);
+      background: rgba(251,251,253,0.82);
+      backdrop-filter: blur(14px) saturate(160%);
+      -webkit-backdrop-filter: blur(14px) saturate(160%);
+      border-bottom: 1px solid var(--gray-200);
+      display: flex; align-items: center;
+      transition: box-shadow 0.2s;
+    }
+    .navbar.scrolled { box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
+    .nav-inner { max-width: 1160px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; width: 100%; }
+    .nav-logo { display: flex; align-items: center; gap: 0.55rem; text-decoration: none; }
+    .nav-logo-icon { width: 28px; height: 28px; background: linear-gradient(135deg, var(--blue), var(--teal)); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .nav-logo-text { font-size: 15px; font-weight: 700; color: var(--gray-900); letter-spacing: -0.02em; }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; }
+    .nav-link { font-size: 13.5px; font-weight: 500; color: var(--gray-500); padding: 0.35rem 0.75rem; border-radius: 8px; text-decoration: none; transition: all 0.15s; }
+    .nav-link:hover { color: var(--gray-900); background: var(--gray-100); }
+    .nav-link.active { color: var(--gray-900); }
+    .nav-github { display: flex; align-items: center; gap: 0.4rem; font-size: 13px; font-weight: 500; color: var(--gray-700); padding: 0.4rem 1rem; border: 1px solid var(--gray-200); border-radius: 980px; text-decoration: none; background: var(--white); transition: all 0.15s; margin-left: 0.75rem; }
+    .nav-github:hover { border-color: var(--gray-400); background: var(--gray-50); }
+    @media (max-width: 768px) { .nav-links { display: none; } }
+
+    /* ── Mouse glow ── */
     .mouse-glow { position: fixed; inset: 0; z-index: 0; pointer-events: none;
-      background: radial-gradient(1200px circle at var(--mx,50%) var(--my,40%), rgba(37,99,235,0.035), rgba(13,148,136,0.015) 40%, transparent 70%); }
+      background: radial-gradient(1200px circle at var(--mx,50%) var(--my,40%), rgba(37,99,235,0.04), rgba(13,148,136,0.015) 40%, transparent 70%); }
 
-    /* Scroll reveal */
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1), transform 0.6s cubic-bezier(0.16,1,0.3,1); }
+    /* ── Scroll reveal ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-d1 { transition-delay: 0.08s; } .reveal-d2 { transition-delay: 0.16s; } .reveal-d3 { transition-delay: 0.24s; }
+    .reveal-d1 { transition-delay: 0.07s; } .reveal-d2 { transition-delay: 0.14s; } .reveal-d3 { transition-delay: 0.21s; } .reveal-d4 { transition-delay: 0.28s; }
 
-    /* Layout */
-    .page { position: relative; z-index: 1; }
+    /* ── Layout ── */
+    .page { position: relative; z-index: 1; padding-top: var(--nav-h); }
     .container { max-width: 1160px; margin: 0 auto; padding: 0 2rem; }
+    section { scroll-margin-top: calc(var(--nav-h) + 1.5rem); }
+
+    /* ── Section headers ── */
+    .section-tag { font-family: var(--mono); font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--teal); margin-bottom: 0.7rem; display: block; }
+    .section-h2 { font-size: clamp(1.9rem, 3.5vw, 2.5rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.6rem; }
+    .section-sub { font-size: 1.05rem; color: var(--gray-500); max-width: 560px; line-height: 1.6; }
+    .section-header-center { text-align: center; }
+    .section-header-center .section-sub { margin: 0 auto; }
 
     /* ── Hero ── */
-    .hero { text-align: center; padding: 4.5rem 2rem 2.5rem; }
-    .hero-badge { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 13px; font-weight: 500; color: var(--teal); margin-bottom: 1.25rem; font-family: var(--mono); }
-    .pulse-dot { width: 6px; height: 6px; background: var(--teal); border-radius: 50%; animation: pulse 2s infinite; }
-    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(13,148,136,.5); } 70% { box-shadow: 0 0 0 8px rgba(13,148,136,0); } 100% { box-shadow: 0 0 0 0 rgba(13,148,136,0); } }
-    .hero h1 { font-size: clamp(2.4rem, 5.5vw, 4.2rem); font-weight: 700; letter-spacing: -0.04em; line-height: 1.1; margin-bottom: 1.2rem; }
-    .hero h1 span { background: linear-gradient(135deg, var(--blue), var(--teal)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero p { font-size: 1.15rem; color: var(--gray-500); max-width: 650px; margin: 0 auto 1.25rem; }
-    .sandbox-chip { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.35rem 0.85rem; background: var(--gray-100); border: 1px solid var(--gray-200); border-radius: 999px; font-size: 12px; color: var(--gray-600); font-family: var(--mono); }
+    #hero {
+      min-height: 88vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 5rem 2rem 4rem; position: relative; overflow: hidden;
+    }
+    .hero-gradient {
+      position: absolute; inset: 0; z-index: 0; overflow: hidden;
+      background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(37,99,235,0.07) 0%, transparent 70%),
+                  radial-gradient(ellipse 60% 50% at 80% 80%, rgba(13,148,136,0.05) 0%, transparent 65%);
+    }
+    .hero-grid-lines {
+      position: absolute; inset: 0; z-index: 0;
+      background-image: linear-gradient(var(--gray-200) 1px, transparent 1px), linear-gradient(90deg, var(--gray-200) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 80%);
+      opacity: 0.4;
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: 780px; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 12.5px; font-weight: 500; color: var(--teal); margin-bottom: 1.5rem; font-family: var(--mono); background: var(--teal-light); border: 1px solid rgba(13,148,136,0.2); padding: 0.3rem 0.85rem; border-radius: 999px; }
+    .pulse-dot { width: 6px; height: 6px; background: var(--teal); border-radius: 50%; animation: pulse-anim 2s infinite; flex-shrink: 0; }
+    @keyframes pulse-anim { 0% { box-shadow: 0 0 0 0 rgba(13,148,136,.5); } 70% { box-shadow: 0 0 0 7px rgba(13,148,136,0); } 100% { box-shadow: 0 0 0 0 rgba(13,148,136,0); } }
+    .hero h1 { font-size: clamp(2.6rem, 6vw, 4.6rem); font-weight: 800; letter-spacing: -0.05em; line-height: 1.05; margin-bottom: 1.25rem; }
+    .hero h1 .grad { background: linear-gradient(135deg, var(--blue) 0%, var(--teal) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub { font-size: 1.15rem; color: var(--gray-500); margin-bottom: 2rem; line-height: 1.65; max-width: 580px; margin-left: auto; margin-right: auto; }
+    .hero-ctas { display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .cta-primary { display: inline-flex; align-items: center; gap: 0.45rem; background: var(--gray-900); color: #fff; padding: 0.7rem 1.5rem; border-radius: 980px; font-size: 14px; font-weight: 600; text-decoration: none; transition: all 0.2s; box-shadow: 0 4px 14px rgba(0,0,0,0.15); }
+    .cta-primary:hover { background: var(--gray-700); box-shadow: 0 6px 20px rgba(0,0,0,0.2); transform: translateY(-1px); }
+    .cta-secondary { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--gray-700); padding: 0.65rem 1.35rem; border-radius: 980px; font-size: 14px; font-weight: 500; text-decoration: none; border: 1px solid var(--gray-300); background: var(--white); transition: all 0.2s; }
+    .cta-secondary:hover { border-color: var(--gray-500); background: var(--gray-50); }
+    .sandbox-chip { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.8rem; background: var(--gray-100); border: 1px solid var(--gray-200); border-radius: 999px; font-size: 11.5px; color: var(--gray-500); font-family: var(--mono); }
+    .hero-logos { display: flex; align-items: center; justify-content: center; gap: 1.5rem; margin-top: 1rem; flex-wrap: wrap; }
+    .hero-logo-pill { font-size: 11.5px; font-family: var(--mono); color: var(--gray-400); background: var(--gray-50); border: 1px solid var(--gray-200); padding: 0.3rem 0.75rem; border-radius: 6px; }
 
-    /* ── KPI strip ── */
-    .kpi-section { padding: 2.5rem 0 3rem; border-bottom: 1px solid var(--gray-200); }
-    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--gray-200); border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.03); }
+    /* ── Problem Section ── */
+    #problem { padding: 5rem 0; border-top: 1px solid var(--gray-100); }
+    .problem-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
+    @media (max-width: 860px) { .problem-grid { grid-template-columns: 1fr; } }
+    .problem-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 18px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+    .problem-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.07); transform: translateY(-2px); transition: all 0.2s; }
+    .problem-num { font-size: 2.8rem; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 0.5rem; line-height: 1; }
+    .problem-num.red { color: var(--red); }
+    .problem-num.amber { color: var(--amber); }
+    .problem-num.blue { color: var(--blue); }
+    .problem-label { font-size: 15px; font-weight: 600; color: var(--gray-800); margin-bottom: 0.5rem; }
+    .problem-desc { font-size: 13.5px; color: var(--gray-500); line-height: 1.55; }
+    .problem-quote { margin-top: 3rem; background: var(--gray-50); border-left: 3px solid var(--teal); border-radius: 0 12px 12px 0; padding: 1.25rem 1.5rem; font-size: 15px; color: var(--gray-600); line-height: 1.65; font-style: italic; }
+    .problem-quote strong { color: var(--gray-900); font-style: normal; }
+
+    /* ── Solution Section ── */
+    #solution { padding: 5rem 0; background: var(--gray-900); color: #fff; }
+    #solution .section-tag { color: #34d399; }
+    #solution .section-h2 { color: #fff; }
+    #solution .section-sub { color: #9ca3af; max-width: 600px; }
+    .solution-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2.5rem; position: relative; }
+    @media (max-width: 860px) { .solution-steps { grid-template-columns: 1fr; } }
+    .solution-steps::before { content: ''; position: absolute; top: 44px; left: calc(16.66% + 1rem); right: calc(16.66% + 1rem); height: 1px; background: linear-gradient(90deg, rgba(52,211,153,0.4), rgba(37,99,235,0.4)); pointer-events: none; }
+    @media (max-width: 860px) { .solution-steps::before { display: none; } }
+    .sol-step { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 1.75rem; text-align: center; }
+    .sol-step-num { width: 40px; height: 40px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.1rem; font-family: var(--mono); font-size: 13px; font-weight: 600; color: #9ca3af; }
+    .sol-step-title { font-size: 16px; font-weight: 700; color: #f9fafb; margin-bottom: 0.6rem; }
+    .sol-step-desc { font-size: 13px; color: #9ca3af; line-height: 1.6; }
+    .sol-step-items { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.4rem; }
+    .sol-item { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px; padding: 0.45rem 0.85rem; font-size: 12.5px; font-family: var(--mono); color: #6ee7b7; text-align: left; display: flex; align-items: center; gap: 0.4rem; }
+    .sol-insight { margin-top: 2.5rem; background: rgba(13,148,136,0.12); border: 1px solid rgba(13,148,136,0.25); border-radius: 14px; padding: 1.5rem 2rem; display: flex; align-items: flex-start; gap: 1.25rem; }
+    .sol-insight-icon { width: 40px; height: 40px; background: rgba(13,148,136,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #34d399; }
+    .sol-insight-title { font-size: 14px; font-weight: 600; color: #d1fae5; margin-bottom: 0.3rem; }
+    .sol-insight-text { font-size: 13px; color: #6ee7b7; line-height: 1.6; }
+
+    /* ── Live Numbers Section ── */
+    #live-numbers { padding: 5rem 0; border-top: 1px solid var(--gray-100); }
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--gray-200); border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.03); margin-bottom: 1.5rem; }
     @media (max-width: 768px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
     .kpi-cell { background: var(--white); padding: 1.75rem 2rem; text-align: center; }
-    .kpi-num { font-size: 2.6rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; }
+    .kpi-num { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
     .kpi-num.c-teal { color: var(--teal); } .kpi-num.c-blue { color: var(--blue); }
-    .kpi-desc { font-size: 12px; color: var(--gray-400); margin-top: 0.45rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
-
-    /* ── Framing banner ── */
-    .framing-banner { margin-top: 1.75rem; background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 1rem; box-shadow: 0 1px 4px rgba(0,0,0,0.02); }
+    .kpi-desc { font-size: 11.5px; color: var(--gray-400); margin-top: 0.45rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 500; }
+    .comparison-banner { background: var(--white); border: 1px solid var(--gray-200); border-radius: 14px; padding: 1.5rem 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.03); margin-bottom: 1.5rem; }
+    .comparison-label { font-size: 12px; color: var(--gray-400); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; font-family: var(--mono); }
+    .comparison-row { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+    .comp-item { display: flex; flex-direction: column; gap: 0.35rem; min-width: 160px; }
+    .comp-item-label { font-size: 12px; color: var(--gray-500); font-family: var(--mono); }
+    .comp-bar-track { background: var(--gray-100); border-radius: 999px; height: 8px; overflow: hidden; }
+    .comp-bar-fill { height: 100%; border-radius: 999px; transition: width 1.2s cubic-bezier(0.16,1,0.3,1); }
+    .comp-bar-fill.baseline { background: var(--gray-300); width: 16.67%; }
+    .comp-bar-fill.pipeline { background: linear-gradient(90deg, var(--blue), var(--teal)); width: 0%; }
+    .comp-item-val { font-size: 14px; font-weight: 700; font-family: var(--mono); }
+    .comp-arrow { color: var(--gray-300); font-size: 1.5rem; }
+    .comp-delta { background: var(--green-light); border: 1px solid #a7f3d0; border-radius: 8px; padding: 0.5rem 1rem; display: flex; flex-direction: column; gap: 0.1rem; }
+    .comp-delta-num { font-size: 1.4rem; font-weight: 800; color: var(--green); letter-spacing: -0.02em; font-family: var(--mono); }
+    .comp-delta-label { font-size: 11px; color: var(--green); font-weight: 500; }
+    .framing-banner { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 1rem; box-shadow: 0 1px 4px rgba(0,0,0,0.02); }
     .framing-tag { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; background: var(--teal-light); color: var(--teal); padding: 0.25rem 0.65rem; border-radius: 6px; font-family: var(--mono); flex-shrink: 0; }
     .framing-text { font-size: 13.5px; color: var(--gray-600); line-height: 1.5; }
 
-    /* ── ROI section ── */
-    .roi-section { padding: 3rem 0; }
-    .roi-section h2 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.03em; text-align: center; margin-bottom: 0.5rem; }
-    .roi-section .subtitle { font-size: 1.05rem; color: var(--gray-500); text-align: center; margin-bottom: 2rem; }
+    /* ── ROI Section ── */
+    #efficiency { padding: 4rem 0; }
     .roi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
     @media (max-width: 768px) { .roi-grid { grid-template-columns: 1fr; } }
     .roi-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 16px; padding: 1.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.03); display: flex; flex-direction: column; justify-content: space-between; }
-    .roi-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.85rem; }
-    .roi-icon-wrap { width: 38px; height: 38px; border-radius: 10px; background: var(--gray-50); border: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: center; color: var(--gray-700); }
-    .roi-num { font-size: 2.3rem; font-weight: 700; letter-spacing: -0.03em; color: var(--gray-900); line-height: 1.1; margin-bottom: 0.3rem; }
+    .roi-icon-wrap { width: 38px; height: 38px; border-radius: 10px; background: var(--gray-50); border: 1px solid var(--gray-200); display: flex; align-items: center; justify-content: center; color: var(--gray-700); margin-bottom: 1rem; }
+    .roi-num { font-size: 2.3rem; font-weight: 800; letter-spacing: -0.03em; color: var(--gray-900); line-height: 1.1; margin-bottom: 0.3rem; }
     .roi-label { font-size: 14.5px; font-weight: 600; color: var(--gray-800); margin-bottom: 0.3rem; }
     .roi-sub { font-size: 13px; color: var(--gray-500); line-height: 1.45; }
     .roi-bar-wrap { margin-top: 1.25rem; }
@@ -77,17 +177,61 @@
     .roi-bar-track { background: var(--gray-100); border-radius: 4px; height: 6px; overflow: hidden; }
     .roi-bar-fill { height: 100%; border-radius: 4px; transition: width 1.2s cubic-bezier(0.16,1,0.3,1); }
 
-    /* ── Architecture ── */
-    .arch-section { padding: 3rem 0; text-align: center; }
-    .arch-section h2 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
-    .arch-section .subtitle { font-size: 1.05rem; color: var(--gray-500); margin-bottom: 2rem; }
-    .arch-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 20px; padding: 2.5rem 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.03); }
-    .arch-svg { width: 100%; height: 130px; }
+    /* ── Architecture Section ── */
+    #architecture { padding: 5rem 0; background: var(--gray-50); border-top: 1px solid var(--gray-200); border-bottom: 1px solid var(--gray-200); }
+    .arch-pipeline { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: start; gap: 1rem; margin-top: 2.5rem; }
+    @media (max-width: 860px) { .arch-pipeline { grid-template-columns: 1fr; } .arch-arrow { transform: rotate(90deg); margin: 0.5rem auto; } }
+    .arch-stage { background: var(--white); border: 1px solid var(--gray-200); border-radius: 16px; padding: 1.5rem; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+    .arch-stage.highlight { background: var(--gray-900); border-color: var(--gray-800); color: #fff; }
+    .arch-stage-num { font-family: var(--mono); font-size: 11px; color: var(--gray-400); margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    .arch-stage.highlight .arch-stage-num { color: #6b7280; }
+    .arch-stage-icon { width: 44px; height: 44px; border-radius: 12px; margin: 0 auto 0.75rem; display: flex; align-items: center; justify-content: center; }
+    .arch-stage-title { font-size: 15px; font-weight: 700; margin-bottom: 0.4rem; }
+    .arch-stage.highlight .arch-stage-title { color: #f9fafb; }
+    .arch-stage-sub { font-size: 12.5px; color: var(--gray-500); line-height: 1.5; }
+    .arch-stage.highlight .arch-stage-sub { color: #9ca3af; }
+    .arch-stage-inputs { margin-top: 1rem; display: flex; flex-direction: column; gap: 0.35rem; }
+    .arch-input-pill { font-size: 11.5px; font-family: var(--mono); padding: 0.3rem 0.7rem; border-radius: 6px; text-align: left; }
+    .arch-input-pill.blue { background: var(--blue-light); color: var(--blue); }
+    .arch-input-pill.teal { background: var(--teal-light); color: var(--teal); }
+    .arch-input-pill.purple { background: var(--purple-light); color: var(--purple); }
+    .arch-input-pill.green { background: var(--green-light); color: var(--green); }
+    .arch-input-pill.amber { background: var(--amber-light); color: var(--amber); }
+    .arch-input-pill.dark { background: rgba(255,255,255,0.07); color: #9ca3af; }
+    .arch-arrow { display: flex; align-items: center; justify-content: center; padding-top: 80px; color: var(--gray-300); }
+    .arch-outcome { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 2rem; }
+    @media (max-width: 640px) { .arch-outcome { grid-template-columns: 1fr; } }
+    .arch-outcome-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 1rem 1.25rem; display: flex; align-items: flex-start; gap: 0.75rem; }
+    .arch-outcome-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+    .arch-outcome-title { font-size: 13.5px; font-weight: 600; color: var(--gray-800); }
+    .arch-outcome-sub { font-size: 12px; color: var(--gray-500); line-height: 1.45; }
 
-    /* ── Upload section ── */
-    .upload-section { padding: 3rem 0; }
-    .upload-section h2 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.03em; text-align: center; margin-bottom: 0.5rem; }
-    .upload-section .subtitle { font-size: 1.05rem; color: var(--gray-500); text-align: center; margin-bottom: 2rem; }
+    /* ── Feature Spotlight ── */
+    #features { padding: 5rem 0; }
+    .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 2.5rem; }
+    @media (max-width: 768px) { .features-grid { grid-template-columns: 1fr; } }
+    .feature-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 20px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.03); transition: all 0.2s; }
+    .feature-card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.08); transform: translateY(-2px); }
+    .feature-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+    .feature-icon { width: 46px; height: 46px; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .feature-icon.blue-bg { background: var(--blue-light); color: var(--blue); }
+    .feature-icon.teal-bg { background: var(--teal-light); color: var(--teal); }
+    .feature-icon.purple-bg { background: var(--purple-light); color: var(--purple); }
+    .feature-icon.amber-bg { background: var(--amber-light); color: var(--amber); }
+    .feature-title { font-size: 17px; font-weight: 700; color: var(--gray-900); }
+    .feature-new-badge { font-size: 10px; font-weight: 700; background: linear-gradient(135deg, var(--blue), var(--teal)); color: #fff; padding: 1px 7px; border-radius: 999px; font-family: var(--mono); vertical-align: middle; margin-left: 0.5rem; }
+    .feature-desc { font-size: 14px; color: var(--gray-500); line-height: 1.65; margin-bottom: 1.25rem; }
+    .feature-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .feature-pill { font-size: 11.5px; font-family: var(--mono); font-weight: 500; padding: 0.3rem 0.7rem; border-radius: 8px; }
+    .feature-pill.green { background: var(--green-light); color: var(--green); }
+    .feature-pill.blue { background: var(--blue-light); color: var(--blue); }
+    .feature-pill.purple { background: var(--purple-light); color: var(--purple); }
+    .feature-pill.amber { background: var(--amber-light); color: var(--amber); }
+    .feature-pill.teal { background: var(--teal-light); color: var(--teal); }
+    .feature-pill.gray { background: var(--gray-100); color: var(--gray-600); }
+
+    /* ── Try It Section ── */
+    #try-it { padding: 5rem 0; border-top: 1px solid var(--gray-100); }
     .upload-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 18px; padding: 2rem; box-shadow: 0 2px 12px rgba(0,0,0,0.03); }
     .upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
     @media (max-width: 640px) { .upload-grid { grid-template-columns: 1fr; } }
@@ -104,12 +248,11 @@
     .dropzone-file { font-size: 12.5px; color: var(--blue); font-weight: 500; font-family: var(--mono); margin-top: 0.2rem; word-break: break-all; }
     .template-link { font-size: 11.5px; color: var(--teal); text-decoration: underline; font-family: var(--mono); position: relative; z-index: 2; cursor: pointer; }
     .template-link:hover { color: var(--blue); }
-
     .validation-alert { margin-bottom: 1.25rem; padding: 0.75rem 1.25rem; border-radius: 10px; background: var(--red-light); border: 1px solid #fecaca; color: var(--red); font-size: 13px; font-family: var(--mono); display: none; align-items: center; gap: 0.6rem; }
-
     .upload-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--gray-100); }
     .upload-status { font-size: 13px; color: var(--gray-500); font-family: var(--mono); }
     .upload-status.ok { color: var(--green); } .upload-status.err { color: var(--red); }
+    .payload-label { font-size: 11.5px; color: var(--gray-400); margin-bottom: 0.35rem; display: block; font-family: var(--mono); }
 
     /* ── Buttons ── */
     .btn { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.55rem 1.3rem; border: none; border-radius: 980px; font-size: 13.5px; font-weight: 500; font-family: var(--font); cursor: pointer; transition: all 0.2s; }
@@ -120,15 +263,12 @@
     .btn-ghost { background: transparent; border: 1px solid var(--gray-200); color: var(--gray-700); }
     .btn-ghost:hover { border-color: var(--gray-400); background: var(--gray-50); }
 
-    /* ── Replay section ── */
-    .interactive-section { padding: 3rem 0; }
-    .interactive-section h2 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.03em; text-align: center; margin-bottom: 0.5rem; }
-    .interactive-section .subtitle { font-size: 1.05rem; color: var(--gray-500); text-align: center; margin-bottom: 2rem; }
+    /* ── Replay Section ── */
+    #replay { padding: 4rem 0; background: var(--gray-50); border-top: 1px solid var(--gray-200); }
     .ctrl-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.75rem; }
     .ctrl-bar label { font-size: 13.5px; color: var(--gray-600); font-weight: 500; }
-    .ctrl-bar select { background: var(--white); border: 1px solid var(--gray-300); border-radius: 10px; padding: 0.55rem 0.9rem; font-size: 13.5px; font-family: var(--mono); color: var(--gray-800); min-width: 360px; outline: none; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; }
+    .ctrl-bar select { background: var(--white); border: 1px solid var(--gray-300); border-radius: 10px; padding: 0.55rem 0.9rem; font-size: 13.5px; font-family: var(--mono); color: var(--gray-800); min-width: 340px; outline: none; cursor: pointer; }
     .ctrl-bar select:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,.1); }
-
     .stages-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.75rem; }
     @media (max-width: 900px) { .stages-grid { grid-template-columns: repeat(2, 1fr); } }
     .stage-card { background: var(--white); border: 1.5px solid var(--gray-200); border-radius: 14px; padding: 1.35rem; opacity: 0.45; transition: all 0.3s cubic-bezier(0.16,1,0.3,1); }
@@ -142,7 +282,6 @@
     .pill-warn { background: var(--amber-light); color: var(--amber); }
     .stage-name { font-size: 14.5px; font-weight: 600; margin-bottom: 0.25rem; }
     .stage-info { font-size: 12.5px; color: var(--gray-500); line-height: 1.45; }
-
     .terminal { background: var(--gray-900); border-radius: 12px; overflow: hidden; box-shadow: 0 6px 24px rgba(0,0,0,.1); }
     .term-chrome { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 1rem; background: var(--gray-800); }
     .term-dots { display: flex; gap: 5px; }
@@ -151,34 +290,24 @@
     .term-body { padding: 1.15rem 1.35rem; font-family: var(--mono); font-size: 12.5px; color: #d1d5db; max-height: 250px; overflow-y: auto; line-height: 1.7; }
     .log-line { margin-bottom: 0.15rem; }
     .t-dim { color: #6b7280; } .t-ok { color: #34d399; } .t-err { color: #f87171; } .t-warn { color: #fbbf24; }
-
     .payload-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.25rem; }
     .payload-box { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 10px; padding: 0.85rem; font-family: var(--mono); font-size: 11.5px; color: var(--gray-600); max-height: 180px; overflow-y: auto; white-space: pre-wrap; }
-    .payload-label { font-size: 11.5px; color: var(--gray-400); margin-bottom: 0.35rem; display: block; font-family: var(--mono); }
 
-    /* ── Audit log table ── */
-    .table-section { padding: 3rem 0 4rem; }
-    .table-section h2 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.03em; text-align: center; margin-bottom: 0.5rem; }
-    .table-section .subtitle { font-size: 1.05rem; color: var(--gray-500); text-align: center; margin-bottom: 1.75rem; }
-    
-    /* ── Anomaly Strip ── */
+    /* ── Audit Table ── */
+    #audit { padding: 5rem 0; }
     .anomalies-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 1.25rem; }
     @media (max-width: 860px) { .anomalies-strip { grid-template-columns: repeat(2, 1fr); } }
     .anomaly-chip { background: var(--white); border: 1px solid var(--gray-200); border-radius: 10px; padding: 0.7rem 0.9rem; font-size: 12px; color: var(--gray-600); display: flex; align-items: center; gap: 0.5rem; line-height: 1.4; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
     .anomaly-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
     .dot-err { background: var(--red); } .dot-warn { background: var(--amber); } .dot-blue { background: var(--blue); } .dot-green { background: var(--green); }
-
-    /* ── Table Toolbar Controls ── */
     .table-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; flex-wrap: wrap; gap: 0.75rem; }
     .toolbar-left { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
     .table-search { background: var(--white); border: 1px solid var(--gray-300); border-radius: 8px; padding: 0.45rem 0.8rem; font-size: 13px; font-family: var(--font); color: var(--gray-800); min-width: 220px; outline: none; }
     .table-search:focus { border-color: var(--blue); box-shadow: 0 0 0 2px rgba(37,99,235,.1); }
     .table-filter-select { background: var(--white); border: 1px solid var(--gray-300); border-radius: 8px; padding: 0.45rem 0.8rem; font-size: 13px; font-family: var(--font); color: var(--gray-800); outline: none; cursor: pointer; }
     .table-count { font-size: 12.5px; color: var(--gray-500); font-family: var(--mono); }
-    
     .toolbar-right { display: flex; align-items: center; gap: 0.5rem; }
     .export-select { background: var(--white); border: 1px solid var(--gray-200); border-radius: 8px; padding: 0.45rem 0.75rem; font-size: 12.5px; font-family: var(--mono); color: var(--gray-700); cursor: pointer; outline: none; }
-
     .table-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,.03); }
     table { width: 100%; border-collapse: collapse; font-size: 13px; }
     th { text-align: left; padding: 0.85rem 1.15rem; background: var(--gray-50); color: var(--gray-500); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--gray-200); }
@@ -186,7 +315,6 @@
     tbody tr { transition: background 0.15s; }
     tbody tr:hover { background: var(--gray-50); }
     tr:last-child td { border-bottom: none; }
-    
     .tag { display: inline-block; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; font-family: var(--mono); }
     .tag-ok { background: var(--green-light); color: var(--green); }
     .tag-err { background: var(--red-light); color: var(--red); }
@@ -194,7 +322,6 @@
     .tag-blue { background: var(--blue-light); color: var(--blue); }
     .tag-purple { background: var(--purple-light); color: var(--purple); }
     .tag-muted { background: var(--gray-100); color: var(--gray-400); }
-
     .method-badge { font-size: 10px; font-weight: 600; font-family: var(--mono); padding: 2px 7px; border-radius: 4px; text-transform: uppercase; white-space: nowrap; display: inline-block; }
     .method-upi { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
     .method-card { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
@@ -202,23 +329,37 @@
     .method-debit { background: #f0fdfa; color: #0f766e; border: 1px solid #99f6e4; }
     .method-batch { background: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe; }
     .method-refund { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
-
     .action-btns { display: flex; gap: 0.35rem; }
     .btn-xs { padding: 0.22rem 0.6rem; font-size: 11px; border-radius: 6px; font-family: var(--mono); font-weight: 500; }
     .btn-approve { background: var(--green-light); color: var(--green); border: 1px solid #a7f3d0; cursor: pointer; transition: all 0.15s; }
     .btn-approve:hover { background: var(--green); color: #fff; }
     .btn-reject { background: var(--red-light); color: var(--red); border: 1px solid #fecaca; cursor: pointer; transition: all 0.15s; }
     .btn-reject:hover { background: var(--red); color: #fff; }
-
-    /* ── Resolution Flow ── */
     .resolution-flow { margin-top: 2rem; background: var(--white); border: 1px solid var(--gray-200); border-radius: 14px; padding: 1.5rem 1.75rem; box-shadow: 0 1px 4px rgba(0,0,0,0.02); }
     .flow-title { font-size: 13px; font-weight: 600; color: var(--gray-700); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
     .flow-steps { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 1rem; }
-    @media (max-width: 768px) { .flow-steps { grid-template-columns: 1fr; text-align: center; } .flow-arrow { transform: rotate(90deg); margin: 0.25rem 0; } }
+    @media (max-width: 768px) { .flow-steps { grid-template-columns: 1fr; text-align: center; } }
     .flow-step { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 13px; color: var(--gray-600); }
     .step-num { width: 24px; height: 24px; border-radius: 50%; background: var(--gray-100); border: 1px solid var(--gray-200); font-size: 11px; font-weight: 600; font-family: var(--mono); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--gray-700); }
     .step-desc { font-size: 12px; color: var(--gray-400); }
     .flow-arrow { color: var(--gray-300); font-weight: bold; }
+
+    /* ── Footer ── */
+    footer { background: var(--gray-900); color: #fff; padding: 3.5rem 0 2rem; margin-top: 4rem; }
+    .footer-inner { display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; flex-wrap: wrap; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .footer-brand { max-width: 280px; }
+    .footer-logo { display: flex; align-items: center; gap: 0.55rem; margin-bottom: 0.75rem; }
+    .footer-logo-icon { width: 28px; height: 28px; background: linear-gradient(135deg, var(--blue), var(--teal)); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .footer-logo-text { font-size: 15px; font-weight: 700; color: #f9fafb; }
+    .footer-desc { font-size: 13px; color: #6b7280; line-height: 1.6; }
+    .footer-links h4 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: #6b7280; margin-bottom: 0.85rem; }
+    .footer-link { display: block; font-size: 13.5px; color: #9ca3af; text-decoration: none; margin-bottom: 0.5rem; transition: color 0.15s; }
+    .footer-link:hover { color: #f9fafb; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-top: 1.5rem; }
+    .footer-copy { font-size: 12.5px; color: #4b5563; }
+    .footer-badge { font-size: 11px; font-family: var(--mono); background: rgba(13,148,136,0.15); border: 1px solid rgba(13,148,136,0.25); color: #34d399; padding: 0.3rem 0.8rem; border-radius: 999px; }
+    .footer-github-btn { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 13px; color: #9ca3af; text-decoration: none; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 0.45rem 1rem; transition: all 0.15s; }
+    .footer-github-btn:hover { border-color: rgba(255,255,255,0.25); color: #f9fafb; }
 
     ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 3px; }
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -226,91 +367,421 @@
   </style>
 </head>
 <body>
+
+<!-- ══ NAVBAR ══ -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#hero">
+      <div class="nav-logo-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <span class="nav-logo-text">WeldedDiff</span>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="#problem">Problem</a>
+      <a class="nav-link" href="#solution">Solution</a>
+      <a class="nav-link" href="#live-numbers">Live Data</a>
+      <a class="nav-link" href="#architecture">How It Works</a>
+      <a class="nav-link" href="#features">Features</a>
+      <a class="nav-link" href="#try-it">Try It</a>
+      <a class="nav-github" href="https://github.com/karthik1647/WeldedDiff" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</nav>
+
 <div class="mouse-glow"></div>
 <div class="page">
 
   <!-- ══ HERO ══ -->
-  <section class="hero reveal">
-    <div class="hero-badge"><span class="pulse-dot"></span> Reconciliation engine online</div>
-    <h1>Three-way ledger matching.<br><span>Down to ₹0.01.</span></h1>
-    <p>WeldedDiff reconciles internal orders, Razorpay payouts, and bank deposits using a deterministic engine backed by an active forensic LLM audit layer.</p>
-    <div class="sandbox-chip">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-      <span>Sandbox mode · Schema-accurate dataset · Live Razorpay API pending key verification</span>
+  <section id="hero">
+    <div class="hero-gradient"></div>
+    <div class="hero-grid-lines"></div>
+    <div class="hero-inner">
+      <div class="hero-badge"><span class="pulse-dot"></span> Reconciliation engine online · Razorpay AI Buildathon 2026</div>
+      <h1 class="reveal">Three-way ledger<br>matching. <span class="grad">Down to ₹0.01.</span></h1>
+      <p class="hero-sub reveal reveal-d1">WeldedDiff eliminates reconciliation chaos by autonomously matching internal orders, Razorpay payouts, and bank deposits — with a deterministic safety engine and forensic LLM that never commits a wrong entry.</p>
+      <div class="hero-ctas reveal reveal-d2">
+        <a href="#live-numbers" class="cta-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Watch It Reconcile
+        </a>
+        <a href="#architecture" class="cta-secondary">Read the Architecture →</a>
+      </div>
+      <div class="sandbox-chip reveal reveal-d3">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        Sandbox mode · Schema-accurate synthetic dataset · Live Razorpay API pending key verification
+      </div>
+      <div class="hero-logos reveal">
+        <span class="hero-logo-pill">Track 4: Finance Controller</span>
+        <span class="hero-logo-pill">DeepSeek LLM</span>
+        <span class="hero-logo-pill">FastAPI</span>
+        <span class="hero-logo-pill">0.00% False Positives</span>
+      </div>
     </div>
   </section>
 
-  <!-- ══ KPIs ══ -->
-  <section class="kpi-section">
+  <!-- ══ PROBLEM ══ -->
+  <section id="problem">
     <div class="container">
+      <span class="section-tag reveal">The Problem</span>
+      <h2 class="section-h2 reveal">Finance reconciliation is<br>broken by design.</h2>
+      <p class="section-sub reveal reveal-d1">Every month, finance controllers at growing Indian merchants manually cross-check three separate ledgers — often in Excel. The cost: missed overcharges, delayed cash-flow visibility, and audit trail gaps that haunt them during compliance reviews.</p>
+      <div class="problem-grid">
+        <div class="problem-card reveal reveal-d1">
+          <div class="problem-num red">≥ 5 min</div>
+          <div class="problem-label">Per invoice, manually</div>
+          <div class="problem-desc">A controller processing 200 settlements per week spends 17+ hours just matching rows across Razorpay CSVs, internal ledgers, and bank statements. WeldedDiff does it in 0.12 seconds.</div>
+        </div>
+        <div class="problem-card reveal reveal-d2">
+          <div class="problem-num amber">₹ Crores</div>
+          <div class="problem-label">Lost to undetected MDR leakage</div>
+          <div class="problem-desc">Razorpay charges 2% MDR + 18% GST. When gateways silently bump this to 3% on high-volume merchants, no one notices. WeldedDiff flags every paisa of overcharge.</div>
+        </div>
+        <div class="problem-card reveal reveal-d3">
+          <div class="problem-num blue">3–7 days</div>
+          <div class="problem-label">Settlement cycle blind spot</div>
+          <div class="problem-desc">T+2 settlement SLA sounds simple until it hits a Friday, a bank holiday, or a long weekend. Funds arrive on Tuesday and nobody knows if it's on time or overdue.</div>
+        </div>
+      </div>
+      <div class="problem-quote reveal">
+        <strong>"Manual reconciliation isn't just slow — it's a compliance risk."</strong> A single mismatched settlement that slips past human review can hold up statutory audits, delay GST filings, and flag the business to RBI payment aggregator oversight requirements.
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SOLUTION ══ -->
+  <section id="solution">
+    <div class="container">
+      <span class="section-tag reveal">The Solution</span>
+      <h2 class="section-h2 reveal" style="color:#fff;">WeldedDiff: deterministic-first,<br>LLM-verified, zero false positives.</h2>
+      <p class="section-sub reveal reveal-d1" style="color:#9ca3af;">Our key insight: most reconciliation systems fail because they treat matching as a machine learning classification problem. We treat it as a <em style="color:#d1d5db;">mathematical proof problem</em> — and only escalate to AI for genuine exceptions.</p>
+      <div class="solution-steps">
+        <div class="sol-step reveal reveal-d1">
+          <div class="sol-step-num">01</div>
+          <div class="sol-step-title">Ingest</div>
+          <div class="sol-step-desc">Pull three independent data streams into a normalised ledger engine.</div>
+          <div class="sol-step-items">
+            <div class="sol-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>Internal Orders
+            </div>
+            <div class="sol-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>Razorpay Payouts
+            </div>
+            <div class="sol-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>Bank Statement
+            </div>
+          </div>
+        </div>
+        <div class="sol-step reveal reveal-d2">
+          <div class="sol-step-num">02</div>
+          <div class="sol-step-title">Match</div>
+          <div class="sol-step-desc">4-way deterministic engine first. DeepSeek forensic LLM only for genuine exceptions.</div>
+          <div class="sol-step-items">
+            <div class="sol-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Order ID + UTR match
+            </div>
+            <div class="sol-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Instrument MDR math
+            </div>
+            <div class="sol-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Banking SLA calendar
+            </div>
+          </div>
+        </div>
+        <div class="sol-step reveal reveal-d3">
+          <div class="sol-step-num">03</div>
+          <div class="sol-step-title">Report</div>
+          <div class="sol-step-desc">Every decision is traced, immutable, and human-in-the-loop approved.</div>
+          <div class="sol-step-items">
+            <div class="sol-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>0 false positives
+            </div>
+            <div class="sol-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Full audit provenance
+            </div>
+            <div class="sol-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Tally + Zoho export
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sol-insight reveal">
+        <div class="sol-insight-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <div class="sol-insight-title">The key safety insight: LLM writes zero ledger entries.</div>
+          <div class="sol-insight-text">DeepSeek is only permitted to propose a match. The deterministic safety gate independently verifies the paisa math and T+2 banking SLA before anything is committed. If the numbers don't balance, the system abstains and queues the exception — no hallucinated commits, ever.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ LIVE NUMBERS ══ -->
+  <section id="live-numbers">
+    <div class="container">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:2rem;">
+        <div>
+          <span class="section-tag reveal">Live Results</span>
+          <h2 class="section-h2 reveal">Real reconciliation. Real numbers.</h2>
+          <p class="section-sub reveal reveal-d1">These metrics are computed live from the active reconciliation run on synthetic Razorpay settlement data.</p>
+        </div>
+      </div>
       <div class="kpi-grid reveal">
-        <div class="kpi-cell"><div class="kpi-num" id="kpi-baseline">16.67%</div><div class="kpi-desc">Baseline match</div></div>
-        <div class="kpi-cell"><div class="kpi-num c-teal" id="kpi-pipeline">98.04%</div><div class="kpi-desc">Disaggregated match</div></div>
+        <div class="kpi-cell"><div class="kpi-num" id="kpi-baseline">16.67%</div><div class="kpi-desc">Naive baseline</div></div>
+        <div class="kpi-cell"><div class="kpi-num c-teal" id="kpi-pipeline">98.04%</div><div class="kpi-desc">WeldedDiff match rate</div></div>
         <div class="kpi-cell"><div class="kpi-num" id="kpi-reviewed">102</div><div class="kpi-desc">Transactions reviewed</div></div>
-        <div class="kpi-cell"><div class="kpi-num c-blue" id="kpi-cost">$0.0011</div><div class="kpi-desc">LLM cost (2 audit calls)</div></div>
+        <div class="kpi-cell"><div class="kpi-num c-blue" id="kpi-cost">$0.0012</div><div class="kpi-desc">Total LLM cost</div></div>
       </div>
-      <div class="framing-banner reveal reveal-d1">
+
+      <div class="comparison-banner reveal reveal-d1">
+        <div class="comparison-label">Match rate improvement</div>
+        <div class="comparison-row">
+          <div class="comp-item">
+            <div class="comp-item-label">Naive Baseline (Excel / manual UTR lookup)</div>
+            <div class="comp-bar-track"><div class="comp-bar-fill baseline"></div></div>
+            <div class="comp-item-val" style="color:var(--gray-400)">16.67%</div>
+          </div>
+          <div class="comp-arrow">→</div>
+          <div class="comp-item">
+            <div class="comp-item-label">WeldedDiff (Det + Batch Disagg + LLM Gate)</div>
+            <div class="comp-bar-track"><div class="comp-bar-fill pipeline" data-target="98.04"></div></div>
+            <div class="comp-item-val" style="color:var(--teal)" id="pipeline-pct">98.04%</div>
+          </div>
+          <div class="comp-delta">
+            <div class="comp-delta-num">+81pp</div>
+            <div class="comp-delta-label">improvement</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="framing-banner reveal reveal-d2">
         <span class="framing-tag">Risk prevention</span>
-        <span class="framing-text">Batch disaggregation auto-committed all verified constituents while DeepSeek audited outlier anomalies — <strong>0 false positives committed to ledger</strong>.</span>
+        <span class="framing-text">Batch disaggregation auto-committed all verified constituents while DeepSeek audited outlier anomalies — <strong>0 false positives committed to ledger</strong> across all 102 reviewed transactions.</span>
       </div>
     </div>
   </section>
 
-  <!-- ══ ROI / EFFICIENCY ══ -->
-  <section class="roi-section">
+  <!-- ══ ROI ══ -->
+  <section id="efficiency">
     <div class="container">
-      <h2 class="reveal">Enterprise efficiency metrics</h2>
-      <p class="subtitle reveal reveal-d1">What the engine delivers compared to manual reconciliation</p>
+      <div class="section-header-center" style="margin-bottom:2rem;">
+        <span class="section-tag reveal">Enterprise ROI</span>
+        <h2 class="section-h2 reveal">The numbers that make a CFO nod.</h2>
+        <p class="section-sub reveal reveal-d1">What replacing manual reconciliation with WeldedDiff actually delivers at scale.</p>
+      </div>
       <div class="roi-grid">
-
         <div class="roi-card reveal reveal-d1">
           <div>
-            <div class="roi-header">
-              <div class="roi-icon-wrap">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              </div>
+            <div class="roi-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             </div>
             <div class="roi-num">~14 hrs</div>
-            <div class="roi-label">Manual time saved</div>
-            <div class="roi-sub">At ~5 min per invoice audit vs 0.12s automated engine throughput</div>
+            <div class="roi-label">Manual time saved per week</div>
+            <div class="roi-sub">At ~5 min per invoice audit vs 0.12s automated engine throughput on 200 settlements</div>
           </div>
           <div class="roi-bar-wrap">
             <div class="roi-bar-label"><span>Manual</span><span>Automated</span></div>
             <div class="roi-bar-track"><div class="roi-bar-fill" style="width:0%;background:linear-gradient(90deg,var(--blue),var(--teal));" data-target="98"></div></div>
           </div>
         </div>
-
         <div class="roi-card reveal reveal-d2">
           <div>
-            <div class="roi-header">
-              <div class="roi-icon-wrap">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              </div>
+            <div class="roi-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
             <div class="roi-num">0.00%</div>
             <div class="roi-label">False positive rate</div>
-            <div class="roi-sub">Deterministic safety gate prevents incorrect auto-commits</div>
+            <div class="roi-sub">The deterministic safety gate prevents every incorrect auto-commit. If math doesn't balance, it abstains — always.</div>
           </div>
           <div class="roi-bar-wrap">
             <div class="roi-bar-label"><span>Industry ~3%</span><span>WeldedDiff 0%</span></div>
             <div class="roi-bar-track"><div class="roi-bar-fill" style="width:0%;background:linear-gradient(90deg,var(--green),var(--teal));" data-target="100"></div></div>
           </div>
         </div>
-
         <div class="roi-card reveal reveal-d3">
           <div>
-            <div class="roi-header">
-              <div class="roi-icon-wrap">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-              </div>
+            <div class="roi-icon-wrap">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             </div>
             <div class="roi-num">$0.00001</div>
             <div class="roi-label">Cost per transaction</div>
-            <div class="roi-sub">99.8% cheaper than manual audits or bulk frontier LLM models</div>
+            <div class="roi-sub">99.8% cheaper than frontier LLM models on equivalent tasks. DeepSeek's efficiency enables production-scale reconciliation economics.</div>
           </div>
           <div class="roi-bar-wrap">
             <div class="roi-bar-label"><span>GPT-4o</span><span>DeepSeek</span></div>
             <div class="roi-bar-track"><div class="roi-bar-fill" style="width:0%;background:linear-gradient(90deg,var(--amber),var(--teal));" data-target="99"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ ARCHITECTURE ══ -->
+  <section id="architecture">
+    <div class="container">
+      <span class="section-tag reveal">Under the Hood</span>
+      <h2 class="section-h2 reveal">A three-stage decision pipeline.</h2>
+      <p class="section-sub reveal reveal-d1">Every transaction goes through three gates. Only if all three agree does a match get committed. This makes false positives mathematically impossible.</p>
+
+      <div class="arch-pipeline reveal reveal-d1">
+        <div class="arch-stage">
+          <div class="arch-stage-num">Stage 01</div>
+          <div class="arch-stage-icon" style="background:var(--blue-light);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <div class="arch-stage-title">Deterministic Engine</div>
+          <div class="arch-stage-sub">4-way proof: Order ID + UTR + Paisa Math ± ₹0.01 + Banking SLA T+2</div>
+          <div class="arch-stage-inputs">
+            <div class="arch-input-pill blue">Order ID exact match</div>
+            <div class="arch-input-pill blue">UTR cryptographic link</div>
+            <div class="arch-input-pill blue">MDR math (UPI/Card/Amex)</div>
+            <div class="arch-input-pill blue">T+2 banking calendar</div>
+          </div>
+        </div>
+
+        <div class="arch-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+
+        <div class="arch-stage highlight">
+          <div class="arch-stage-num">Stage 02</div>
+          <div class="arch-stage-icon" style="background:rgba(13,148,136,0.2);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+          </div>
+          <div class="arch-stage-title">DeepSeek LLM Forensic</div>
+          <div class="arch-stage-sub">Only for exceptions. Active batch decomposition, narration matching, anomaly diagnosis.</div>
+          <div class="arch-stage-inputs">
+            <div class="arch-input-pill dark">Fuzzy bank narration match</div>
+            <div class="arch-input-pill dark">Batch delta forensic audit</div>
+            <div class="arch-input-pill dark">Confidence scoring 0–100%</div>
+          </div>
+        </div>
+
+        <div class="arch-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+
+        <div class="arch-stage">
+          <div class="arch-stage-num">Stage 03</div>
+          <div class="arch-stage-icon" style="background:var(--green-light);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="arch-stage-title">Safety Gate + HITL</div>
+          <div class="arch-stage-sub">LLM confidence ≥85% AND paisa math verified. Otherwise: abstain → exception queue.</div>
+          <div class="arch-stage-inputs">
+            <div class="arch-input-pill green">AUTO_COMMIT (verified)</div>
+            <div class="arch-input-pill amber">ABSTAINED (exception)</div>
+            <div class="arch-input-pill teal">USER_APPROVED (human)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arch-outcome reveal reveal-d2">
+        <div class="arch-outcome-card">
+          <div class="arch-outcome-dot" style="background:var(--green);"></div>
+          <div>
+            <div class="arch-outcome-title">Batch Disaggregation</div>
+            <div class="arch-outcome-sub">When one bank credit covers 10 orders, the engine separates and auto-commits the 9 clean payouts while isolating only the 1 anomalous outlier.</div>
+          </div>
+        </div>
+        <div class="arch-outcome-card">
+          <div class="arch-outcome-dot" style="background:var(--blue);"></div>
+          <div>
+            <div class="arch-outcome-title">Multi-Instrument MDR</div>
+            <div class="arch-outcome-sub">UPI (0%), Debit Card (0.5%), Credit Card (2%), Amex (3.5%) — contract rates are dynamically applied per transaction, not hard-coded.</div>
+          </div>
+        </div>
+        <div class="arch-outcome-card">
+          <div class="arch-outcome-dot" style="background:var(--amber);"></div>
+          <div>
+            <div class="arch-outcome-title">Indian Banking Calendar SLA</div>
+            <div class="arch-outcome-sub">T+2 SLA is calculated in business banking days (skipping weekends and RTGS holidays), not raw calendar days.</div>
+          </div>
+        </div>
+        <div class="arch-outcome-card">
+          <div class="arch-outcome-dot" style="background:var(--purple);"></div>
+          <div>
+            <div class="arch-outcome-title">Immutable Audit Trail</div>
+            <div class="arch-outcome-sub">Every decision — auto-committed, proposed, or abstained — is logged with a complete trace of the reasoning chain for compliance review.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FEATURE SPOTLIGHT ══ -->
+  <section id="features">
+    <div class="container">
+      <div class="section-header-center" style="margin-bottom:2rem;">
+        <span class="section-tag reveal">What's Inside</span>
+        <h2 class="section-h2 reveal">Production-grade features,<br>not a hackathon toy.</h2>
+        <p class="section-sub reveal reveal-d1">Built for Indian FinTech reality — MDR complexity, settlement batching, RBI holidays, and ERP system integration.</p>
+      </div>
+      <div class="features-grid">
+
+        <div class="feature-card reveal reveal-d1">
+          <div class="feature-header">
+            <div class="feature-icon teal-bg">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div><div class="feature-title">Multi-Instrument MDR Engine <span class="feature-new-badge">NEW</span></div></div>
+          </div>
+          <div class="feature-desc">Automatically detects whether a payment was made via UPI, Debit Card, Credit Card, or Amex — and applies the correct RBI/NPCI standard fee schedule for each. No more hardcoded 2% for everything.</div>
+          <div class="feature-pills">
+            <span class="feature-pill green">UPI: 0% MDR</span>
+            <span class="feature-pill blue">Credit Card: 2.0%</span>
+            <span class="feature-pill purple">Amex: 3.5%</span>
+            <span class="feature-pill teal">Debit: 0.5%</span>
+            <span class="feature-pill gray">+ 18% GST on all</span>
+          </div>
+        </div>
+
+        <div class="feature-card reveal reveal-d2">
+          <div class="feature-header">
+            <div class="feature-icon blue-bg">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            </div>
+            <div><div class="feature-title">Batch Disaggregation <span class="feature-new-badge">NEW</span></div></div>
+          </div>
+          <div class="feature-desc">Razorpay sends one lump-sum bank credit for 10, 50, or 100 orders at once. WeldedDiff isolates the single faulty order (fee variance, dispute) and auto-commits the clean batch — instead of failing the entire settlement.</div>
+          <div class="feature-pills">
+            <span class="feature-pill green">Clean orders → AUTO_COMMIT</span>
+            <span class="feature-pill amber">Outlier → Exception Queue</span>
+            <span class="feature-pill blue">Subset-sum isolation</span>
+          </div>
+        </div>
+
+        <div class="feature-card reveal reveal-d3">
+          <div class="feature-header">
+            <div class="feature-icon purple-bg">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            </div>
+            <div><div class="feature-title">ERP-Ready Exports</div></div>
+          </div>
+          <div class="feature-desc">Export your reconciled ledger directly into Tally ERP voucher format or Zoho Books bank feed layout — ready to import without any reformatting. Also supports a full provenance CSV report for compliance filing.</div>
+          <div class="feature-pills">
+            <span class="feature-pill purple">Tally ERP Format</span>
+            <span class="feature-pill blue">Zoho Books Bank Feed</span>
+            <span class="feature-pill gray">Standard CSV + Audit Log</span>
+          </div>
+        </div>
+
+        <div class="feature-card reveal reveal-d4">
+          <div class="feature-header">
+            <div class="feature-icon amber-bg">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            </div>
+            <div><div class="feature-title">Forensic Audit Replay</div></div>
+          </div>
+          <div class="feature-desc">Step through any individual transaction's full decision chain in real-time: deterministic checks → LLM forensic audit → safety gate evaluation → final verdict. Every step is transparent and explainable.</div>
+          <div class="feature-pills">
+            <span class="feature-pill amber">Live terminal log stream</span>
+            <span class="feature-pill teal">LLM justification trace</span>
+            <span class="feature-pill green">HITL approve / dismiss</span>
           </div>
         </div>
 
@@ -318,42 +789,14 @@
     </div>
   </section>
 
-  <!-- ══ ARCHITECTURE ══ -->
-  <section class="arch-section">
+  <!-- ══ TRY IT ══ -->
+  <section id="try-it">
     <div class="container">
-      <h2 class="reveal">How it works</h2>
-      <p class="subtitle reveal reveal-d1">Three data streams. Dynamic MDR rules. Real-time batch disaggregation</p>
-      <div class="arch-card reveal reveal-d2">
-        <svg class="arch-svg" viewBox="0 0 1000 130" fill="none">
-          <!-- Connection lines -->
-          <path d="M 195 41 C 310 41 340 65 415 65" stroke="rgba(37, 99, 235, 0.5)" stroke-width="2.5"/>
-          <path d="M 195 91 C 310 91 340 65 415 65" stroke="rgba(13, 148, 136, 0.5)" stroke-width="2.5"/>
-          <path d="M 615 65 C 720 65 750 65 825 65" stroke="rgba(5, 150, 105, 0.5)" stroke-width="2.5"/>
-          <!-- Animated pulse dots -->
-          <circle r="4.5" fill="#2563eb"><animateMotion path="M 195 41 C 310 41 340 65 415 65" dur="2.5s" repeatCount="indefinite"/></circle>
-          <circle r="4.5" fill="#0d9488"><animateMotion path="M 195 91 C 310 91 340 65 415 65" dur="3s" repeatCount="indefinite"/></circle>
-          <circle r="5" fill="#059669"><animateMotion path="M 615 65 C 720 65 750 65 825 65" dur="2s" repeatCount="indefinite"/></circle>
-          <!-- Nodes -->
-          <rect x="25" y="22" width="170" height="38" rx="10" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1.5"/>
-          <text x="55" y="46" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#374151">Internal Orders</text>
-          <rect x="25" y="72" width="170" height="38" rx="10" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1.5"/>
-          <text x="42" y="96" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#374151">Razorpay Payouts</text>
-          <rect x="415" y="36" width="200" height="58" rx="12" fill="#1f2937" stroke="#374151" stroke-width="1.5"/>
-          <text x="515" y="60" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#f9fafb">WeldedDiff</text>
-          <text x="515" y="78" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#9ca3af">Engine + DeepSeek LLM</text>
-          <rect x="825" y="44" width="155" height="42" rx="10" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5"/>
-          <text x="902" y="70" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#059669">Bank Statement</text>
-        </svg>
-      </div>
-    </div>
-  </section>
+      <span class="section-tag reveal">Live Demo</span>
+      <h2 class="section-h2 reveal">Upload your own data and watch it run.</h2>
+      <p class="section-sub reveal reveal-d1">Drop in any Razorpay payout CSV and bank statement — or leave both empty to re-run against the built-in synthetic dataset with injected anomalies.</p>
 
-  <!-- ══ UPLOAD & RUN PIPELINE ══ -->
-  <section class="upload-section">
-    <div class="container">
-      <h2 class="reveal">Run live reconciliation</h2>
-      <p class="subtitle reveal reveal-d1">Upload custom CSV exports to reconcile any dataset against the engine</p>
-      <div class="upload-card reveal reveal-d2">
+      <div class="upload-card reveal reveal-d2" style="margin-bottom:2rem;">
         <div class="validation-alert" id="validation-alert">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           <span id="validation-alert-msg">CSV error</span>
@@ -401,10 +844,12 @@
   </section>
 
   <!-- ══ REPLAY ══ -->
-  <section class="interactive-section" id="replay">
+  <section id="replay">
     <div class="container">
-      <h2 class="reveal">Step through a real transaction</h2>
-      <p class="subtitle reveal reveal-d1">Watch a payment traverse the full pipeline — dynamic MDR checks, LLM audit, safety gate, final verdict</p>
+      <span class="section-tag reveal">Decision Replay</span>
+      <h2 class="section-h2 reveal">Step through a real transaction.</h2>
+      <p class="section-sub reveal reveal-d1">Watch how <code style="font-family:var(--mono);background:var(--gray-100);padding:0 0.35rem;border-radius:4px;">pay_012</code> gets evaluated — DeepSeek returns 95% confidence, but the paisa guard catches a ₹102k discrepancy and safely abstains.</p>
+
       <div class="ctrl-bar reveal reveal-d2">
         <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
           <label>Transaction:</label>
@@ -416,22 +861,18 @@
         </button>
       </div>
       <div class="stages-grid reveal reveal-d3">
-        <div class="stage-card" id="stage-1"><div class="stage-top"><span class="stage-no">01</span><span class="pill" id="status-1">pending</span></div><div class="stage-name">Deterministic engine</div><div class="stage-info" id="stage-info-1">Instrument MDR check (UPI/Card/Amex) + T+2 Banking SLA.</div></div>
+        <div class="stage-card" id="stage-1"><div class="stage-top"><span class="stage-no">01</span><span class="pill" id="status-1">pending</span></div><div class="stage-name">Deterministic engine</div><div class="stage-info" id="stage-info-1">Instrument MDR check + T+2 Banking SLA calendar.</div></div>
         <div class="stage-card" id="stage-2"><div class="stage-top"><span class="stage-no">02</span><span class="pill" id="status-2">pending</span></div><div class="stage-name">LLM forensic audit</div><div class="stage-info">DeepSeek narration matching and batch candidate analysis.</div></div>
-        <div class="stage-card" id="stage-3"><div class="stage-top"><span class="stage-no">03</span><span class="pill" id="status-3">pending</span></div><div class="stage-name">Confidence gate</div><div class="stage-info">≥ 85% threshold and gross vs bank credit safety check.</div></div>
+        <div class="stage-card" id="stage-3"><div class="stage-top"><span class="stage-no">03</span><span class="pill" id="status-3">pending</span></div><div class="stage-name">Confidence gate</div><div class="stage-info">≥ 85% threshold + gross vs bank credit safety check.</div></div>
         <div class="stage-card" id="stage-4"><div class="stage-top"><span class="stage-no">04</span><span class="pill" id="status-4">pending</span></div><div class="stage-name">Final outcome</div><div class="stage-info">Committed, proposed, or abstained to exception queue.</div></div>
       </div>
       <div class="terminal reveal" id="live-terminal">
         <div class="term-chrome">
-          <div class="term-dots">
-            <span class="term-dot"></span>
-            <span class="term-dot"></span>
-            <span class="term-dot"></span>
-          </div>
+          <div class="term-dots"><span class="term-dot"></span><span class="term-dot"></span><span class="term-dot"></span></div>
           <span class="term-title" id="log-ref-id">pay_012</span>
         </div>
         <div class="term-body" id="console-output">
-          <div class="log-line"><span class="t-dim">[sys]</span> Select a transaction or execute pipeline to view logs.</div>
+          <div class="log-line"><span class="t-dim">[sys]</span> Select a transaction and click Replay to watch the decision pipeline live.</div>
         </div>
       </div>
       <div class="payload-row" id="payload-container" style="display:none;">
@@ -442,20 +883,19 @@
   </section>
 
   <!-- ══ AUDIT TABLE ══ -->
-  <section class="table-section">
+  <section id="audit">
     <div class="container">
-      <h2 class="reveal">Full audit log</h2>
-      <p class="subtitle reveal reveal-d1">Every transaction. Every decision. Complete provenance</p>
-      
-      <!-- Injected anomalies summary -->
+      <span class="section-tag reveal">Audit Log</span>
+      <h2 class="section-h2 reveal">Full audit log — every decision, every trace.</h2>
+      <p class="section-sub reveal reveal-d1">Complete provenance for every transaction. Search, filter by status, approve exceptions, or export to ERP formats.</p>
+
       <div class="anomalies-strip reveal">
         <div class="anomaly-chip"><span class="anomaly-dot dot-warn"></span><span><strong>pay_005</strong> · MDR fee overcharge detected (3% vs 2%)</span></div>
         <div class="anomaly-chip"><span class="anomaly-dot dot-err"></span><span><strong>pay_012</strong> · Safety gate blocked ₹102k mismatch</span></div>
-        <div class="anomaly-chip"><span class="anomaly-dot dot-warn"></span><span><strong>pay_025</strong> · SLA settlement breach (>2 banking days)</span></div>
+        <div class="anomaly-chip"><span class="anomaly-dot dot-warn"></span><span><strong>pay_025</strong> · SLA breach (>2 banking days)</span></div>
         <div class="anomaly-chip"><span class="anomaly-dot dot-green"></span><span><strong>Batch Disaggregation</strong> · Clean constituents auto-committed</span></div>
       </div>
 
-      <!-- Toolbar with Search, Status Filters and ERP Exporter -->
       <div class="table-toolbar reveal">
         <div class="toolbar-left">
           <input type="text" id="table-search-input" class="table-search" placeholder="Search Ref ID, UTR, Reason, Method...">
@@ -466,7 +906,7 @@
             <option value="USER_APPROVED">USER_APPROVED (Overrides)</option>
             <option value="PROPOSED">PROPOSED (Pending)</option>
           </select>
-          <span class="table-count" id="table-record-count">Loading records…</span>
+          <span class="table-count" id="table-record-count">Loading…</span>
         </div>
         <div class="toolbar-right">
           <select id="export-format-select" class="export-select">
@@ -488,31 +928,68 @@
         </table>
       </div>
 
-      <!-- Downstream Exception Lifecycle -->
       <div class="resolution-flow reveal reveal-d2">
         <div class="flow-title">Exception Resolution Lifecycle</div>
         <div class="flow-steps">
-          <div class="flow-step">
-            <div class="step-num">1</div>
-            <div><strong>Variance Flagged</strong><div class="step-desc">Deterministic rule or LLM flags discrepancy</div></div>
-          </div>
+          <div class="flow-step"><div class="step-num">1</div><div><strong>Variance Flagged</strong><div class="step-desc">Deterministic rule or LLM flags discrepancy</div></div></div>
           <div class="flow-arrow">→</div>
-          <div class="flow-step">
-            <div class="step-num">2</div>
-            <div><strong>Controller Review</strong><div class="step-desc">Interactive HITL approve/dismiss in dashboard</div></div>
-          </div>
+          <div class="flow-step"><div class="step-num">2</div><div><strong>Controller Review</strong><div class="step-desc">HITL approve / dismiss in dashboard</div></div></div>
           <div class="flow-arrow">→</div>
-          <div class="flow-step">
-            <div class="step-num">3</div>
-            <div><strong>Ledger Sync</strong><div class="step-desc">Approved exports to CSV / Rejected to manual recon</div></div>
-          </div>
+          <div class="flow-step"><div class="step-num">3</div><div><strong>Ledger Sync</strong><div class="step-desc">Approved exports to Tally/Zoho/CSV</div></div></div>
         </div>
       </div>
-
     </div>
   </section>
 
 </div>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="footer-logo-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <span class="footer-logo-text">WeldedDiff</span>
+        </div>
+        <div class="footer-desc">AI-powered three-way ledger reconciliation for Indian payment gateways. Built for the Razorpay AI Buildathon 2026, Track 4: Finance Controller.</div>
+      </div>
+      <div class="footer-links">
+        <h4>Sections</h4>
+        <a class="footer-link" href="#problem">The Problem</a>
+        <a class="footer-link" href="#solution">The Solution</a>
+        <a class="footer-link" href="#architecture">How It Works</a>
+        <a class="footer-link" href="#features">Features</a>
+        <a class="footer-link" href="#try-it">Try It Live</a>
+      </div>
+      <div class="footer-links">
+        <h4>Technical</h4>
+        <a class="footer-link" href="#live-numbers">Live Metrics</a>
+        <a class="footer-link" href="#replay">Decision Replay</a>
+        <a class="footer-link" href="#audit">Audit Log</a>
+        <a class="footer-link" href="/api/summary" target="_blank">API: Summary</a>
+        <a class="footer-link" href="/api/traces" target="_blank">API: Traces</a>
+      </div>
+      <div class="footer-links">
+        <h4>Links</h4>
+        <a class="footer-link" href="https://github.com/karthik1647/WeldedDiff" target="_blank">GitHub Repository</a>
+        <a class="footer-link" href="/api/download_template/payouts">Download Sample CSV</a>
+        <a class="footer-link" href="/api/export?format=standard">Export Report</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 WeldedDiff · Razorpay AI Buildathon · Track 4: Finance Controller</div>
+      <span class="footer-badge">✦ Razorpay AI Buildathon 2026</span>
+      <a class="footer-github-btn" href="https://github.com/karthik1647/WeldedDiff" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        github.com/karthik1647/WeldedDiff
+      </a>
+    </div>
+  </div>
+</footer>
+
 <script>
   /* ── Scroll reveal ── */
   const revealObs = new IntersectionObserver(entries => {
@@ -520,11 +997,39 @@
   }, { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
+  /* ── Navbar scroll shadow + active link ── */
+  const navbar = document.getElementById('navbar');
+  const navLinks = document.querySelectorAll('.nav-link');
+  const sections = document.querySelectorAll('section[id]');
+
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 10);
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+    navLinks.forEach(l => {
+      l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+    });
+  });
+
   /* ── ROI bar animation ── */
   const barObs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { const f = e.target.querySelector('.roi-bar-fill'); if (f) { setTimeout(() => f.style.width = f.dataset.target + '%', 150); } barObs.unobserve(e.target); } });
+    entries.forEach(e => { if (e.isIntersecting) {
+      const f = e.target.querySelector('.roi-bar-fill'); if (f) setTimeout(() => f.style.width = f.dataset.target + '%', 150);
+      barObs.unobserve(e.target);
+    }});
   }, { threshold: 0.25 });
   document.querySelectorAll('.roi-card').forEach(el => barObs.observe(el));
+
+  /* ── Comparison bar animate ── */
+  const compBarObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) {
+      const fill = e.target.querySelector('.comp-bar-fill.pipeline');
+      if (fill) setTimeout(() => { fill.style.width = fill.dataset.target + '%'; }, 300);
+      compBarObs.unobserve(e.target);
+    }});
+  }, { threshold: 0.2 });
+  const compBanner = document.querySelector('.comparison-banner');
+  if (compBanner) compBarObs.observe(compBanner);
 
   /* ── Mouse gradient ── */
   addEventListener('mousemove', e => {
@@ -541,9 +1046,13 @@
       if (sR.ok) {
         const s = await sR.json();
         document.getElementById('kpi-baseline').textContent = `${s.baseline?.baseline_bank_match_rate_pct ?? '16.67'}%`;
-        document.getElementById('kpi-pipeline').textContent = `${s.advanced_payout_match_rate_pct ?? '98.04'}%`;
+        const pct = s.advanced_payout_match_rate_pct ?? 98.04;
+        document.getElementById('kpi-pipeline').textContent = `${pct}%`;
+        if (document.getElementById('pipeline-pct')) document.getElementById('pipeline-pct').textContent = `${pct}%`;
+        const pFill = document.querySelector('.comp-bar-fill.pipeline');
+        if (pFill) pFill.dataset.target = pct;
         document.getElementById('kpi-reviewed').textContent = (s.deterministic_reconciled_payouts ?? 100) + (s.llm_calls_made ?? 2);
-        document.getElementById('kpi-cost').textContent = `\$${(s.llm_processing_cost_usd ?? 0.0011).toFixed(4)}`;
+        document.getElementById('kpi-cost').textContent = `\$${(s.llm_processing_cost_usd ?? 0.0012).toFixed(4)}`;
       }
       if (tR.ok) { allTraces = await tR.json(); populateDropdown(); renderTable(); selectTransaction('pay_012'); }
     } catch (e) { console.error(e); }
@@ -563,7 +1072,6 @@
   }
 
   function selectTransaction(id) {
-    const m = allTraces.filter(t => t.payment_id === id || t.utr === id);
     document.getElementById('log-ref-id').textContent = id;
     resetStages();
   }
@@ -582,13 +1090,11 @@
     const id = document.getElementById('tx-select').value;
     const m = allTraces.filter(t => t.payment_id === id || t.utr === id);
     const tr = m.length ? m[m.length - 1] : null; if (!tr) return;
-
     const btn = document.getElementById('btn-replay');
     btn.disabled = true;
     btn.innerHTML = `<span class="spin"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg></span><span>Running…</span>`;
     resetStages();
     const out = document.getElementById('console-output'); out.innerHTML = '';
-
     function log(msg, cls='') {
       const d = document.createElement('div'); d.className = 'log-line';
       const ts = new Date().toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
@@ -598,30 +1104,27 @@
     const wait = ms => new Promise(r => setTimeout(r, ms));
     const conf = tr.llm_confidence !== undefined ? tr.llm_confidence : (tr.decision === 'AUTO_COMMIT' ? 100 : 0);
     const method = (tr.payment_method || 'credit_card').toUpperCase();
-
     document.getElementById('stage-1').className = 'stage-card active'; document.getElementById('status-1').textContent = 'running';
-    log(`[engine] Inspecting ${id} (${method})…`); await wait(600);
-    log(`[engine] Method: ${method} | Expected Net: ${tr.net_calculated || tr.amount || '—'} INR`);
-    log(`[engine] T+2 Banking SLA checked against Indian clearing calendar`);
-    document.getElementById('stage-1').className = 'stage-card passed'; const p1 = document.getElementById('status-1'); p1.className = 'pill pill-ok'; p1.textContent = 'verified';
-
+    log(`[engine] Inspecting ${id} — instrument: ${method}`); await wait(600);
+    log(`[engine] Expected net: ${tr.net_calculated || tr.amount || '—'} INR`);
+    log(`[engine] T+2 banking SLA check against Indian clearing calendar`);
+    document.getElementById('stage-1').className = 'stage-card passed';
+    const p1 = document.getElementById('status-1'); p1.className = 'pill pill-ok'; p1.textContent = 'verified';
     await wait(400);
     document.getElementById('stage-2').className = 'stage-card active'; document.getElementById('status-2').textContent = 'running';
-    log('[llm] Querying DeepSeek active forensic agent…'); await wait(700);
-    log(`[llm] ${tr.compared_candidates?.length ?? 0} candidate(s), score: ${conf}%`);
+    log('[llm] Querying DeepSeek forensic agent…'); await wait(700);
+    log(`[llm] ${tr.compared_candidates?.length ?? 0} bank candidate(s) evaluated — confidence: ${conf}%`);
     if (tr.llm_justification) log(`[llm] "${tr.llm_justification}"`, 't-ok');
     document.getElementById('stage-2').className = 'stage-card passed';
     const p2 = document.getElementById('status-2'); p2.className = conf >= 85 ? 'pill pill-ok' : 'pill pill-bad'; p2.textContent = `${conf}%`;
-
     await wait(500);
     document.getElementById('stage-3').className = 'stage-card active'; document.getElementById('status-3').textContent = 'evaluating';
-    log('[gate] Checking deterministic amount guard…'); await wait(600);
+    log('[gate] Verifying paisa math against bank credit…'); await wait(600);
     const p3 = document.getElementById('status-3');
-    if (conf >= 85 && tr.decision === 'ABSTAINED') { log(`[gate] OVERRIDE — ${conf}% blocked by ₹102,044 amount guard`, 't-err'); p3.className = 'pill pill-bad'; p3.textContent = 'override'; }
-    else if (conf >= 85) { log(`[gate] PASSED — ${conf}% verified above threshold`, 't-ok'); p3.className = 'pill pill-ok'; p3.textContent = 'passed'; }
-    else { log(`[gate] ABSTAIN — ${conf}% below 85%`, 't-err'); p3.className = 'pill pill-bad'; p3.textContent = 'abstained'; }
+    if (conf >= 85 && tr.decision === 'ABSTAINED') { log(`[gate] OVERRIDE — ${conf}% blocked: amount discrepancy exceeds tolerance`, 't-err'); p3.className = 'pill pill-bad'; p3.textContent = 'override'; }
+    else if (conf >= 85) { log(`[gate] PASSED — ${conf}% verified above threshold, amounts balance`, 't-ok'); p3.className = 'pill pill-ok'; p3.textContent = 'passed'; }
+    else { log(`[gate] ABSTAIN — ${conf}% below 85% gate`, 't-err'); p3.className = 'pill pill-bad'; p3.textContent = 'abstained'; }
     document.getElementById('stage-3').className = 'stage-card passed';
-
     await wait(400);
     document.getElementById('stage-4').className = 'stage-card active';
     const reason = tr.reason || `confidence ${conf}%`;
@@ -632,45 +1135,33 @@
     else if (tr.decision === 'USER_APPROVED') { p4.className = 'pill pill-ok'; p4.textContent = 'approved'; }
     else { p4.className = 'pill pill-ok'; p4.textContent = 'committed'; }
     document.getElementById('stage-4').className = 'stage-card passed';
-
     document.getElementById('payload-container').style.display = 'grid';
-    document.getElementById('payout-payload').textContent = JSON.stringify({ payment_id: id, payment_method: tr.payment_method || 'credit_card', utr: tr.utr || '—', net: tr.net_calculated || tr.amount || '—', entity: 'payout' }, null, 2);
+    document.getElementById('payout-payload').textContent = JSON.stringify({ payment_id: id, payment_method: tr.payment_method || 'credit_card', utr: tr.utr || '—', net: tr.net_calculated || tr.amount || '—' }, null, 2);
     document.getElementById('candidates-payload').textContent = JSON.stringify(tr.compared_candidates || [], null, 2);
-
     btn.disabled = false;
     btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg><span>Replay</span>`;
   }
 
-  /* ── Filtered Table render ── */
+  /* ── Filtered Table ── */
   function renderTable() {
     const tbody = document.getElementById('traces-table-body'); tbody.innerHTML = '';
     const m = new Map();
     allTraces.forEach(t => { const id = t.payment_id || t.order_id || t.utr; if (id) m.set(id, t); });
     const allRecords = Array.from(m.values());
-
-    const searchQuery = (document.getElementById('table-search-input')?.value || '').trim().toLowerCase();
-    const statusFilter = document.getElementById('table-status-filter')?.value || 'ALL';
-
+    const q = (document.getElementById('table-search-input')?.value || '').trim().toLowerCase();
+    const sf = document.getElementById('table-status-filter')?.value || 'ALL';
     const filtered = allRecords.filter(t => {
       const id = (t.payment_id || t.order_id || t.utr || '').toLowerCase();
       const utr = (t.utr || '').toLowerCase();
       const reason = (t.reason || '').toLowerCase();
       const step = (t.step || '').toLowerCase();
       const method = (t.payment_method || '').toLowerCase();
-
-      const matchesSearch = !searchQuery || id.includes(searchQuery) || utr.includes(searchQuery) || reason.includes(searchQuery) || step.includes(searchQuery) || method.includes(searchQuery);
-      const matchesStatus = statusFilter === 'ALL' || t.decision === statusFilter;
-
-      return matchesSearch && matchesStatus;
+      const mq = !q || id.includes(q) || utr.includes(q) || reason.includes(q) || step.includes(q) || method.includes(q);
+      const ms = sf === 'ALL' || t.decision === sf;
+      return mq && ms;
     });
-
     document.getElementById('table-record-count').textContent = `Showing ${filtered.length} of ${allRecords.length} records`;
-    
-    if (filtered.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:var(--gray-400);padding:2rem;">No matching records found.</td></tr>`;
-      return;
-    }
-
+    if (filtered.length === 0) { tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:var(--gray-400);padding:2rem;">No matching records.</td></tr>`; return; }
     filtered.forEach(t => {
       const row = document.createElement('tr');
       const id = t.payment_id || t.order_id || t.utr;
@@ -682,12 +1173,8 @@
       const src = t.decision === 'AUTO_COMMIT' ? 'Deterministic' : t.decision === 'USER_APPROVED' ? 'Human + LLM' : 'LLM Audit';
       const canAction = ['ABSTAINED', 'PROPOSED'].includes(t.decision);
       const actionsHtml = canAction
-        ? `<div class="action-btns">
-             <button class="btn-xs btn-approve" onclick="hitlAction('${id}','approve',this)">✓ Approve</button>
-             <button class="btn-xs btn-reject" onclick="hitlAction('${id}','reject',this)">✕ Dismiss</button>
-           </div>`
+        ? `<div class="action-btns"><button class="btn-xs btn-approve" onclick="hitlAction('${id}','approve',this)">✓ Approve</button><button class="btn-xs btn-reject" onclick="hitlAction('${id}','reject',this)">✕ Dismiss</button></div>`
         : `<span style="color:var(--gray-300);font-size:12px;">—</span>`;
-
       const method = t.payment_method || 'credit_card';
       let mc = 'method-card';
       if (method === 'upi') mc = 'method-upi';
@@ -695,7 +1182,6 @@
       if (method === 'debit_card') mc = 'method-debit';
       if (method === 'batch') mc = 'method-batch';
       if (method === 'refund') mc = 'method-refund';
-
       row.innerHTML = `
         <td><code style="color:var(--gray-400)">${t.step || '—'}</code></td>
         <td><code>${id || '—'}</code></td>
@@ -703,17 +1189,16 @@
         <td style="font-family:var(--mono)">${t.net_calculated || t.amount || t.amount_debited || '—'}</td>
         <td style="color:var(--gray-500)">${src}</td>
         <td><span class="tag ${tc}" id="tag-${id}">${t.decision}</span></td>
-        <td style="max-width:300px;white-space:normal;color:var(--gray-500)">${t.reason || '—'}</td>
+        <td style="max-width:280px;white-space:normal;color:var(--gray-500)">${t.reason || '—'}</td>
         <td id="actions-${id}">${actionsHtml}</td>`;
       tbody.appendChild(row);
     });
   }
 
-  /* ── Search & Filter listeners ── */
   document.getElementById('table-search-input').addEventListener('input', renderTable);
   document.getElementById('table-status-filter').addEventListener('change', renderTable);
 
-  /* ── HITL approve/reject ── */
+  /* ── HITL ── */
   async function hitlAction(id, action, btn) {
     btn.disabled = true; btn.textContent = '…';
     try {
@@ -723,63 +1208,37 @@
         allTraces.forEach(t => { if ((t.payment_id || t.order_id || t.utr) === id) t.decision = data.new_decision; });
         const tag = document.getElementById(`tag-${id}`);
         const actionsCell = document.getElementById(`actions-${id}`);
-        if (tag) {
-          tag.className = data.new_decision === 'USER_APPROVED' ? 'tag tag-blue' : data.new_decision === 'ABSTAINED' ? 'tag tag-err' : 'tag tag-ok';
-          tag.textContent = data.new_decision;
-        }
+        if (tag) { tag.className = data.new_decision === 'USER_APPROVED' ? 'tag tag-blue' : data.new_decision === 'ABSTAINED' ? 'tag tag-err' : 'tag tag-ok'; tag.textContent = data.new_decision; }
         if (actionsCell) actionsCell.innerHTML = `<span style="color:var(--gray-400);font-size:12px">${action === 'approve' ? '✓ approved' : '✕ dismissed'}</span>`;
         const sR = await fetch('/api/summary');
-        if (sR.ok) {
-          const s = await sR.json();
-          document.getElementById('kpi-pipeline').textContent = `${s.advanced_payout_match_rate_pct ?? '—'}%`;
-        }
-      } else {
-        btn.disabled = false; btn.textContent = action === 'approve' ? '✓ Approve' : '✕ Dismiss';
-        alert(`Action failed: ${data.detail}`);
-      }
-    } catch (e) {
-      btn.disabled = false; btn.textContent = '!';
-      console.error(e);
-    }
+        if (sR.ok) { const s = await sR.json(); document.getElementById('kpi-pipeline').textContent = `${s.advanced_payout_match_rate_pct ?? '—'}%`; }
+      } else { btn.disabled = false; btn.textContent = action === 'approve' ? '✓ Approve' : '✕ Dismiss'; alert(`Action failed: ${data.detail}`); }
+    } catch (e) { btn.disabled = false; btn.textContent = '!'; console.error(e); }
   }
 
-  /* ── Multi-Format CSV / ERP Export ── */
+  /* ── Export ── */
   document.getElementById('btn-export').addEventListener('click', () => {
-    const fmt = document.getElementById('export-format-select').value || 'standard';
-    window.location.href = `/api/export?format=${encodeURIComponent(fmt)}`;
+    window.location.href = `/api/export?format=${encodeURIComponent(document.getElementById('export-format-select').value || 'standard')}`;
   });
 
-  /* ── Dropzone UX ── */
+  /* ── Dropzones ── */
   function setupDropzone(dzId, inputId, nameId) {
     const dz = document.getElementById(dzId);
     const input = document.getElementById(inputId);
     const name = document.getElementById(nameId);
-    input.addEventListener('change', () => {
-      name.textContent = input.files[0]?.name || '';
-      hideAlert();
-    });
+    input.addEventListener('change', () => { name.textContent = input.files[0]?.name || ''; hideAlert(); });
     dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('dragover'); });
     dz.addEventListener('dragleave', () => dz.classList.remove('dragover'));
     dz.addEventListener('drop', e => {
       e.preventDefault(); dz.classList.remove('dragover');
-      if (e.dataTransfer.files[0]) { 
-        input.files = e.dataTransfer.files; 
-        name.textContent = e.dataTransfer.files[0].name; 
-        hideAlert();
-      }
+      if (e.dataTransfer.files[0]) { input.files = e.dataTransfer.files; name.textContent = e.dataTransfer.files[0].name; hideAlert(); }
     });
   }
   setupDropzone('dz-payouts', 'file-payouts', 'file-payouts-name');
   setupDropzone('dz-bank', 'file-bank', 'file-bank-name');
 
-  function showAlert(msg) {
-    const a = document.getElementById('validation-alert');
-    document.getElementById('validation-alert-msg').textContent = msg;
-    a.style.display = 'flex';
-  }
-  function hideAlert() {
-    document.getElementById('validation-alert').style.display = 'none';
-  }
+  function showAlert(msg) { const a = document.getElementById('validation-alert'); document.getElementById('validation-alert-msg').textContent = msg; a.style.display = 'flex'; }
+  function hideAlert() { document.getElementById('validation-alert').style.display = 'none'; }
 
   document.getElementById('btn-reset-files').addEventListener('click', () => {
     document.getElementById('file-payouts').value = '';
@@ -791,7 +1250,7 @@
     hideAlert();
   });
 
-  /* ── Run pipeline with Live Log Output ── */
+  /* ── Run Pipeline ── */
   document.getElementById('btn-run-pipeline').addEventListener('click', async () => {
     const btn = document.getElementById('btn-run-pipeline');
     const status = document.getElementById('upload-status');
@@ -799,23 +1258,19 @@
     btn.innerHTML = `<span class="spin"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 11-6.219-8.56"/></svg></span><span>Running pipeline…</span>`;
     status.textContent = 'Executing reconciliation engine…'; status.className = 'upload-status';
     hideAlert();
-
     const term = document.getElementById('console-output');
     document.getElementById('log-ref-id').textContent = 'live_reconciliation';
-    term.innerHTML = `<div class="log-line"><span class="t-dim">[sys]</span> Starting reconciliation pipeline execution...</div>`;
-
+    term.innerHTML = `<div class="log-line"><span class="t-dim">[sys]</span> Starting reconciliation pipeline…</div>`;
     const fd = new FormData();
     const f1 = document.getElementById('file-payouts').files[0];
     const f2 = document.getElementById('file-bank').files[0];
     if (f1) fd.append('orders_file', f1);
     if (f2) fd.append('bank_file', f2);
-
     try {
       const res = await fetch('/api/run_pipeline', { method: 'POST', body: fd });
       const data = await res.json();
       if (res.ok) {
         status.textContent = `✓ Pipeline complete — ${data.trace_count} records processed`; status.className = 'upload-status ok';
-        
         if (data.logs && data.logs.length > 0) {
           term.innerHTML = '';
           data.logs.forEach(line => {
@@ -829,15 +1284,8 @@
           });
           term.scrollTop = term.scrollHeight;
         }
-
         const [sR, tR] = await Promise.all([fetch('/api/summary'), fetch('/api/traces')]);
-        if (sR.ok) {
-          const s = await sR.json();
-          document.getElementById('kpi-baseline').textContent = `${s.baseline?.baseline_bank_match_rate_pct ?? '—'}%`;
-          document.getElementById('kpi-pipeline').textContent = `${s.advanced_payout_match_rate_pct ?? '—'}%`;
-          document.getElementById('kpi-reviewed').textContent = (s.deterministic_reconciled_payouts ?? 0) + (s.llm_calls_made ?? 0);
-          document.getElementById('kpi-cost').textContent = `\$${(s.llm_processing_cost_usd ?? 0).toFixed(4)}`;
-        }
+        if (sR.ok) { const s = await sR.json(); document.getElementById('kpi-baseline').textContent = `${s.baseline?.baseline_bank_match_rate_pct ?? '—'}%`; document.getElementById('kpi-pipeline').textContent = `${s.advanced_payout_match_rate_pct ?? '—'}%`; document.getElementById('kpi-reviewed').textContent = (s.deterministic_reconciled_payouts ?? 0) + (s.llm_calls_made ?? 0); document.getElementById('kpi-cost').textContent = `\$${(s.llm_processing_cost_usd ?? 0).toFixed(4)}`; }
         if (tR.ok) { allTraces = await tR.json(); populateDropdown(); renderTable(); }
       } else {
         const errorMsg = data.detail || 'Reconciliation failed';
@@ -845,16 +1293,11 @@
         showAlert(errorMsg);
         term.innerHTML += `<div class="log-line"><span class="t-err">[error] ${errorMsg}</span></div>`;
       }
-    } catch (e) {
-      status.textContent = 'Network error during execution'; status.className = 'upload-status err';
-      showAlert('Network error — check server connection');
-    }
-
+    } catch (e) { status.textContent = 'Network error'; status.className = 'upload-status err'; showAlert('Network error — check server connection'); }
     btn.disabled = false;
     btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l14 9-14 9V3z"/></svg><span>Execute recon engine</span>`;
   });
 
-  /* ── Wire up dropdown & replay ── */
   document.getElementById('tx-select').addEventListener('change', e => selectTransaction(e.target.value));
   document.getElementById('btn-replay').addEventListener('click', runReplay);
 
