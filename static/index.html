@@ -64,7 +64,7 @@
 
     /* ── Section headers ── */
     .section-tag { font-family: var(--mono); font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--teal); margin-bottom: 0.7rem; display: block; }
-    .section-h2 { font-size: clamp(1.9rem, 3.5vw, 2.5rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.6rem; }
+    .section-h2 { font-size: clamp(1.45rem, 2.4vw, 1.9rem); font-weight: 700; letter-spacing: -0.025em; margin-bottom: 0.6rem; line-height: 1.25; }
     .section-sub { font-size: 1.05rem; color: var(--gray-500); max-width: 560px; line-height: 1.6; }
     .section-header-center { text-align: center; }
     .section-header-center .section-sub { margin: 0 auto; }
@@ -308,7 +308,7 @@
     .table-count { font-size: 12.5px; color: var(--gray-500); font-family: var(--mono); }
     .toolbar-right { display: flex; align-items: center; gap: 0.5rem; }
     .export-select { background: var(--white); border: 1px solid var(--gray-200); border-radius: 8px; padding: 0.45rem 0.75rem; font-size: 12.5px; font-family: var(--mono); color: var(--gray-700); cursor: pointer; outline: none; }
-    .table-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,.03); }
+    .table-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,.03); max-height: 520px; overflow-y: auto; }
     table { width: 100%; border-collapse: collapse; font-size: 13px; }
     th { text-align: left; padding: 0.85rem 1.15rem; background: var(--gray-50); color: var(--gray-500); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--gray-200); }
     td { padding: 0.75rem 1.15rem; border-bottom: 1px solid var(--gray-100); color: var(--gray-700); vertical-align: middle; }
@@ -361,6 +361,129 @@
     .footer-github-btn { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 13px; color: #9ca3af; text-decoration: none; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 0.45rem 1rem; transition: all 0.15s; }
     .footer-github-btn:hover { border-color: rgba(255,255,255,0.25); color: #f9fafb; }
 
+    /* ── Feature card modal ── */
+    .feature-card { cursor: pointer; }
+    .feature-card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.09); transform: translateY(-2px); }
+    .feat-expand-hint { font-size: 11px; color: var(--gray-400); font-family: var(--mono); margin-top: 1rem; display: flex; align-items: center; gap: 0.3rem; }
+    .modal-overlay { position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,0.45); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 2rem; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal-box { background: var(--white); border-radius: 24px; max-width: 620px; width: 100%; padding: 2.5rem; box-shadow: 0 24px 80px rgba(0,0,0,0.18); transform: scale(0.95) translateY(10px); transition: transform 0.25s cubic-bezier(0.16,1,0.3,1); position: relative; max-height: 90vh; overflow-y: auto; }
+    .modal-overlay.open .modal-box { transform: scale(1) translateY(0); }
+    .modal-close { position: absolute; top: 1.25rem; right: 1.25rem; width: 30px; height: 30px; border-radius: 50%; background: var(--gray-100); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--gray-600); transition: background 0.15s; }
+    .modal-close:hover { background: var(--gray-200); }
+    .modal-tag { font-family: var(--mono); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--teal); margin-bottom: 0.75rem; display: block; }
+    .modal-title { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.75rem; color: var(--gray-900); }
+    .modal-body { font-size: 14px; color: var(--gray-600); line-height: 1.7; margin-bottom: 1.25rem; }
+    .modal-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .modal-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .modal-detail-cell { background: var(--gray-50); border: 1px solid var(--gray-200); border-radius: 10px; padding: 0.85rem; }
+    .modal-detail-label { font-size: 11px; color: var(--gray-400); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.3rem; }
+    .modal-detail-val { font-size: 13.5px; color: var(--gray-800); font-weight: 600; }
+
+    /* ── Themes ── */
+    .theme-switcher { display: flex; align-items: center; gap: 0.4rem; margin-right: 0.5rem; }
+    .theme-btn { width: 18px; height: 18px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: all 0.15s; outline: none; }
+    .theme-btn:hover, .theme-btn.active { border-color: var(--gray-900); transform: scale(1.15); }
+    .theme-btn.t-white { background: #f3f4f6; border-color: var(--gray-300); }
+    .theme-btn.t-white.active { border-color: var(--gray-700); }
+    .theme-btn.t-razorpay { background: linear-gradient(135deg,#528FF0,#1a1f36); }
+    .theme-btn.t-royal { background: linear-gradient(135deg,#9B1C1C,#C5A028); }
+    .theme-btn.t-dark { background: #0a0a0f; border-color: #444; }
+
+    /* White theme (default) */
+    :root, [data-theme="white"] {
+      --bg: #fbfbfd; --surface: #ffffff; --surface2: #f9fafb;
+      --border: #e5e7eb; --border2: #f3f4f6;
+      --text1: #111827; --text2: #374151; --text3: #6b7280; --text4: #9ca3af;
+      --accent: #2563eb; --accent2: #0d9488;
+      --accent-light: #eff6ff; --accent2-light: #f0fdfa;
+      --sol-bg: #111827; --sol-text: #f9fafb; --sol-sub: #9ca3af;
+      --sol-item: rgba(255,255,255,0.05); --sol-item-color: #6ee7b7;
+      --nav-bg: rgba(251,251,253,0.85);
+      --section-alt: #f9fafb;
+      --footer-bg: #111827;
+    }
+    [data-theme="razorpay"] {
+      --bg: #0d1117; --surface: #161b22; --surface2: #1c2129;
+      --border: #30363d; --border2: #21262d;
+      --text1: #e6edf3; --text2: #c9d1d9; --text3: #8b949e; --text4: #6e7681;
+      --accent: #528FF0; --accent2: #39d0b8;
+      --accent-light: rgba(82,143,240,0.12); --accent2-light: rgba(57,208,184,0.1);
+      --sol-bg: #010409; --sol-text: #e6edf3; --sol-sub: #8b949e;
+      --sol-item: rgba(255,255,255,0.04); --sol-item-color: #39d0b8;
+      --nav-bg: rgba(13,17,23,0.92);
+      --section-alt: #161b22;
+      --footer-bg: #010409;
+      --gray-50: #1c2129; --gray-100: #21262d; --gray-200: #30363d;
+      --gray-300: #484f58; --gray-400: #6e7681; --gray-500: #8b949e;
+      --gray-600: #c9d1d9; --gray-700: #c9d1d9; --gray-800: #e6edf3; --gray-900: #f0f6fc;
+      --white: #161b22; --blue: #528FF0; --teal: #39d0b8; --green: #3fb950;
+    }
+    [data-theme="royal"] {
+      --bg: #fdf8f0; --surface: #ffffff; --surface2: #faf5eb;
+      --border: #e8dcc8; --border2: #f3ead8;
+      --text1: #1c1008; --text2: #3a2a10; --text3: #7a6040; --text4: #a09060;
+      --accent: #8B1A1A; --accent2: #C5A028;
+      --accent-light: rgba(139,26,26,0.08); --accent2-light: rgba(197,160,40,0.1);
+      --sol-bg: #1c1008; --sol-text: #fdf8f0; --sol-sub: #9a8060;
+      --sol-item: rgba(255,255,255,0.05); --sol-item-color: #C5A028;
+      --nav-bg: rgba(253,248,240,0.9);
+      --section-alt: #faf5eb;
+      --footer-bg: #1c1008;
+      --gray-50: #faf5eb; --gray-100: #f3ead8; --gray-200: #e8dcc8;
+      --gray-300: #cfc0a0; --gray-400: #a09060; --gray-500: #7a6040;
+      --gray-600: #5a4030; --gray-700: #3a2a10; --gray-800: #2a1a08; --gray-900: #1c1008;
+      --white: #ffffff; --blue: #8B1A1A; --teal: #C5A028; --green: #4a7c50;
+      --blue-light: rgba(139,26,26,0.08); --teal-light: rgba(197,160,40,0.1);
+    }
+    [data-theme="dark"] {
+      --bg: #09090e; --surface: #111118; --surface2: #16161e;
+      --border: #252530; --border2: #1e1e28;
+      --text1: #ededf5; --text2: #c8c8d8; --text3: #7070a0; --text4: #50507a;
+      --accent: #6B8FF0; --accent2: #2ec4b6;
+      --accent-light: rgba(107,143,240,0.12); --accent2-light: rgba(46,196,182,0.1);
+      --sol-bg: #040408; --sol-text: #ededf5; --sol-sub: #7070a0;
+      --sol-item: rgba(255,255,255,0.04); --sol-item-color: #2ec4b6;
+      --nav-bg: rgba(9,9,14,0.92);
+      --section-alt: #111118;
+      --footer-bg: #040408;
+      --gray-50: #16161e; --gray-100: #1e1e28; --gray-200: #252530;
+      --gray-300: #35354a; --gray-400: #50507a; --gray-500: #7070a0;
+      --gray-600: #a0a0c0; --gray-700: #c8c8d8; --gray-800: #dcdcec; --gray-900: #ededf5;
+      --white: #111118; --blue: #6B8FF0; --teal: #2ec4b6; --green: #22c55e;
+      --blue-light: rgba(107,143,240,0.12); --teal-light: rgba(46,196,182,0.1);
+      --green-light: rgba(34,197,94,0.1); --red-light: rgba(220,38,38,0.12);
+      --amber-light: rgba(217,119,6,0.12); --purple-light: rgba(124,58,237,0.12);
+    }
+
+    /* Theme-aware overrides */
+    body { background: var(--bg); color: var(--text1); }
+    .navbar { background: var(--nav-bg); border-bottom-color: var(--border); }
+    .nav-logo-text, .nav-link:hover { color: var(--text1); }
+    .nav-link { color: var(--text3); }
+    .nav-github { background: var(--surface); border-color: var(--border); color: var(--text2); }
+    .nav-github:hover { background: var(--surface2); }
+    #solution { background: var(--sol-bg) !important; }
+    #solution .section-h2 { color: var(--sol-text) !important; }
+    #solution .section-sub { color: var(--sol-sub) !important; }
+    .sol-step { background: var(--sol-item); border-color: rgba(255,255,255,0.08); }
+    .sol-item { background: var(--sol-item); color: var(--sol-item-color); }
+    .arch-stage, .roi-card, .feature-card, .upload-card, .table-card, .comparison-banner, .framing-banner, .anomaly-chip, .resolution-flow, .stage-card { background: var(--surface); border-color: var(--border); }
+    #architecture, #replay { background: var(--section-alt); border-color: var(--border); }
+    th { background: var(--surface2); border-bottom-color: var(--border); color: var(--text3); }
+    td { border-bottom-color: var(--border2); color: var(--text2); }
+    tbody tr:hover { background: var(--surface2); }
+    .hero-grid-lines { background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px); }
+    .section-tag { color: var(--teal); }
+    footer { background: var(--footer-bg); }
+    .modal-box { background: var(--surface); }
+    .modal-title { color: var(--text1); }
+    .modal-body { color: var(--text3); }
+    .modal-detail-cell { background: var(--surface2); border-color: var(--border); }
+    .modal-detail-val { color: var(--text2); }
+    .modal-close { background: var(--surface2); color: var(--text3); }
+    .payload-box { background: var(--surface2); border-color: var(--border); color: var(--text3); }
+
     ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: transparent; } ::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 3px; }
     @keyframes spin { to { transform: rotate(360deg); } }
     .spin { animation: spin 0.7s linear infinite; display: inline-block; }
@@ -384,6 +507,12 @@
       <a class="nav-link" href="#architecture">How It Works</a>
       <a class="nav-link" href="#features">Features</a>
       <a class="nav-link" href="#try-it">Try It</a>
+      <div class="theme-switcher" title="Switch theme">
+        <button class="theme-btn t-white active" onclick="setTheme('white')" title="White"></button>
+        <button class="theme-btn t-razorpay" onclick="setTheme('razorpay')" title="Razorpay"></button>
+        <button class="theme-btn t-royal" onclick="setTheme('royal')" title="Royal"></button>
+        <button class="theme-btn t-dark" onclick="setTheme('dark')" title="Dark"></button>
+      </div>
       <a class="nav-github" href="https://github.com/karthik1647/WeldedDiff" target="_blank">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
         GitHub
@@ -718,12 +847,12 @@
     <div class="container">
       <div class="section-header-center" style="margin-bottom:2rem;">
         <span class="section-tag reveal">What's Inside</span>
-        <h2 class="section-h2 reveal">Production-grade features,<br>not a hackathon toy.</h2>
+        <h2 class="section-h2 reveal">Built for the complexity<br>Indian FinTech actually has.</h2>
         <p class="section-sub reveal reveal-d1">Built for Indian FinTech reality — MDR complexity, settlement batching, RBI holidays, and ERP system integration.</p>
       </div>
       <div class="features-grid">
 
-        <div class="feature-card reveal reveal-d1">
+        <div class="feature-card reveal reveal-d1" onclick="openFeatureModal('mdr')">
           <div class="feature-header">
             <div class="feature-icon teal-bg">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
@@ -738,9 +867,13 @@
             <span class="feature-pill teal">Debit: 0.5%</span>
             <span class="feature-pill gray">+ 18% GST on all</span>
           </div>
+          <div class="feat-expand-hint">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            Click to expand
+          </div>
         </div>
 
-        <div class="feature-card reveal reveal-d2">
+        <div class="feature-card reveal reveal-d2" onclick="openFeatureModal('batch')">
           <div class="feature-header">
             <div class="feature-icon blue-bg">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
@@ -753,9 +886,13 @@
             <span class="feature-pill amber">Outlier → Exception Queue</span>
             <span class="feature-pill blue">Subset-sum isolation</span>
           </div>
+          <div class="feat-expand-hint">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            Click to expand
+          </div>
         </div>
 
-        <div class="feature-card reveal reveal-d3">
+        <div class="feature-card reveal reveal-d3" onclick="openFeatureModal('erp')">
           <div class="feature-header">
             <div class="feature-icon purple-bg">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
@@ -768,9 +905,13 @@
             <span class="feature-pill blue">Zoho Books Bank Feed</span>
             <span class="feature-pill gray">Standard CSV + Audit Log</span>
           </div>
+          <div class="feat-expand-hint">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            Click to expand
+          </div>
         </div>
 
-        <div class="feature-card reveal reveal-d4">
+        <div class="feature-card reveal reveal-d4" onclick="openFeatureModal('replay')">
           <div class="feature-header">
             <div class="feature-icon amber-bg">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
@@ -783,18 +924,36 @@
             <span class="feature-pill teal">LLM justification trace</span>
             <span class="feature-pill green">HITL approve / dismiss</span>
           </div>
+          <div class="feat-expand-hint">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            Click to expand
+          </div>
         </div>
 
       </div>
     </div>
   </section>
 
+  <!-- ══ FEATURE MODAL ══ -->
+  <div class="modal-overlay" id="feature-modal" onclick="closeFeatureModal(event)">
+    <div class="modal-box" id="modal-box">
+      <button class="modal-close" onclick="closeModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <span class="modal-tag" id="modal-tag">Feature</span>
+      <h3 class="modal-title" id="modal-title"></h3>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-pills" id="modal-pills"></div>
+      <div class="modal-detail-grid" id="modal-detail-grid"></div>
+    </div>
+  </div>
+
   <!-- ══ TRY IT ══ -->
   <section id="try-it">
     <div class="container">
       <span class="section-tag reveal">Live Demo</span>
-      <h2 class="section-h2 reveal">Upload your own data and watch it run.</h2>
-      <p class="section-sub reveal reveal-d1">Drop in any Razorpay payout CSV and bank statement — or leave both empty to re-run against the built-in synthetic dataset with injected anomalies.</p>
+      <h2 class="section-h2 reveal">Run the engine on your data.</h2>
+      <p class="section-sub reveal reveal-d1">Upload your own Razorpay payout CSV and bank statement. If there are any column or format issues, you'll see a precise error below. Leave both empty to run on the built-in dataset with injected anomalies.</p>
 
       <div class="upload-card reveal reveal-d2" style="margin-bottom:2rem;">
         <div class="validation-alert" id="validation-alert">
@@ -1300,6 +1459,113 @@
 
   document.getElementById('tx-select').addEventListener('change', e => selectTransaction(e.target.value));
   document.getElementById('btn-replay').addEventListener('click', runReplay);
+
+  /* ── Theme switcher ── */
+  function setTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+    const map = { white: 't-white', razorpay: 't-razorpay', royal: 't-royal', dark: 't-dark' };
+    document.querySelector('.' + map[t])?.classList.add('active');
+    localStorage.setItem('wd-theme', t);
+  }
+  (function() { const saved = localStorage.getItem('wd-theme'); if (saved) setTheme(saved); })();
+
+  /* ── Feature modal data ── */
+  const FEATURE_DATA = {
+    mdr: {
+      tag: 'Multi-Instrument MDR Engine',
+      title: 'Payment instrument-aware fee calculation',
+      body: `Razorpay applies different Merchant Discount Rates (MDR) based on how the customer paid. UPI attracts 0% under NPCI mandate. Debit cards are capped at 0.5% by RBI. Credit cards are typically 2%. Amex and international cards can reach 3.5%.\n\nWeldedDiff reads the payment_method field from each Razorpay payout and dynamically computes the expected fee using the contractual rates — including 18% GST on the MDR. It then compares the actual fee charged to this computed expected value. A variance beyond ₹0.01 raises a MDR overcharge flag for human review.`,
+      pills: [
+        { label: 'UPI: 0% MDR (NPCI mandate)', cls: 'feature-pill green' },
+        { label: 'Debit Card: 0.5% + 18% GST', cls: 'feature-pill teal' },
+        { label: 'Credit Card: 2.0% + 18% GST', cls: 'feature-pill blue' },
+        { label: 'Amex / Intl: 3.5% + 18% GST', cls: 'feature-pill purple' },
+      ],
+      details: [
+        { label: 'Live anomaly example', val: 'pay_005 — 3% charged vs 2% contract rate' },
+        { label: 'Detection method', val: 'Deterministic paisa math, ±₹0.01 tolerance' },
+        { label: 'Data source', val: 'payment_method column in Razorpay CSV' },
+        { label: 'Outcome on mismatch', val: 'ABSTAINED → Controller review queue' },
+      ]
+    },
+    batch: {
+      tag: 'Batch Disaggregation',
+      title: 'Isolate one faulty payout from a clean batch',
+      body: `Razorpay frequently settles 10–100 orders in a single lump-sum bank credit. Traditional systems fail the entire batch if any one constituent is anomalous — WeldedDiff doesn't.\n\nThe engine uses a subset-sum algorithm to find which combination of payouts matches the bank credit amount. Clean constituents are immediately auto-committed to the ledger. Only the outlier (fee variance, dispute flag, SLA breach) is sent to the exception queue. This means a controller only reviews 1 transaction, not 100.`,
+      pills: [
+        { label: 'Clean orders → AUTO_COMMIT', cls: 'feature-pill green' },
+        { label: 'Outlier → Exception Queue', cls: 'feature-pill amber' },
+        { label: 'Subset-sum matching', cls: 'feature-pill blue' },
+      ],
+      details: [
+        { label: 'Live example', val: 'Batch with ord_dup_1/ord_dup_2 duplicate collision' },
+        { label: 'Algorithm', val: 'Greedy subset-sum over net-calculated amounts' },
+        { label: 'Outcome — clean', val: 'PARTIAL_DISAGGREGATED → AUTO_COMMIT' },
+        { label: 'Outcome — outlier', val: 'ABSTAINED → human review' },
+      ]
+    },
+    erp: {
+      tag: 'ERP-Ready Exports',
+      title: 'One-click export to Tally ERP and Zoho Books',
+      body: `Once reconciliation is complete and exceptions are reviewed, the finance controller needs to post the entries to their accounting system. Most tools stop at CSV — WeldedDiff goes further.\n\nTally ERP export generates voucher-format lines with Dr/Cr posting ready for batch import into Tally Prime. Zoho Books export generates a bank feed file in the exact column layout Zoho expects, eliminating manual column mapping. Standard CSV includes the full audit trail with LLM confidence scores.`,
+      pills: [
+        { label: 'Tally ERP voucher format', cls: 'feature-pill purple' },
+        { label: 'Zoho Books bank feed', cls: 'feature-pill blue' },
+        { label: 'Standard CSV + full provenance', cls: 'feature-pill gray' },
+      ],
+      details: [
+        { label: 'API endpoint', val: 'GET /api/export?format=tally|zoho|standard' },
+        { label: 'Tally format', val: 'Date, Particulars, Vch Type, Dr, Cr' },
+        { label: 'Zoho format', val: 'Date, Description, Amount, Category' },
+        { label: 'Included metadata', val: 'decision, reason, LLM confidence, UTR' },
+      ]
+    },
+    replay: {
+      tag: 'Forensic Audit Replay',
+      title: 'Step through any transaction\'s decision chain live',
+      body: `The Decision Replay section lets you select any transaction from the audit log and watch the 4-stage decision pipeline execute in real-time — with live terminal output at each step.\n\nStage 01 shows the deterministic checks (instrument MDR, SLA calendar). Stage 02 shows the DeepSeek LLM forensic audit call. Stage 03 shows the safety gate evaluation (confidence ≥ 85% AND paisa balance). Stage 04 shows the final outcome. Every decision is traceable, explainable, and human-overridable.`,
+      pills: [
+        { label: 'Live terminal log stream', cls: 'feature-pill amber' },
+        { label: 'LLM justification text', cls: 'feature-pill teal' },
+        { label: 'Human-in-the-loop approve / dismiss', cls: 'feature-pill green' },
+      ],
+      details: [
+        { label: 'Featured example', val: 'pay_012: 95% LLM conf, safety gate blocked' },
+        { label: 'Stage count', val: '4 stages: Det → LLM → Gate → Outcome' },
+        { label: 'LLM model', val: 'DeepSeek via OpenAI-compatible API' },
+        { label: 'Cost per LLM call', val: '~$0.0006 (2 calls total in demo run)' },
+      ]
+    }
+  };
+
+  function openFeatureModal(key) {
+    const d = FEATURE_DATA[key]; if (!d) return;
+    document.getElementById('modal-tag').textContent = d.tag;
+    document.getElementById('modal-title').textContent = d.title;
+    document.getElementById('modal-body').innerHTML = d.body.replace(/\n/g, '<br><br>');
+    const pp = document.getElementById('modal-pills'); pp.innerHTML = '';
+    d.pills.forEach(p => { const s = document.createElement('span'); s.className = p.cls; s.textContent = p.label; pp.appendChild(s); });
+    const dg = document.getElementById('modal-detail-grid'); dg.innerHTML = '';
+    d.details.forEach(det => {
+      const c = document.createElement('div'); c.className = 'modal-detail-cell';
+      c.innerHTML = `<div class="modal-detail-label">${det.label}</div><div class="modal-detail-val">${det.val}</div>`;
+      dg.appendChild(c);
+    });
+    document.getElementById('feature-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('feature-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeFeatureModal(e) {
+    if (e.target === document.getElementById('feature-modal')) closeModal();
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
   addEventListener('DOMContentLoaded', init);
 </script>
