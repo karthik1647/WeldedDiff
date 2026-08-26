@@ -12,7 +12,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 os.makedirs(DATA_DIR, exist_ok=True)
 
-def generate_synthetic_data(num_records=100, seed=42):
+def generate_synthetic_data(num_records=100, seed=42, scenario="standard"):
     random.seed(seed)
     rzp_client = RazorpaySandboxClient()
     
@@ -38,6 +38,8 @@ def generate_synthetic_data(num_records=100, seed=42):
         # Payment method assignment
         # Keep pay_012 and pay_005 as credit_card for historical test anchors
         if i in (5, 12):
+            method = "credit_card"
+        elif scenario == "mdr_leakage" and i % 10 == 0:
             method = "credit_card"
         else:
             method = random.choice(instruments)

@@ -144,3 +144,20 @@ def test_batch_disaggregation_isolates_faulty_transaction(mock_ledger_files):
     # 1 faulty payout is isolated and sent to unresolved
     assert len(unresolved["payouts"]) == 1
     assert unresolved["payouts"][0]["payment_id"] == "pay_b3"
+
+def test_fuzzy_bank_header_normalization():
+    from src.utils import normalize_bank_csv_headers
+    # Test HDFC / ICICI bank statement column variation
+    raw_hdfc_df = pd.DataFrame([{
+        "Txn Date": "2026-08-25",
+        "Narration": "CMS/RZRPY/set_101/UTR_001",
+        "Deposit Amt": "12500.00",
+        "Withdrawal Amt": "0.00"
+    }])
+    normalized = normalize_bank_csv_headers(raw_hdfc_df)
+    assert "date" in normalized.columns
+    assert "description" in normalized.columns
+    assert "amount_credited" in normalized.columns
+    assert "amount_debited" in normalized.columns
+    assert normalized.iloc[0]["amount_credited"] == "12500.00"
+

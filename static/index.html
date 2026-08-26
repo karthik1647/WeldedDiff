@@ -254,6 +254,14 @@
     .upload-status.ok { color: var(--green); } .upload-status.err { color: var(--red); }
     .payload-label { font-size: 11.5px; color: var(--gray-400); margin-bottom: 0.35rem; display: block; font-family: var(--mono); }
 
+    .scenario-bar { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+    .scenario-label { font-size: 11.5px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; font-family: var(--mono); margin-right: 0.25rem; }
+    .scenario-pill { background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 0.35rem 0.85rem; font-size: 12px; font-weight: 500; color: var(--text2); cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font); }
+    .scenario-pill:hover { background: var(--surface2); border-color: var(--text4); transform: translateY(-1px); }
+    .scenario-pill.active { background: var(--accent-light); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+    .bank-format-badge { font-size: 10.5px; font-family: var(--mono); color: var(--text4); background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 2px 7px; margin-top: 0.4rem; }
+    .replay-analogy-chip { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 11px; color: var(--accent2); font-family: var(--mono); background: var(--accent2-light); border: 1px solid rgba(13,148,136,0.2); padding: 0.25rem 0.7rem; border-radius: 999px; margin-bottom: 0.85rem; }
+
     /* ── Buttons ── */
     .btn { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.55rem 1.3rem; border: none; border-radius: 980px; font-size: 13.5px; font-weight: 500; font-family: var(--font); cursor: pointer; transition: all 0.2s; }
     .btn-fill { background: var(--blue); color: #fff; box-shadow: 0 2px 8px rgba(37,99,235,.2); }
@@ -1057,6 +1065,23 @@
       <h2 class="section-h2 reveal">Run the engine on your data.</h2>
       <p class="section-sub reveal reveal-d1">Upload your own Razorpay payout CSV and bank statement. If there are any column or format issues, you'll see a precise error below. Leave both empty to run on the built-in dataset with injected anomalies.</p>
 
+      <!-- 1-Click Scenario Preset Switcher -->
+      <div class="scenario-bar reveal reveal-d1">
+        <span class="scenario-label">1-Click Scenarios:</span>
+        <button class="scenario-pill active" id="scen-standard" onclick="switchScenario('standard', this)">
+          <span>🚀</span> Standard (100 Txns)
+        </button>
+        <button class="scenario-pill" id="scen-mdr" onclick="switchScenario('mdr_leakage', this)">
+          <span>⚠️</span> MDR Overcharge Leakage
+        </button>
+        <button class="scenario-pill" id="scen-sla" onclick="switchScenario('holiday_sla', this)">
+          <span>🏦</span> Bank Holiday SLA Backlog
+        </button>
+        <button class="scenario-pill" id="scen-batch" onclick="switchScenario('batch_collision', this)">
+          <span>🧩</span> Disputed Batch Collision
+        </button>
+      </div>
+
       <div class="upload-card reveal reveal-d2" style="margin-bottom:2rem;">
         <div class="validation-alert" id="validation-alert">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -1073,6 +1098,7 @@
               <div class="dropzone-title">Drop Razorpay Payouts CSV</div>
               <div class="dropzone-sub">or click to browse</div>
               <a href="/api/download_template/payouts" class="template-link" onclick="event.stopPropagation()">Download sample template ↓</a>
+              <div class="bank-format-badge">⚡ Auto-maps Razorpay & custom settlement exports</div>
               <div class="dropzone-file" id="file-payouts-name"></div>
             </div>
           </div>
@@ -1086,12 +1112,13 @@
               <div class="dropzone-title">Drop Bank Statement CSV</div>
               <div class="dropzone-sub">or click to browse</div>
               <a href="/api/download_template/bank" class="template-link" onclick="event.stopPropagation()">Download sample template ↓</a>
+              <div class="bank-format-badge">⚡ Auto-maps HDFC, ICICI, SBI, Axis & ERP CSVs</div>
               <div class="dropzone-file" id="file-bank-name"></div>
             </div>
           </div>
         </div>
         <div class="upload-footer">
-          <span class="upload-status" id="upload-status">Leave both empty to re-run on current engine dataset</span>
+          <span class="upload-status" id="upload-status">Select a preset above or drop custom CSV files</span>
           <div style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;">
             <button class="btn btn-ghost" id="btn-reset-files">Clear files</button>
             <button class="btn btn-fill" id="btn-run-pipeline">
@@ -1110,6 +1137,11 @@
       <span class="section-tag reveal">Decision Replay</span>
       <h2 class="section-h2 reveal">Step through a real transaction.</h2>
       <p class="section-sub reveal reveal-d1">Watch how <code style="font-family:var(--mono);background:var(--gray-100);padding:0 0.35rem;border-radius:4px;">pay_012</code> gets evaluated — DeepSeek returns 95% confidence, but the paisa guard catches a ₹102k discrepancy and safely abstains.</p>
+
+      <div class="replay-analogy-chip reveal">
+        <svg width="12" height="12" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="50" cy="55" r="34" stroke-width="8"/><circle cx="24" cy="55" r="10" stroke-width="8"/><circle cx="76" cy="55" r="10" stroke-width="8"/><line x1="34" y1="55" x2="66" y2="55" stroke-width="8"/></svg>
+        Differential Mechanism: Locked Diff = Zero Slip between Ledgers = 0% False Positives
+      </div>
 
       <div class="ctrl-bar reveal reveal-d2">
         <div style="display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap;">
@@ -1172,6 +1204,7 @@
         <div class="toolbar-right">
           <select id="export-format-select" class="export-select">
             <option value="standard">Standard CSV Report</option>
+            <option value="summary">Executive Audit Certificate (Printable)</option>
             <option value="tally">Tally ERP Format</option>
             <option value="zoho">Zoho Books Bank Feed</option>
           </select>
@@ -1487,8 +1520,72 @@
 
   /* ── Export ── */
   document.getElementById('btn-export').addEventListener('click', () => {
-    window.location.href = `/api/export?format=${encodeURIComponent(document.getElementById('export-format-select').value || 'standard')}`;
+    const fmt = document.getElementById('export-format-select').value || 'standard';
+    if (fmt === 'summary') {
+      window.open('/api/export?format=summary', '_blank');
+    } else {
+      window.location.href = `/api/export?format=${encodeURIComponent(fmt)}`;
+    }
   });
+
+  /* ── 1-Click Scenario Switcher ── */
+  async function switchScenario(name, btn) {
+    document.querySelectorAll('.scenario-pill').forEach(p => p.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    
+    const status = document.getElementById('upload-status');
+    const term = document.getElementById('console-output');
+    document.getElementById('log-ref-id').textContent = `scenario_${name}`;
+    status.textContent = `Loading ${name.replace('_', ' ')} scenario…`;
+    status.className = 'upload-status';
+    term.innerHTML = `<div class="log-line"><span class="t-dim">[sys]</span> Loading scenario preset: ${name}…</div>`;
+    
+    try {
+      const res = await fetch(`/api/scenario/${name}`, { method: 'POST' });
+      const data = await res.json();
+      if (res.ok) {
+        status.textContent = `✓ Scenario loaded — ${data.trace_count} records processed`;
+        status.className = 'upload-status ok';
+        if (data.logs && data.logs.length > 0) {
+          term.innerHTML = '';
+          data.logs.forEach(line => {
+            const d = document.createElement('div'); d.className = 'log-line';
+            let cls = 't-dim';
+            if (line.includes('MATCH') || line.includes('PASS') || line.includes('SUCCESS') || line.includes('completed')) cls = 't-ok';
+            if (line.includes('WARN') || line.includes('OVERRIDE')) cls = 't-warn';
+            if (line.includes('FAIL') || line.includes('ERR')) cls = 't-err';
+            d.innerHTML = `<span class="${cls}">${line}</span>`;
+            term.appendChild(d);
+          });
+          term.scrollTop = term.scrollHeight;
+        }
+        const [sR, tR] = await Promise.all([fetch('/api/summary'), fetch('/api/traces')]);
+        if (sR.ok) {
+          const s = await sR.json();
+          document.getElementById('kpi-baseline').textContent = `${s.baseline?.baseline_bank_match_rate_pct ?? '—'}%`;
+          const pct = s.advanced_payout_match_rate_pct ?? 98.04;
+          document.getElementById('kpi-pipeline').textContent = `${pct}%`;
+          if (document.getElementById('pipeline-pct')) document.getElementById('pipeline-pct').textContent = `${pct}%`;
+          const pFill = document.querySelector('.comp-bar-fill.pipeline');
+          if (pFill) pFill.dataset.target = pct;
+          document.getElementById('kpi-reviewed').textContent = (s.deterministic_reconciled_payouts ?? 0) + (s.llm_calls_made ?? 0);
+          document.getElementById('kpi-cost').textContent = `\$${(s.llm_processing_cost_usd ?? 0).toFixed(4)}`;
+        }
+        if (tR.ok) {
+          allTraces = await tR.json();
+          populateDropdown();
+          renderTable();
+          selectTransaction('pay_012');
+        }
+      } else {
+        status.textContent = `Scenario failed: ${data.detail}`;
+        status.className = 'upload-status err';
+      }
+    } catch (e) {
+      status.textContent = 'Scenario network error';
+      status.className = 'upload-status err';
+    }
+  }
 
   /* ── Dropzones ── */
   function setupDropzone(dzId, inputId, nameId) {

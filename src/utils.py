@@ -132,3 +132,68 @@ def is_within_banking_sla(settled_at_date, bank_date, max_business_days=2):
         return days_diff <= 0
     business_days = count_banking_business_days(settled_at_date, bank_date)
     return business_days <= max_business_days
+
+def normalize_bank_csv_headers(df):
+    """
+    Normalizes bank statement dataframe columns to canonical: date, description, amount_credited, amount_debited.
+    Supports HDFC, ICICI, SBI, Axis, Kotak and standard ERP column naming conventions.
+    """
+    col_map = {}
+    for col in df.columns:
+        norm = re.sub(r"[_\s\.-]+", "", str(col).strip().lower())
+        
+        # Date column synonyms
+        if norm in ("date", "txndate", "transactiondate", "valuedate", "postingdate", "entrydate"):
+            col_map[col] = "date"
+        # Description column synonyms
+        elif norm in ("description", "particulars", "narration", "remarks", "transactionremarks", "details", "memo"):
+            col_map[col] = "description"
+        # Credit column synonyms
+        elif norm in ("amountcredited", "depositamt", "credit", "cramount", "deposit", "creditinr", "cr", "received"):
+            col_map[col] = "amount_credited"
+        # Debit column synonyms
+        elif norm in ("amountdebited", "withdrawalamt", "debit", "dramount", "withdrawal", "debitinr", "dr", "paidout"):
+            col_map[col] = "amount_debited"
+            
+    df = df.rename(columns=col_map)
+    # Ensure all canonical columns exist with proper defaults if missing
+    if "date" not in df.columns:
+        df["date"] = ""
+    if "description" not in df.columns:
+        df["description"] = ""
+    if "amount_credited" not in df.columns:
+        df["amount_credited"] = "0.00"
+    if "amount_debited" not in df.columns:
+        df["amount_debited"] = "0.00"
+    return df
+
+def normalize_payout_csv_headers(df):
+    """
+    Normalizes Razorpay payouts dataframe columns to canonical:
+    payment_id, order_id, payment_method, amount, fee, tax_gst, settlement_id, settled_at, utr
+    """
+    col_map = {}
+    for col in df.columns:
+        norm = re.sub(r"[_\s\.-]+", "", str(col).strip().lower())
+        if norm in ("paymentid", "payid", "transactionid", "txnid", "id"):
+            col_map[col] = "payment_id"
+        elif norm in ("orderid", "ordid", "referenceid", "refid", "invoiceid"):
+            col_map[col] = "order_id"
+        elif norm in ("paymentmethod", "method", "instrument", "paymenttype", "mode"):
+            col_map[col] = "payment_method"
+        elif norm in ("amount", "grossamount", "totalamount", "txnamount"):
+            col_map[col] = "amount"
+        elif norm in ("fee", "fees", "mdr", "gatewayfee", "commission"):
+            col_map[col] = "fee"
+        elif norm in ("taxgst", "tax", "gst", "servicetax"):
+            col_map[col] = "tax_gst"
+        elif norm in ("settlementid", "setid", "batchid", "payoutid"):
+            col_map[col] = "settlement_id"
+        elif norm in ("settledat", "settlementdate", "payoutdate", "settleddate"):
+            col_map[col] = "settled_at"
+        elif norm in ("utr", "utrno", "rrn", "bankref", "bankreference"):
+            col_map[col] = "utr"
+            
+    df = df.rename(columns=col_map)
+    return df
+

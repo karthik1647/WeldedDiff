@@ -2858,7 +2858,7 @@
     "decision": "ABSTAINED",
     "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
     "llm_confidence": 0,
-    "llm_justification": "Candidate [0] has narration containing 'set_100' matching the settlement ID, but the credited amount (124128.47 INR) is far higher than the expected net payout (16455.11 INR), indicating it is a batch settlement for multiple transactions. The UTR in the bank description is not provided, so cannot verify UTR match. Candidate [1] has a different settlement ID (set_101) and amount (133080.68 INR), also not matching. Neither candidate matches the expected amount, and no UTR is available to confirm a match. Therefore, no candidate qualifies as a match."
+    "llm_justification": "Candidate [0] has narration 'CMS/NEFT-CMS-RAZORPAY-SETL/set_100/BATCH' which contains settlement ID 'set_100' matching the payout's settlement ID, and date 2026-08-24 is within T+2 days of settlement date 2026-08-23. However, the bank credited amount is 124128.47 INR, which is significantly higher than the expected net payout of 16455.11 INR. This indicates the bank deposit likely aggregates multiple payouts, not just this single payout. The UTR reference 'UTR_N00006' is not present in the narration. Candidate [1] has settlement ID 'set_101' which does not match 'set_100', and amount 133080.68 INR also does not match. Neither candidate matches the expected amount, and no UTR match is found. Therefore, no candidate qualifies as a high-confidence match."
   },
   {
     "step": "llm_payout_audit",
@@ -2880,6 +2880,6 @@
     "decision": "ABSTAINED",
     "reason": "LLM Match rejected or fell below confidence gate (score: 0)",
     "llm_confidence": 0,
-    "llm_justification": "Candidate [1] has settlement ID set_101 matching the payout, but the credited amount (133080.68 INR) is far higher than the expected net payout (12598.50 INR), indicating it is a batch settlement containing multiple payouts. Candidate [0] has a different settlement ID (set_100) and amount mismatch. Neither candidate matches the expected net payout amount, and no UTR is provided in the bank narrations to verify against UTR_N00016. Therefore, no candidate qualifies as a direct match."
+    "llm_justification": "Candidate [1] has settlement ID set_101 matching the payout, but the credited amount (133080.68 INR) is much higher than the expected net payout (12598.50 INR), indicating it is a batch settlement containing multiple payouts. Candidate [0] has a different settlement ID (set_100) and amount mismatch. Neither candidate matches the expected amount or UTR, and no candidate has a UTR matching UTR_N00016. Therefore, no candidate qualifies as a match."
   }
 ]

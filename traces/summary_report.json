@@ -14,7 +14,7 @@
   "llm_abstained_debits": 0,
   "advanced_payout_match_rate_pct": 98.04,
   "advanced_debit_match_rate_pct": 100.0,
-  "llm_processing_cost_usd": 0.001138,
+  "llm_processing_cost_usd": 0.001278,
   "llm_input_tokens": 950,
-  "llm_output_tokens": 281
+  "llm_output_tokens": 345
 }
