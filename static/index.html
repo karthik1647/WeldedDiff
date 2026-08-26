@@ -1077,6 +1077,31 @@
     </div>
   </div>
 
+  <!-- ══ API INSPECTOR MODAL ══ -->
+  <div class="modal-overlay" id="api-modal" onclick="closeApiModal(event)">
+    <div class="modal-box" id="api-modal-box" style="max-width:760px;width:90%;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
+        <div>
+          <span class="modal-tag" id="api-modal-tag">API Live Inspector</span>
+          <h3 class="modal-title" id="api-modal-title" style="margin-top:0.25rem;font-size:18px;">Live API Response</h3>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.5rem;">
+          <button class="btn btn-ghost" id="btn-copy-json" onclick="copyApiJson()" style="font-size:12px;padding:0.4rem 0.75rem;">📋 Copy JSON</button>
+          <a class="btn btn-ghost" id="api-modal-raw-link" href="/api/summary" target="_blank" style="font-size:12px;padding:0.4rem 0.75rem;text-decoration:none;">🔗 Open Raw Endpoint</a>
+          <button class="modal-close" onclick="closeApiModalDirect()" style="position:static;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+      <div style="position:relative;">
+        <pre id="api-modal-pre" style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:1rem;max-height:460px;overflow:auto;font-family:var(--mono);font-size:12px;line-height:1.5;color:var(--text2);margin:0;"></pre>
+      </div>
+      <div style="margin-top:1rem;display:flex;justify-content:flex-end;">
+        <button class="btn btn-fill" onclick="closeApiModalDirect()">← Return to Dashboard</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ══ TRY IT ══ -->
   <section id="try-it">
     <div class="container">
@@ -1304,8 +1329,8 @@
         <a class="footer-link" href="#live-numbers">Live Metrics</a>
         <a class="footer-link" href="#replay">Decision Replay</a>
         <a class="footer-link" href="#audit">Audit Log</a>
-        <a class="footer-link" href="/api/summary" target="_blank">API: Summary</a>
-        <a class="footer-link" href="/api/traces" target="_blank">API: Traces</a>
+        <a class="footer-link" href="#api-summary" onclick="event.preventDefault(); openApiModal('summary')">API: Summary</a>
+        <a class="footer-link" href="#api-traces" onclick="event.preventDefault(); openApiModal('traces')">API: Traces</a>
       </div>
       <div class="footer-links">
         <h4>Links</h4>
@@ -1829,7 +1854,52 @@
     if (e.target === document.getElementById('feature-modal')) closeModal();
   }
 
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+  /* ── API Modal Inspector ── */
+  let currentApiJson = '';
+  async function openApiModal(type) {
+    const ep = type === 'summary' ? '/api/summary' : '/api/traces';
+    document.getElementById('api-modal-tag').textContent = `GET ${ep}`;
+    document.getElementById('api-modal-title').textContent = type === 'summary' ? 'Reconciliation Summary Metrics' : 'Decision Audit Log Traces';
+    document.getElementById('api-modal-raw-link').href = ep;
+    const pre = document.getElementById('api-modal-pre');
+    pre.textContent = 'Fetching live API response…';
+    document.getElementById('api-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    try {
+      const res = await fetch(ep);
+      const data = await res.json();
+      currentApiJson = JSON.stringify(data, null, 2);
+      pre.textContent = currentApiJson;
+    } catch (e) {
+      pre.textContent = 'Error loading API response: ' + e.message;
+    }
+  }
+
+  function closeApiModal(e) {
+    if (e.target === document.getElementById('api-modal')) closeApiModalDirect();
+  }
+
+  function closeApiModalDirect() {
+    document.getElementById('api-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function copyApiJson() {
+    if (!currentApiJson) return;
+    navigator.clipboard.writeText(currentApiJson).then(() => {
+      const btn = document.getElementById('btn-copy-json');
+      const old = btn.textContent;
+      btn.textContent = '✓ Copied!';
+      setTimeout(() => btn.textContent = old, 1500);
+    });
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      closeModal();
+      closeApiModalDirect();
+    }
+  });
 
   addEventListener('DOMContentLoaded', init);
 </script>

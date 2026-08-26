@@ -7,7 +7,7 @@ import sys
 from datetime import date, datetime
 from fastapi import FastAPI, HTTPException, UploadFile, File, Query
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
+from fastapi.responses import FileResponse, JSONResponse, StreamingResponse, Response
 from pydantic import BaseModel
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -48,12 +48,11 @@ def save_json_file(filepath, data):
 def get_summary():
     data = load_json_file(SUMMARY_REPORT_PATH)
     if not data:
-        # Auto-run standard scenario to generate initial data
         from src.generator import generate_synthetic_data
         generate_synthetic_data(num_records=100, seed=42, scenario="standard")
         subprocess.run([sys.executable, "-m", "src.pipeline"], cwd=BASE_DIR, capture_output=True, text=True)
         data = load_json_file(SUMMARY_REPORT_PATH) or {}
-    return JSONResponse(content=data)
+    return Response(content=json.dumps(data, indent=2), media_type="application/json")
 
 # ── Traces ────────────────────────────────────────────────────────────────────
 @app.get("/api/traces")
@@ -64,7 +63,7 @@ def get_traces():
         generate_synthetic_data(num_records=100, seed=42, scenario="standard")
         subprocess.run([sys.executable, "-m", "src.pipeline"], cwd=BASE_DIR, capture_output=True, text=True)
         data = load_json_file(DECISION_LOG_PATH) or []
-    return JSONResponse(content=data)
+    return Response(content=json.dumps(data, indent=2), media_type="application/json")
 
 @app.get("/api/traces/{ref_id}")
 def get_trace_by_id(ref_id: str):
@@ -72,7 +71,7 @@ def get_trace_by_id(ref_id: str):
     matching = [t for t in traces if t.get("payment_id") == ref_id or t.get("order_id") == ref_id or t.get("utr") == ref_id]
     if not matching:
         raise HTTPException(status_code=404, detail=f"No trace found for {ref_id}")
-    return matching
+    return Response(content=json.dumps(matching, indent=2), media_type="application/json")
 
 # ── HITL Approve / Reject ─────────────────────────────────────────────────────
 @app.post("/api/traces/{ref_id}/approve")
