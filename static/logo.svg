@@ -1,10 +1,55 @@
-﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" stroke="#0d9488" stroke-linecap="round" stroke-linejoin="round">
-  <circle cx="50" cy="55" r="34" stroke-width="2.8"/>
-  <line x1="5" y1="55" x2="16" y2="55" stroke-width="2.8"/>
-  <circle cx="24" cy="55" r="8" stroke-width="2.8"/>
-  <line x1="32" y1="55" x2="68" y2="55" stroke-width="2.8"/>
-  <circle cx="76" cy="55" r="8" stroke-width="2.8"/>
-  <line x1="84" y1="55" x2="95" y2="55" stroke-width="2.8"/>
-  <line x1="50" y1="21" x2="50" y2="38" stroke-width="2.8"/>
-  <rect x="45.5" y="38" width="9" height="9" rx="1.5" stroke-width="2.8"/>
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <linearGradient id="diffGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="metalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Left Axle Shaft (3D Perspective) -->
+  <path d="M 6 58 L 26 53 L 26 57 L 6 62 Z" fill="url(#metalGrad)" stroke="#334155" stroke-width="1.2"/>
+  <ellipse cx="6" cy="60" rx="2" ry="4" fill="#64748b" stroke="#334155" stroke-width="1.2"/>
+
+  <!-- Right Axle Shaft (3D Perspective) -->
+  <path d="M 76 43 L 94 38 L 94 42 L 76 47 Z" fill="url(#metalGrad)" stroke="#334155" stroke-width="1.2"/>
+  <ellipse cx="94" cy="40" rx="2" ry="4" fill="#475569" stroke="#334155" stroke-width="1.2"/>
+
+  <!-- Top Input Drive Shaft & Pinion -->
+  <path d="M 48 6 L 54 4 L 54 22 L 48 24 Z" fill="url(#metalGrad)" stroke="#334155" stroke-width="1.2"/>
+  <!-- Drive Pinion Bevel (3D) -->
+  <path d="M 43 24 L 59 19 L 64 30 L 38 34 Z" fill="url(#diffGlow)" stroke="#0369a1" stroke-width="1.5"/>
+
+  <!-- 3D Bevel Ring Gear (Tilted 3D Ellipse on Left) -->
+  <g transform="rotate(-15 42 56)">
+    <!-- Ring gear outer rim -->
+    <ellipse cx="42" cy="56" rx="14" ry="32" stroke="#0284c7" stroke-width="3" fill="rgba(14,165,233,0.08)"/>
+    <!-- Ring gear inner rim -->
+    <ellipse cx="42" cy="56" rx="10" ry="24" stroke="#0ea5e9" stroke-width="1.8"/>
+    <!-- 3D Gear Bevel Steps -->
+    <path d="M 32 30 L 36 34 M 30 42 L 35 44 M 30 56 L 35 56 M 32 70 L 36 68 M 38 82 L 42 78" stroke="#0284c7" stroke-width="2"/>
+  </g>
+
+  <!-- Central Differential Carrier Housing (Spherical 3D Cage) -->
+  <ellipse cx="56" cy="50" rx="22" ry="20" stroke="#475569" stroke-width="2.2" fill="rgba(255,255,255,0.03)"/>
+  <path d="M 42 46 C 42 36, 70 36, 70 46 C 70 56, 42 56, 42 46" stroke="#64748b" stroke-width="1.4" stroke-dasharray="2 2"/>
+
+  <!-- Inner 3D Bevel Spider Gears -->
+  <!-- Top Bevel Spider -->
+  <path d="M 52 35 L 60 32 L 58 41 L 54 42 Z" fill="#0ea5e9" stroke="#0284c7" stroke-width="1.2"/>
+  <!-- Bottom Bevel Spider -->
+  <path d="M 52 65 L 60 62 L 58 55 L 54 56 Z" fill="#0ea5e9" stroke="#0284c7" stroke-width="1.2"/>
+  <!-- Left Side Spider -->
+  <path d="M 40 48 L 47 44 L 48 54 L 41 56 Z" fill="#0284c7" stroke="#0369a1" stroke-width="1.2"/>
+  <!-- Right Side Spider -->
+  <path d="M 72 44 L 65 48 L 64 58 L 71 54 Z" fill="#0284c7" stroke="#0369a1" stroke-width="1.2"/>
+
+  <!-- Center Locked Weld Core (Bright Glowing Hexagon) -->
+  <polygon points="56,45 61,48 61,54 56,57 51,54 51,48" fill="#38bdf8" stroke="#0284c7" stroke-width="1.5"/>
+  <!-- Weld Spark Cross -->
+  <line x1="53" y1="51" x2="59" y2="51" stroke="#ffffff" stroke-width="1.5"/>
+  <line x1="56" y1="48" x2="56" y2="54" stroke="#ffffff" stroke-width="1.5"/>
 </svg>
