@@ -596,25 +596,26 @@
   <div class="nav-inner">
     <a class="nav-logo" href="#hero">
       <div class="nav-logo-icon">
-        <!-- 3D Isometric Differential Logomark -->
+        <!-- Axle-Perpendicular Differential Logomark (Z-Axis view down the axle) -->
         <svg width="20" height="20" viewBox="0 0 100 100" fill="none" stroke-linecap="round" stroke-linejoin="round">
-          <!-- Drive Shaft & Pinion -->
-          <line x1="50" y1="6" x2="50" y2="24" stroke-width="4" stroke="white"/>
-          <path d="M 42 24 L 58 24 L 62 32 L 38 32 Z" stroke-width="3" stroke="white" fill="rgba(255,255,255,0.2)"/>
-          <!-- 3D Ring Gear Crescent -->
-          <path d="M 38 32 A 28 28 0 0 0 42 84 L 33 84 A 36 36 0 0 1 28 28 Z" stroke-width="3" stroke="white" fill="rgba(255,255,255,0.3)"/>
-          <!-- Carrier Housing -->
-          <circle cx="56" cy="56" r="22" stroke-width="3.5" stroke="white"/>
-          <!-- Axle Output Shafts -->
-          <line x1="4" y1="56" x2="34" y2="56" stroke-width="4" stroke="white"/>
-          <line x1="78" y1="56" x2="96" y2="56" stroke-width="4" stroke="white"/>
-          <!-- Spider Bevel Gears -->
-          <polygon points="56,38 51,45 61,45" stroke-width="2.5" stroke="white" fill="rgba(255,255,255,0.25)"/>
-          <polygon points="56,74 51,67 61,67" stroke-width="2.5" stroke="white" fill="rgba(255,255,255,0.25)"/>
-          <polygon points="38,56 45,51 45,61" stroke-width="2.5" stroke="white" fill="rgba(255,255,255,0.25)"/>
-          <polygon points="74,56 67,51 67,61" stroke-width="2.5" stroke="white" fill="rgba(255,255,255,0.25)"/>
-          <!-- Central Welded Core -->
-          <rect x="51" y="51" width="10" height="10" rx="2" stroke-width="2" stroke="white" fill="white"/>
+          <!-- Top Input Pinion -->
+          <line x1="50" y1="4" x2="50" y2="18" stroke-width="4" stroke="white"/>
+          <path d="M 42 18 L 58 18 L 54 26 L 46 26 Z" stroke-width="3" stroke="white" fill="rgba(255,255,255,0.2)"/>
+          <!-- Concentric Ring Gear -->
+          <circle cx="50" cy="56" r="36" stroke="white" stroke-width="3.5"/>
+          <circle cx="50" cy="56" r="28" stroke="white" stroke-width="2" stroke-dasharray="3 3"/>
+          <!-- Carrier Housing Cage -->
+          <rect x="36" y="42" width="28" height="28" rx="6" stroke="white" stroke-width="3" fill="rgba(255,255,255,0.15)"/>
+          <!-- 4 Spider Bevel Gears -->
+          <polygon points="50,36 45,43 55,43" stroke="white" stroke-width="2.5" fill="rgba(255,255,255,0.3)"/>
+          <polygon points="50,76 45,69 55,69" stroke="white" stroke-width="2.5" fill="rgba(255,255,255,0.3)"/>
+          <polygon points="30,56 37,51 37,61" stroke="white" stroke-width="2.5" fill="rgba(255,255,255,0.3)"/>
+          <polygon points="70,56 63,51 63,61" stroke="white" stroke-width="2.5" fill="rgba(255,255,255,0.3)"/>
+          <!-- Central Axle Bore Hub (Output shaft pointing straight at viewer) -->
+          <circle cx="50" cy="56" r="7" stroke="white" stroke-width="3" fill="white"/>
+          <!-- Weld Cross on Center Hub -->
+          <line x1="50" y1="47" x2="50" y2="65" stroke="#0ea5e9" stroke-width="2.5"/>
+          <line x1="41" y1="56" x2="59" y2="56" stroke="#0ea5e9" stroke-width="2.5"/>
         </svg>
       </div>
       <span class="nav-logo-text">WeldedDiff</span>
@@ -1253,17 +1254,18 @@
         <div class="footer-logo">
           <div class="footer-logo-icon">
             <svg width="18" height="18" viewBox="0 0 100 100" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="50" y1="6" x2="50" y2="24" stroke-width="4" stroke="white"/>
-              <path d="M 42 24 L 58 24 L 62 32 L 38 32 Z" stroke-width="3" stroke="white" fill="rgba(255,255,255,0.2)"/>
-              <path d="M 38 32 A 28 28 0 0 0 42 84 L 33 84 A 36 36 0 0 1 28 28 Z" stroke-width="3" stroke="white" fill="rgba(255,255,255,0.3)"/>
-              <circle cx="56" cy="56" r="22" stroke-width="3.5" stroke="white"/>
-              <line x1="4" y1="56" x2="34" y2="56" stroke-width="4" stroke="white"/>
-              <line x1="78" y1="56" x2="96" y2="56" stroke-width="4" stroke="white"/>
-              <polygon points="56,38 51,45 61,45" stroke-width="2.5" stroke="white" fill="rgba(255,255,255,0.25)"/>
-              <polygon points="56,74 51,67 61,67" stroke-width="2.5" stroke="white" fill="rgba(255,255,255,0.25)"/>
-              <polygon points="38,56 45,51 45,61" stroke-width="2.5" stroke="white" fill="rgba(255,255,255,0.25)"/>
-              <polygon points="74,56 67,51 67,61" stroke-width="2.5" stroke="white" fill="rgba(255,255,255,0.25)"/>
-              <rect x="51" y="51" width="10" height="10" rx="2" stroke-width="2" stroke="white" fill="white"/>
+              <line x1="50" y1="4" x2="50" y2="18" stroke-width="4" stroke="white"/>
+              <path d="M 42 18 L 58 18 L 54 26 L 46 26 Z" stroke-width="3" stroke="white" fill="rgba(255,255,255,0.2)"/>
+              <circle cx="50" cy="56" r="36" stroke="white" stroke-width="3.5"/>
+              <circle cx="50" cy="56" r="28" stroke="white" stroke-width="2" stroke-dasharray="3 3"/>
+              <rect x="36" y="42" width="28" height="28" rx="6" stroke="white" stroke-width="3" fill="rgba(255,255,255,0.15)"/>
+              <polygon points="50,36 45,43 55,43" stroke="white" stroke-width="2.5" fill="rgba(255,255,255,0.3)"/>
+              <polygon points="50,76 45,69 55,69" stroke-width="2.5" fill="rgba(255,255,255,0.3)"/>
+              <polygon points="30,56 37,51 37,61" stroke="white" stroke-width="2.5" fill="rgba(255,255,255,0.3)"/>
+              <polygon points="70,56 63,51 63,61" stroke-width="2.5" fill="rgba(255,255,255,0.3)"/>
+              <circle cx="50" cy="56" r="7" stroke="white" stroke-width="3" fill="white"/>
+              <line x1="50" y1="47" x2="50" y2="65" stroke="#0ea5e9" stroke-width="2.5"/>
+              <line x1="41" y1="56" x2="59" y2="56" stroke="#0ea5e9" stroke-width="2.5"/>
             </svg>
           </div>
           <span class="footer-logo-text">WeldedDiff</span>
